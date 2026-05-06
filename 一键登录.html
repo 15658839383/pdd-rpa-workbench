@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>一键登录</title>
+  <link rel="stylesheet" href="商家属性填写.css">
+  <link rel="stylesheet" href="zapier-refresh.css">
+  <style>
+    :root {
+      color-scheme: light;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      background: #fffefb;
+      font-family: var(--font), system-ui, -apple-system, sans-serif;
+      overflow: hidden;
+    }
+
+    .quick-login-page {
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr) auto;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .quick-login-header {
+      padding: 16px 16px 12px;
+      border-bottom: 1px solid var(--line, #eceae6);
+      background: rgba(255, 254, 251, 0.96);
+      backdrop-filter: blur(10px);
+    }
+
+    .quick-login-header__title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text, #0f110f);
+      margin: 0 0 4px;
+      line-height: 1.3;
+    }
+
+    .quick-login-header__account {
+      font-size: 12px;
+      color: var(--text-tertiary, #9c9a96);
+      margin: 0;
+    }
+
+    .quick-login-search {
+      padding: 10px 16px 8px;
+      border-bottom: 1px solid var(--line, #eceae6);
+      background: rgba(255, 254, 251, 0.96);
+    }
+
+    .quick-login-search__input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px 12px;
+      font-size: 13px;
+      border: 1px solid var(--line, #eceae6);
+      border-radius: 8px;
+      background: #fff;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .quick-login-search__input:focus {
+      border-color: var(--text, #0f110f);
+    }
+
+    .quick-login-search__meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--text-tertiary, #9c9a96);
+    }
+
+    .quick-login-list {
+      min-height: 0;
+      padding: 10px 12px 12px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      overscroll-behavior: contain;
+      scrollbar-gutter: stable;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(67, 52, 40, 0.4) transparent;
+    }
+
+    .quick-login-list::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    .quick-login-list::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .quick-login-list::-webkit-scrollbar-thumb {
+      background: rgba(67, 52, 40, 0.35);
+      border: 2px solid rgba(255, 254, 251, 0.96);
+      border-radius: 999px;
+    }
+
+    .quick-login-list::-webkit-scrollbar-thumb:hover {
+      background: rgba(67, 52, 40, 0.52);
+    }
+
+    .quick-login-item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      margin-bottom: 8px;
+      border: 1px solid var(--line, #eceae6);
+      border-radius: 8px;
+      background: var(--surface-soft, #f7f6f3);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .quick-login-item:hover {
+      border-color: #c8c6c2;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .quick-login-item__name {
+      min-width: 0;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text, #0f110f);
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .quick-login-item__btn {
+      justify-self: end;
+      white-space: nowrap;
+      min-width: 82px;
+      padding-inline: 10px;
+    }
+
+    .quick-login-empty {
+      padding: 40px 16px;
+      text-align: center;
+      color: var(--text-tertiary, #9c9a96);
+      font-size: 13px;
+    }
+
+    .quick-login-footer {
+      padding: 10px 16px 12px;
+      border-top: 1px solid var(--line, #eceae6);
+      background: rgba(255, 254, 251, 0.96);
+      backdrop-filter: blur(10px);
+    }
+
+    .quick-login-footer__btn {
+      width: 100%;
+    }
+
+    .quick-login-toast {
+      position: fixed;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #fff;
+      background: var(--text, #0f110f);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .quick-login-toast.is-visible {
+      opacity: 1;
+    }
+
+    .quick-login-toast.is-error {
+      background: #c0392b;
+    }
+
+    .quick-login-toast.is-success {
+      background: #1a7f37;
+    }
+  </style>
+</head>
+<body>
+  <div class="quick-login-page">
+    <header class="quick-login-header">
+      <h1 class="quick-login-header__title">一键登录</h1>
+      <p class="quick-login-header__account" id="quickLoginAccountName">正在加载…</p>
+    </header>
+
+    <div class="quick-login-search" id="quickLoginSearchWrap" hidden>
+      <input type="text" class="quick-login-search__input" id="quickLoginSearchInput" placeholder="搜索店铺名称或编号…" autocomplete="off">
+      <div class="quick-login-search__meta">
+        <span id="quickLoginSearchCount"></span>
+        <span id="quickLoginTotalCount"></span>
+      </div>
+    </div>
+
+    <main class="quick-login-list" id="quickLoginShopList">
+      <div class="quick-login-empty">正在加载店铺列表…</div>
+    </main>
+
+    <footer class="quick-login-footer">
+      <button type="button" class="ghost-button quick-login-footer__btn" id="backToWorkbenchBtn">返回工作台</button>
+    </footer>
+  </div>
+
+  <div class="quick-login-toast" id="quickLoginToast"></div>
+
+  <script src="一键登录.js"></script>
+</body>
+</html>

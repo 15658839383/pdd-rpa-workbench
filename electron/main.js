@@ -158,6 +158,11 @@ async function promptForLegacyWorkspaceRoot() {
   return result.filePaths[0] || "";
 }
 
+let mainWindowNormalBounds = null;
+let mainWindowWasMaximized = false;
+let mainWindowWasResizable = true;
+let mainWindowWasMaximizable = true;
+
 async function createMainWindow() {
   const windowIconPath = path.join(__dirname, "..", "ico.png");
 
@@ -404,6 +409,49 @@ function registerIpcHandlers() {
       preserveBaseUrl: payload?.preserveBaseUrl !== false,
       notify: false
     });
+  });
+
+  ipcMain.handle("window:enterQuickLogin", async () => {
+    if (!mainWindow || mainWindow.isDestroyed()) {
+      return;
+    }
+    mainWindowNormalBounds = mainWindow.getBounds();
+    mainWindowWasMaximized = mainWindow.isMaximized();
+    mainWindowWasResizable = mainWindow.isResizable();
+    mainWindowWasMaximizable = mainWindow.isMaximizable();
+    if (mainWindowWasMaximized) {
+      mainWindow.unmaximize();
+    }
+    mainWindow.setMinimumSize(420, 600);
+    mainWindow.setSize(420, 640);
+    mainWindow.center();
+    mainWindow.setMaximizable(false);
+    mainWindow.setResizable(false);
+    await mainWindow.loadFile(path.join(__dirname, "..", "一键登录.html"));
+  });
+
+  ipcMain.handle("window:exitQuickLogin", async () => {
+    if (!mainWindow || mainWindow.isDestroyed()) {
+      return;
+    }
+    await loadRendererEntry(mainWindow);
+    mainWindow.setResizable(mainWindowWasResizable);
+    mainWindow.setMaximizable(mainWindowWasMaximizable);
+    if (mainWindowNormalBounds) {
+      mainWindow.setBounds(mainWindowNormalBounds);
+    } else {
+      mainWindow.setSize(1680, 1040);
+    }
+    mainWindow.setMinimumSize(1220, 860);
+    if (mainWindowWasMaximized && mainWindowWasMaximizable) {
+      mainWindow.maximize();
+    } else {
+      mainWindow.center();
+    }
+    mainWindowNormalBounds = null;
+    mainWindowWasMaximized = false;
+    mainWindowWasResizable = true;
+    mainWindowWasMaximizable = true;
   });
 }
 

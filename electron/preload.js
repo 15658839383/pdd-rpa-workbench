@@ -44,5 +44,9 @@ contextBridge.exposeInMainWorld("desktopBridge", {
     openFolder: (key) => ipcRenderer.invoke("workspace:openFolder", key),
     openPath: (targetPath) => ipcRenderer.invoke("workspace:openPath", targetPath),
     exportSalesOverview: (payload) => ipcRenderer.invoke("workspace:exportSalesOverview", payload)
+  },
+  window: {
+    enterQuickLogin: () => ipcRenderer.invoke("window:enterQuickLogin"),
+    exitQuickLogin: () => ipcRenderer.invoke("window:exitQuickLogin")
   }
 });

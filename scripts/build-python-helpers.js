@@ -39,9 +39,9 @@ function main() {
     buildHelper(helper);
   }
 
-  console.log("Python helper executables are ready:");
+  console.log("Python helper bundles are ready:");
   HELPERS.forEach((helper) => {
-    console.log(`- ${path.join(DIST_ROOT, `${helper.name}.exe`)}`);
+    console.log(`- ${path.join(DIST_ROOT, helper.name)}`);
   });
 }
 
@@ -77,7 +77,7 @@ function buildHelper(helper) {
     "PyInstaller",
     "--noconfirm",
     "--clean",
-    "--onefile",
+    "--onedir",
     "--name",
     helper.name,
     "--distpath",
@@ -90,7 +90,7 @@ function buildHelper(helper) {
     helper.scriptPath
   ];
 
-  console.log(`Building ${helper.name}.exe`);
+  console.log(`Building ${helper.name} helper bundle`);
   const result = spawnSync("python", args, {
     cwd: ROOT_DIR,
     stdio: "inherit",
@@ -98,11 +98,16 @@ function buildHelper(helper) {
   });
 
   if (result.error || result.status !== 0) {
-    throw new Error(`Failed to build ${helper.name}.exe`);
+    throw new Error(`Failed to build ${helper.name} helper bundle`);
   }
 
-  const outputPath = path.join(DIST_ROOT, `${helper.name}.exe`);
-  if (!fs.existsSync(outputPath)) {
-    throw new Error(`Expected output was not created: ${outputPath}`);
+  const outputDir = path.join(DIST_ROOT, helper.name);
+  const outputExePath = path.join(outputDir, `${helper.name}.exe`);
+  if (!fs.existsSync(outputDir)) {
+    throw new Error(`Expected helper bundle directory was not created: ${outputDir}`);
+  }
+
+  if (!fs.existsSync(outputExePath)) {
+    throw new Error(`Expected helper executable was not created: ${outputExePath}`);
   }
 }

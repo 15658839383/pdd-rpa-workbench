@@ -32,14 +32,22 @@ function resolvePackagedHelperPath(fileName) {
     return null;
   }
 
+  const helperBaseName = path.basename(normalizedFileName, path.extname(normalizedFileName));
+
   const portableExecutableDir = getPortableExecutableDir();
   const candidates = [
     process.resourcesPath ? path.join(process.resourcesPath, "helpers", normalizedFileName) : null,
+    process.resourcesPath ? path.join(process.resourcesPath, "helpers", helperBaseName, normalizedFileName) : null,
     path.join(path.dirname(process.execPath), "resources", "helpers", normalizedFileName),
+    path.join(path.dirname(process.execPath), "resources", "helpers", helperBaseName, normalizedFileName),
     path.join(path.dirname(process.execPath), "helpers", normalizedFileName),
+    path.join(path.dirname(process.execPath), "helpers", helperBaseName, normalizedFileName),
     portableExecutableDir ? path.join(portableExecutableDir, "resources", "helpers", normalizedFileName) : null,
+    portableExecutableDir ? path.join(portableExecutableDir, "resources", "helpers", helperBaseName, normalizedFileName) : null,
     portableExecutableDir ? path.join(portableExecutableDir, "helpers", normalizedFileName) : null,
-    path.join(process.cwd(), "resources", "helpers", normalizedFileName)
+    portableExecutableDir ? path.join(portableExecutableDir, "helpers", helperBaseName, normalizedFileName) : null,
+    path.join(process.cwd(), "resources", "helpers", normalizedFileName),
+    path.join(process.cwd(), "resources", "helpers", helperBaseName, normalizedFileName)
   ].filter(Boolean);
 
   return candidates.find((candidate) => fs.existsSync(candidate)) || null;

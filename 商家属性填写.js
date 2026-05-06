@@ -533,6 +533,7 @@ function cacheDom() {
   dom.loginSubmitBtn = document.getElementById('loginSubmitBtn');
   dom.loginError = document.getElementById('loginError');
   dom.logoutBtn = document.getElementById('logoutBtn');
+  dom.openQuickLoginBtn = document.getElementById('openQuickLoginBtn');
   dom.openChangePasswordBtn = document.getElementById('openChangePasswordBtn');
   dom.accountDisplayName = document.getElementById('accountDisplayName');
   dom.accountRoleName = document.getElementById('accountRoleName');
@@ -640,6 +641,7 @@ function bindUiEvents() {
   dom.loginRememberPasswordInput?.addEventListener('change', handleRememberPasswordChange);
   dom.appTabs.forEach((tab) => tab.addEventListener('click', handleAppTabClick));
   dom.logoutBtn?.addEventListener('click', handleLogout);
+  dom.openQuickLoginBtn?.addEventListener('click', handleOpenQuickLogin);
   dom.openShopPickerBtn?.addEventListener('click', handleOpenShopPicker);
   dom.shopSelectionBackBtn?.addEventListener('click', closeShopPicker);
   dom.openSalesOverviewBtn?.addEventListener('click', handleOpenSalesOverviewPage);
@@ -2659,6 +2661,13 @@ async function tryAutoBindCurrentTemplateShop({ source = 'template' } = {}) {
   }
 
   return Boolean(result.ok);
+}
+
+async function handleOpenQuickLogin() {
+  if (!state.bridge?.window?.enterQuickLogin) {
+    return;
+  }
+  await state.bridge.window.enterQuickLogin();
 }
 
 async function handleOpenShopPicker() {

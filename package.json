@@ -29,9 +29,11 @@
       "fonts/**/*",
       "ico.png",
       "商家属性填写html.html",
+      "一键登录.html",
       "商家属性填写.css",
       "zapier-refresh.css",
       "商家属性填写.js",
+      "一键登录.js",
       "package.json"
     ],
     "extraResources": [
@@ -39,7 +41,7 @@
         "from": ".build/python-helpers",
         "to": "helpers",
         "filter": [
-          "*.exe"
+          "**/*"
         ]
       },
       {
