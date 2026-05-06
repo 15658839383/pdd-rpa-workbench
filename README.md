@@ -20,7 +20,7 @@
 │       ├── templateStore.js     # 模板存储服务
 │       └── workspace.js         # 工作目录服务
 ├── scripts/                     # 构建辅助脚本
-│   └── build-python-helpers.js  # 构建一键登录/在线检查 helper 目录
+│   └── build-python-helpers.js  # 构建在线检查 helper 目录
 ├── automation/                  # 预留给后续外部脚本集成
 │   ├── automation_bridge.py     # Legacy DrissionPage 脚本（仅保留参考）
 │   └── requirements.txt         # Legacy DrissionPage 依赖（仅保留参考）
@@ -35,7 +35,7 @@
 - Node.js 16+
 - Python 3.x
 - PyInstaller
-- DrissionPage 4.1.1.2
+- Playwright Core 1.59+
 - Windows 10/11
 - Google Chrome
 
@@ -57,15 +57,15 @@ npm run dev
 npm run build
 ```
 
-构建命令会先把 Python helper 脚本打成 onedir 目录，再执行 Electron NSIS 安装版打包。
+构建命令会先把在线检查 Python helper 脚本打成 onedir 目录，再执行 Electron NSIS 安装版打包。
 
 构建完成后：
 
 - 安装版主产物位于 `dist/宜承多多工作台-<version>-setup.exe`
 - 解包目录位于 `dist/win-unpacked/`
-- 随包 helper 位于 `dist/win-unpacked/resources/helpers/<helper-name>/`
+- 随包在线检查 helper 位于 `dist/win-unpacked/resources/helpers/<helper-name>/`
 
-发布版目标机器不需要预装 Python，但仍需要：
+发布版目标机器不需要预装 Python 才能执行一键登录，但仍需要：
 
 - Windows 10/11 x64
 - Google Chrome
@@ -132,7 +132,8 @@ npm run build
 ### Legacy 脚本
 
 - `automation/automation_bridge.py` 与 `automation/requirements.txt` 仅保留作为旧 DrissionPage 实现参考，不再参与当前自动化主流程和构建。
-- `tools/店铺一键登录/拼多多cookie一键登录.py` 和 `tools/检查是否登录状态是否正常/检查cookies状态.py` 会在构建时被打包为随应用分发的 helper 目录。
+- `tools/店铺一键登录/拼多多cookie一键登录.py` 保留为历史参考；当前一键登录已改为 Electron 主进程直接调用 Playwright Core + 本机 Chrome。
+- `tools/检查是否登录状态是否正常/检查cookies状态.py` 仍会在构建时打包为随应用分发的 helper 目录。
 
 ### 查看构建日志
 

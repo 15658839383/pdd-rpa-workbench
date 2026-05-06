@@ -3,22 +3,22 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # 项目概述
 
-宜承多多工作台 — 一个基于 Electron 的拼多多商家上架辅助桌面工具。负责模板管理、素材导入、模板快照导出，以及调用业务后端 / Python helper exe 完成店铺登录态、类目、属性、SKU 等数据获取。当前自动填充逻辑已下线，自动化由用户外部脚本基于导出的模板快照执行。
+宜承多多工作台 — 一个基于 Electron 的拼多多商家上架辅助桌面工具。负责模板管理、素材导入、模板快照导出，以及调用业务后端 / Playwright / Python helper exe 完成店铺登录态、类目、属性、SKU 等数据获取。当前自动填充逻辑已下线，自动化由用户外部脚本基于导出的模板快照执行。
 
 # 常用命令
 
 | 场景 | 命令 |
 |------|------|
 | 启动开发版（无需打包 helper exe） | `npm run dev` 或 `npm start` |
-| 仅打包 Python helper exe | `npm run build:helpers` |
-| 打 NSIS 安装版（含 helper） | `npm run build` |
+| 仅打包在线检查 Python helper exe | `npm run build:helpers` |
+| 打 NSIS 安装版（含在线检查 helper） | `npm run build` |
 | 仅 electron-builder 打 dir 包 | `npm run pack` |
 | 渲染端调试时强制走开发服务器 | 设置环境变量 `ELECTRON_RENDERER_URL=http://...` |
 | 用自定义工作区目录启动 | `electron . --workspace-root <绝对路径>` 或 `--workspace-root=<路径>` |
 
 仓库目前没有自动化测试套件、lint 配置和 npm test 脚本，**不要**自行新增 lint/test 命令并声称「已通过验证」；改完代码请用 `npm run dev` 启动 Electron 在浏览器化的渲染端实际点一遍受影响的功能。
 
-构建依赖：Node.js 16+、Python 3、PyInstaller、DrissionPage 4.1.1.2、Windows 10/11（`scripts/build-python-helpers.js` 主动检查 `process.platform === "win32"` 并直接抛错）。
+构建依赖：Node.js 16+、Python 3、PyInstaller、Playwright Core、Windows 10/11、Google Chrome（`scripts/build-python-helpers.js` 主动检查 `process.platform === "win32"` 并直接抛错）。
 
 # 架构总览
 
@@ -43,7 +43,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `templateStore.js` / `assetService.js` / `sessionStore.js` / `credentialStore.js` / `shopCatalogStore.js`：基于 `workspace` 路径做 JSON / 文件级持久化，导出模板时 `templateStore.exportTemplate` 会展开 `formData`、生成 `skuList`、`attributeList`、`categoryStapleNames`、`categoryFullPath` 等结构化字段供外部脚本消费。
 - `backendClient.js`：与业务后端 `http://106.75.215.11:8080` 交互的核心。维护 `currentUser / shopCatalog / cookieJar / categoryCache / attributeCache / skuSpecCache` 等内存态；登录、店铺/类目/属性/SKU 拉取、一键登录、店铺总览全部经由它。会话失效会通过 `onSessionInvalidated` 回调把 `auth:event` 推到渲染端。
 - `shopCategoryService / shopPropertyService / shopSpecNameService / shopGoodsDetailService / shopQuickLoginService / shopOverviewService / shopOnlineChecker`：基于 cookie 直连拼多多接口的客户端，由 `backendClient` 组合调用。
-- `externalTooling.js`：解析 helper exe 路径（开发态用 `tools/...py` + Python，安装态用 `resources/helpers/*.exe`）。新增 helper 必须同时改 `scripts/build-python-helpers.js` 的 `HELPERS` 列表和 `package.json` 的 `extraResources`。
+- `externalTooling.js`：解析 helper exe 路径（当前主要服务在线检查 helper；新增 helper 时需同时改 `scripts/build-python-helpers.js` 的 `HELPERS` 列表和 `package.json` 的 `extraResources`）。
 - `salesOverviewExportService.js`：用 `exceljs` 把渲染端组装好的 payload 写成 xlsx，由主进程 `workspace:exportSalesOverview` IPC 触发 `dialog.showSaveDialog`。
 
 ## IPC 通道命名约定
@@ -55,7 +55,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Python helper / 外部脚本
 
-- `tools/店铺一键登录/拼多多cookie一键登录.py` 与 `tools/检查是否登录状态是否正常/检查cookies状态.py` 是 **构建时打包成 exe** 的两个 helper（产物名 `shop-quick-login.exe` / `shop-online-check.exe`，由 `scripts/build-python-helpers.js` 产出到 `.build/python-helpers/` 后被 `extraResources` 拷到 `resources/helpers/`）。
+- `electron/services/shopQuickLoginService.js`：当前一键登录实现，直接在 Electron 主进程里调用 `playwright-core` + 本机 Chrome 打开持久化浏览器并注入 cookies。
+- `tools/检查是否登录状态是否正常/检查cookies状态.py` 是 **构建时打包成 exe** 的 helper（产物名 `shop-online-check.exe`，由 `scripts/build-python-helpers.js` 产出到 `.build/python-helpers/` 后被 `extraResources` 拷到 `resources/helpers/`）。
 - `tools/` 下其他子目录（`按商品ID填充之属性 / 获取上架类目 / 经营总览脚本 / 商品规格可选` 等）是 **业务接口的 reference 实现**，正常构建不打包，仅作为参考。
 - `automation/automation_bridge.py` 是 **legacy DrissionPage 实现**，仅供参考，不参与当前流程。
 - `drission_example_profile/` 是历史浏览器画像目录，构建时不参与；运行时实际画像走工作区下的 `browser-profile-playwright/` 与 `browser-profile-cookie-login/`。
@@ -76,4 +77,5 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 2. 接触模板导出 (`templateStore.exportTemplate`) 时务必同步阅读 README 第 3 节，避免破坏 `skuList / attributeList / categoryStapleNames / categoryFullPath` 这些下游脚本依赖的字段。
 3. 业务后端默认地址 `http://106.75.215.11:8080` 在 `backendClient.js` 中作为 `DEFAULT_BASE_URL` 硬编码，UI 上允许修改，但代码层不要随意散落硬编码。
 4. 改 helper / 脚本路径前请确认 `extraResources` 与 `externalTooling.resolvePackagedHelperPath` 的候选列表都覆盖到，否则安装版和开发版会出现行为差异。
-5. 受限角色控制（`canUseShopQuickLogin / canViewAllShops` 等）写在 `backendClient.js` 顶部，新增功能权限时优先复用这些 helper 而不是再起一套判断。
+5. 一键登录当前依赖本机 Chrome；如果调整 `shopQuickLoginService.js` 的浏览器发现逻辑，务必同时验证开发态和安装版。
+6. 受限角色控制（`canUseShopQuickLogin / canViewAllShops` 等）写在 `backendClient.js` 顶部，新增功能权限时优先复用这些 helper 而不是再起一套判断。

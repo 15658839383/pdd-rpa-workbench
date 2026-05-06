@@ -10,11 +10,6 @@ const SPEC_ROOT = path.join(BUILD_ROOT, "pyinstaller", "helpers-spec");
 
 const HELPERS = [
   {
-    name: "shop-quick-login",
-    scriptPath: path.join(ROOT_DIR, "tools", "店铺一键登录", "拼多多cookie一键登录.py"),
-    extraArgs: ["--collect-all", "DrissionPage"]
-  },
-  {
     name: "shop-online-check",
     scriptPath: path.join(ROOT_DIR, "tools", "检查是否登录状态是否正常", "检查cookies状态.py"),
     extraArgs: []
