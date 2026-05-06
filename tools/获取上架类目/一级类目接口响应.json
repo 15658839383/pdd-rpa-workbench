@@ -1,0 +1,1103 @@
+{
+    "success": true,
+    "errorCode": 1000000,
+    "errorMsg": null,
+    "result": [
+        {
+            "id": 17412,
+            "name": "饰品/流行首饰/摆件/保养鉴定",
+            "notice": "",
+            "stapleName": [
+                "家居生活"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 16901,
+            "name": "家庭/个人清洁工具",
+            "notice": "",
+            "stapleName": [
+                "家居生活"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 17671,
+            "name": "鲜花园艺/绿植仿真/园林设备",
+            "notice": "",
+            "stapleName": [
+                "家居生活"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8721,
+            "name": "本地化生活服务",
+            "notice": "虚拟商品分类选择后不支持修改，请确认选择无误！",
+            "stapleName": [
+                "虚拟商品"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8722,
+            "name": "电影/演出/体育赛事",
+            "notice": "该类目下可发布以下商品：各类展览会门票，漫展门票、车展门票、博览会门票等。",
+            "stapleName": [
+                "虚拟商品"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 5906,
+            "name": "数码相机/单反相机/摄像机",
+            "notice": "二手商品请放置在二手类目。",
+            "stapleName": [
+                "数码电器"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8723,
+            "name": "个性定制/设计服务",
+            "notice": "虚拟商品分类选择后不支持修改，请确认选择无误！",
+            "stapleName": [
+                "虚拟商品"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8724,
+            "name": "购物卡/礼品卡/代金券",
+            "notice": "虚拟商品分类选择后不支持修改，请确认选择无误！",
+            "stapleName": [
+                "虚拟商品"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8725,
+            "name": "婚庆/摄影/摄像服务",
+            "notice": "虚拟商品分类选择后不支持修改，请确认选择无误！",
+            "stapleName": [
+                "虚拟商品"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8726,
+            "name": "教育培训",
+            "notice": "本类目为虚拟商品类目，请勿发布实物商品",
+            "stapleName": [
+                "虚拟商品"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8727,
+            "name": "景点门票/周边游",
+            "notice": "虚拟商品分类选择后不支持修改，请确认选择无误！",
+            "stapleName": [
+                "虚拟商品"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8728,
+            "name": "旅游路线/商品/服务",
+            "notice": "虚拟商品分类选择后不支持修改，请确认选择无误！",
+            "stapleName": [
+                "虚拟商品"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8729,
+            "name": "生活缴费",
+            "notice": "虚拟商品分类选择后不支持修改，请确认选择无误！",
+            "stapleName": [
+                "虚拟商品"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8730,
+            "name": "数字生活娱乐",
+            "notice": "本类目为虚拟商品类目，请勿发布实物商品",
+            "stapleName": [
+                "虚拟商品"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 16155,
+            "name": "农机/农具/农膜",
+            "notice": "",
+            "stapleName": [
+                "家居生活"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8731,
+            "name": "特价酒店/客栈/公寓旅馆",
+            "notice": "虚拟商品分类选择后不支持修改，请确认选择无误！",
+            "stapleName": [
+                "虚拟商品"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8732,
+            "name": "网络服务/软件",
+            "notice": "本类目为虚拟商品类目，请勿发布实物商品",
+            "stapleName": [
+                "虚拟商品"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8733,
+            "name": "网上营业厅",
+            "notice": "1、虚拟商品分类选择后不支持修改，请确认选择无误！2、请联系运营上传相关资质并等待核实",
+            "stapleName": [
+                "虚拟商品"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8734,
+            "name": "休闲娱乐",
+            "notice": "本类目为虚拟商品类目，请勿发布实物商品",
+            "stapleName": [
+                "虚拟商品"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8736,
+            "name": "游戏服务/直播",
+            "notice": "本类目为虚拟商品类目，请勿发布实物商品",
+            "stapleName": [
+                "虚拟商品"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 5921,
+            "name": "智能设备",
+            "notice": "二手商品请放置在二手类目。",
+            "stapleName": [
+                "数码电器"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 16676,
+            "name": "厨房/烹饪用具",
+            "notice": "",
+            "stapleName": [
+                "家居生活"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 2603,
+            "name": "办公设备/耗材/相关服务",
+            "notice": "",
+            "stapleName": [
+                "数码电器"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 17455,
+            "name": "珠宝/钻石/翡翠/黄金",
+            "notice": "",
+            "stapleName": [
+                "家居生活"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 18482,
+            "name": "彩妆/香水/美妆工具",
+            "notice": "",
+            "stapleName": [
+                "美容个护"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8508,
+            "name": "流行男鞋",
+            "notice": "",
+            "stapleName": [
+                "服饰箱包"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 24636,
+            "name": "包装用品",
+            "notice": "",
+            "stapleName": [
+                "数码电器"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8509,
+            "name": "女鞋",
+            "notice": "",
+            "stapleName": [
+                "服饰箱包"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 24383,
+            "name": "平板电脑/MID",
+            "notice": "二手商品请放置在二手类目。",
+            "stapleName": [
+                "数码电器"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 16192,
+            "name": "畜牧/养殖物资",
+            "notice": "",
+            "stapleName": [
+                "家居生活"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 6209,
+            "name": "个人护理保健",
+            "notice": "",
+            "stapleName": [
+                "数码电器"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 24386,
+            "name": "品牌台机/品牌一体机/服务器",
+            "notice": "二手商品请放置在二手类目。",
+            "stapleName": [
+                "数码电器"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 5955,
+            "name": "厨房电器",
+            "notice": "",
+            "stapleName": [
+                "数码电器"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 2629,
+            "name": "文具电教/文化用品/商务用品",
+            "notice": "书籍类商品请勿放在此类目",
+            "stapleName": [
+                "数码电器"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 22856,
+            "name": "搬运/仓储/物流设备",
+            "notice": "",
+            "stapleName": [
+                "家纺家具家装"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 16209,
+            "name": "农用物资",
+            "notice": "",
+            "stapleName": [
+                "家居生活"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 24402,
+            "name": "DIY电脑",
+            "notice": "二手商品请放置在二手类目。",
+            "stapleName": [
+                "数码电器"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 14933,
+            "name": "童鞋/婴儿鞋/亲子鞋",
+            "notice": "",
+            "stapleName": [
+                "母婴玩具"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 24407,
+            "name": "闪存卡/U盘/存储/移动硬盘",
+            "notice": "二手商品请放置在二手类目。",
+            "stapleName": [
+                "数码电器"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8538,
+            "name": "箱包皮具/女包/男包",
+            "notice": "",
+            "stapleName": [
+                "服饰箱包"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 16989,
+            "name": "居家日用",
+            "notice": "",
+            "stapleName": [
+                "家居生活"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 18270,
+            "name": "医疗健康服务",
+            "notice": "",
+            "stapleName": [
+                "医药健康"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 17249,
+            "name": "烟品/打火机/瑞士军刀",
+            "notice": "",
+            "stapleName": [
+                "家居生活"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 5217,
+            "name": "古董文玩/邮币/字画/收藏",
+            "notice": "",
+            "stapleName": [
+                "家居生活"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 9313,
+            "name": "床上用品",
+            "notice": "",
+            "stapleName": [
+                "家纺家具家装"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 22881,
+            "name": "标准件/零部件/工业耗材",
+            "notice": "",
+            "stapleName": [
+                "家纺家具家装"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 19298,
+            "name": "婴童尿裤",
+            "notice": "",
+            "stapleName": [
+                "母婴玩具"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 9314,
+            "name": "电子/电工",
+            "notice": "",
+            "stapleName": [
+                "家纺家具家装"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 9315,
+            "name": "基础建材",
+            "notice": "",
+            "stapleName": [
+                "家纺家具家装"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 9316,
+            "name": "家居饰品",
+            "notice": "",
+            "stapleName": [
+                "家纺家具家装"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 9317,
+            "name": "灯饰光源照明",
+            "notice": "",
+            "stapleName": [
+                "家纺家具家装"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 6758,
+            "name": "酒类",
+            "notice": "",
+            "stapleName": [
+                "食品保健"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 9318,
+            "name": "家装主材",
+            "notice": "",
+            "stapleName": [
+                "家纺家具家装"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 9319,
+            "name": "居家布艺",
+            "notice": "",
+            "stapleName": [
+                "家纺家具家装"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 9320,
+            "name": "全屋定制",
+            "notice": "",
+            "stapleName": [
+                "家纺家具家装"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 14697,
+            "name": "奶粉/辅食/营养品/零食",
+            "notice": "",
+            "stapleName": [
+                "母婴玩具"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 9321,
+            "name": "商业/办公家具",
+            "notice": "",
+            "stapleName": [
+                "家纺家具家装"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 24426,
+            "name": "电脑硬件/显示器/电脑周边",
+            "notice": "二手商品请放置在二手类目。",
+            "stapleName": [
+                "数码电器"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 9322,
+            "name": "特色手工艺",
+            "notice": "",
+            "stapleName": [
+                "家纺家具家装"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 9323,
+            "name": "五金工具",
+            "notice": "",
+            "stapleName": [
+                "家纺家具家装"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 9324,
+            "name": "住宅家具",
+            "notice": "",
+            "stapleName": [
+                "家纺家具家装"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 16237,
+            "name": "成人用品",
+            "notice": "不可在成人用品类目发布食品",
+            "stapleName": [
+                "医药健康"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 20078,
+            "name": "汽车服务",
+            "notice": "",
+            "stapleName": [
+                "汽配摩托"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 2933,
+            "name": "3C数码配件",
+            "notice": "",
+            "stapleName": [
+                "数码电器"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 14966,
+            "name": "童装/婴儿装/亲子装",
+            "notice": "",
+            "stapleName": [
+                "母婴玩具"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 5752,
+            "name": "影音电器",
+            "notice": "二手商品请放置在二手类目。",
+            "stapleName": [
+                "数码电器"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 13176,
+            "name": "OTC药品",
+            "notice": "",
+            "stapleName": [
+                "医药健康"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 13177,
+            "name": "精制中药材",
+            "notice": "",
+            "stapleName": [
+                "医药健康"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 13178,
+            "name": "隐形眼镜/护理液",
+            "notice": "",
+            "stapleName": [
+                "医药健康"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 24699,
+            "name": "保健用品",
+            "notice": "",
+            "stapleName": [
+                "医药健康"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 18814,
+            "name": "医疗器械",
+            "notice": "",
+            "stapleName": [
+                "医药健康"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 6785,
+            "name": "保健食品/膳食营养补充食品",
+            "notice": "",
+            "stapleName": [
+                "食品保健",
+                "医药健康"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 17285,
+            "name": "洗护清洁剂/卫生巾/纸/香薰",
+            "notice": "",
+            "stapleName": [
+                "家居生活"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8583,
+            "name": "内衣裤袜",
+            "notice": "",
+            "stapleName": [
+                "服饰箱包"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 6536,
+            "name": "咖啡/麦片/冲饮",
+            "notice": "",
+            "stapleName": [
+                "食品保健"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 17803,
+            "name": "乐器/吉他/钢琴/配件",
+            "notice": "",
+            "stapleName": [
+                "家居生活"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 18574,
+            "name": "美容美体仪器",
+            "notice": "",
+            "stapleName": [
+                "美容个护"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 6290,
+            "name": "网络设备",
+            "notice": "二手商品请放置在二手类目。",
+            "stapleName": [
+                "数码电器"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 22931,
+            "name": "机械设备",
+            "notice": "",
+            "stapleName": [
+                "家纺家具家装"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 14740,
+            "name": "婴童用品",
+            "notice": "",
+            "stapleName": [
+                "母婴玩具"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 16794,
+            "name": "收纳整理",
+            "notice": "",
+            "stapleName": [
+                "家居生活"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 7323,
+            "name": "电子元器件市场",
+            "notice": "二手商品请放置在二手类目。",
+            "stapleName": [
+                "数码电器"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 16288,
+            "name": "宠物/宠物食品及用品",
+            "notice": "",
+            "stapleName": [
+                "家居生活"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 11683,
+            "name": "电动车/配件/交通工具",
+            "notice": "",
+            "stapleName": [
+                "运动户外"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 16548,
+            "name": "餐饮具",
+            "notice": "",
+            "stapleName": [
+                "家居生活"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 11684,
+            "name": "户外/登山/旅行野营用品",
+            "notice": "",
+            "stapleName": [
+                "运动户外"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 20645,
+            "name": "模玩/动漫/周边/cos/桌游",
+            "notice": "",
+            "stapleName": [
+                "母婴玩具"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 11685,
+            "name": "运动/瑜伽/健身/球类",
+            "notice": "",
+            "stapleName": [
+                "运动户外"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 11686,
+            "name": "运动包/户外包/配件",
+            "notice": "",
+            "stapleName": [
+                "运动户外"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 11687,
+            "name": "运动服/休闲服",
+            "notice": "",
+            "stapleName": [
+                "运动户外"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 11688,
+            "name": "运动鞋",
+            "notice": "",
+            "stapleName": [
+                "运动户外"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 18088,
+            "name": "装修设计/施工/监理",
+            "notice": "",
+            "stapleName": [
+                "家纺家具家装"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 18601,
+            "name": "美发护发/假发",
+            "notice": "",
+            "stapleName": [
+                "美容个护"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 21417,
+            "name": "音乐/影视/明星/音像",
+            "notice": "",
+            "stapleName": [
+                "家居生活"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 11689,
+            "name": "自行车/骑行装备/零配件",
+            "notice": "",
+            "stapleName": [
+                "运动户外"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 18349,
+            "name": "处方药",
+            "notice": "",
+            "stapleName": [
+                "医药健康"
+            ],
+            "catQualificationDetail": {
+                "status": 2,
+                "canReapplyTime": null,
+                "needApplyCatQualificationCatIdList": null,
+                "inValid": true
+            }
+        },
+        {
+            "id": 22964,
+            "name": "清洗/食品/商业设备",
+            "notice": "",
+            "stapleName": [
+                "家纺家具家装"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 27063,
+            "name": "特色农产品（非食用）",
+            "notice": "",
+            "stapleName": [
+                "水果生鲜"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 15543,
+            "name": "书籍/杂志/报纸",
+            "notice": "在此一级类目发布商品需提供相应资质",
+            "stapleName": [
+                "家居生活"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8634,
+            "name": "腕表眼镜",
+            "notice": "隐形眼镜/隐形护理液请不要放在此类目。",
+            "stapleName": [
+                "服饰箱包"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 6586,
+            "name": "茶",
+            "notice": "",
+            "stapleName": [
+                "食品保健"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 6076,
+            "name": "大家电",
+            "notice": "",
+            "stapleName": [
+                "数码电器"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 24520,
+            "name": "电玩/配件/游戏/攻略",
+            "notice": "二手商品请放置在二手类目。",
+            "stapleName": [
+                "数码电器"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 5834,
+            "name": "手机",
+            "notice": "已激活手机商品请发布至【二手数码-二手手机】类目。\n",
+            "stapleName": [
+                "数码电器"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 22986,
+            "name": "橡塑材料及制品",
+            "notice": "",
+            "stapleName": [
+                "家纺家具家装"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 18637,
+            "name": "美容护肤/美体/精油",
+            "notice": "",
+            "stapleName": [
+                "美容个护"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 7629,
+            "name": "摩托车/装备/配件",
+            "notice": "",
+            "stapleName": [
+                "汽配摩托"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 5839,
+            "name": "二手数码",
+            "notice": "",
+            "stapleName": [
+                "数码电器"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 7639,
+            "name": "汽车/用品/配件/改装",
+            "notice": "",
+            "stapleName": [
+                "汽配摩托"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 5851,
+            "name": "笔记本电脑",
+            "notice": "二手商品请放置在二手类目。",
+            "stapleName": [
+                "数码电器"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8669,
+            "name": "服饰配件",
+            "notice": "",
+            "stapleName": [
+                "服饰箱包"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 6883,
+            "name": "传统滋补品",
+            "notice": "",
+            "stapleName": [
+                "食品保健",
+                "医药健康"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 6630,
+            "name": "粮油米面/南北干货/调味品",
+            "notice": "",
+            "stapleName": [
+                "食品保健"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 15083,
+            "name": "玩具/童车/益智/积木/模型",
+            "notice": "",
+            "stapleName": [
+                "母婴玩具"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8172,
+            "name": "水产肉类/新鲜蔬果/熟食",
+            "notice": "",
+            "stapleName": [
+                "水果生鲜"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 17134,
+            "name": "节庆用品/礼品",
+            "notice": "",
+            "stapleName": [
+                "家居生活"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 239,
+            "name": "男装",
+            "notice": "",
+            "stapleName": [
+                "服饰箱包"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 6128,
+            "name": "生活电器",
+            "notice": "",
+            "stapleName": [
+                "数码电器"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 8439,
+            "name": "女装/女士精品",
+            "notice": "请使用商品实物拍摄图片",
+            "stapleName": [
+                "服饰箱包"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 15356,
+            "name": "孕产妇用品/孕妇装/营养",
+            "notice": "",
+            "stapleName": [
+                "母婴玩具"
+            ],
+            "catQualificationDetail": null
+        },
+        {
+            "id": 6398,
+            "name": "零食/坚果/特产",
+            "notice": "",
+            "stapleName": [
+                "食品保健"
+            ],
+            "catQualificationDetail": null
+        }
+    ]
+}

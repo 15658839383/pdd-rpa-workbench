@@ -1,0 +1,74 @@
+{
+  "name": "pdd-goods-desktop",
+  "version": "0.1.3",
+  "private": true,
+  "description": "拼多多商家属性填写 Electron 安装版工具",
+  "main": "electron/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron .",
+    "build:helpers": "node scripts/build-python-helpers.js",
+    "prebuild:app": "node scripts/clean-dist.js",
+    "build:app": "electron-builder --win nsis --x64",
+    "pack": "npm run build:helpers && electron-builder --dir",
+    "build": "npm run build:helpers && npm run build:app"
+  },
+  "devDependencies": {
+    "electron": "41.1.0",
+    "electron-builder": "26.8.1"
+  },
+  "build": {
+    "appId": "com.local.pdd-goods-desktop",
+    "productName": "宜承多多工作台",
+    "asar": true,
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron/**/*",
+      "fonts/**/*",
+      "ico.png",
+      "商家属性填写html.html",
+      "商家属性填写.css",
+      "zapier-refresh.css",
+      "商家属性填写.js",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": ".build/python-helpers",
+        "to": "helpers",
+        "filter": [
+          "*.exe"
+        ]
+      },
+      {
+        "from": "tools",
+        "to": "tools",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "icon": "ico.png",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "${productName}-${version}-setup.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0"
+  }
+}

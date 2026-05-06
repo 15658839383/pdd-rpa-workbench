@@ -1,0 +1,69 @@
+{
+  "data": {
+    "pagination": {
+      "page": 1,
+      "page_size": 20,
+      "total": 1,
+      "total_pages": 1
+    },
+    "products": [
+      {
+        "activity": {
+          "id": null,
+          "max_price": 0.0,
+          "min_price": 0.0,
+          "name": null
+        },
+        "audit_status": null,
+        "category": {
+          "id": 24126,
+          "level1": "\u5185\u8863\u88e4\u889c",
+          "level2": "\u7537\u58eb\u889c\u5b50/\u4e1d\u889c/\u6253\u5e95\u88e4\u889c",
+          "level3": "\u4e2d\u7b52\u889c",
+          "level4": null,
+          "name": "\u4e2d\u7b52\u889c"
+        },
+        "category_score_rank": null,
+        "created_time": "2026-03-29 18:13:54",
+        "data_import_time": "2026-03-30 06:17:00",
+        "data_source": "SKU\u62c6\u5206\u578b\u53f7\u5360\u6bd4\u591a",
+        "data_update_time": "2026-04-09 07:09:48",
+        "delivery_time_limit": 172800,
+        "external_product_code": "201011",
+        "favorites": 0,
+        "id": 1475169,
+        "is_free_shipping": "\u5426",
+        "is_new_product": "\u5426",
+        "listing_status": "\u5df2\u4e0b\u67b6",
+        "main_sale_tag": "201011",
+        "operator_name": "\u4fde\u6e05",
+        "price": {
+          "market": 55.9,
+          "max_group": 44.9,
+          "max_single": 54.9,
+          "min_group": 26.9,
+          "min_single": 36.9
+        },
+        "product_code": null,
+        "product_desc": "\u3010\u5e15\u5170\u6735\u3011\u590f\u5b63\u8584\u6b3e\u6297\u83cc\u7f51\u773c\u7537\u889c\u900f\u6c14\u5438\u6c57\u4e0d\u6389\u8ddf\u8fd0\u52a8\u77ed\u7b52\u6d45\u53e3\u889c\u5b50",
+        "product_id": "929421783014",
+        "product_name": "\u3010\u5e15\u5170\u6735\u3011\u590f\u5b63\u8584\u6b3e\u6297\u83cc\u7f51\u773c\u7537\u889c\u900f\u6c14\u5438\u6c57\u4e0d\u6389\u8ddf\u8fd0\u52a8\u77ed\u7b52\u6d45\u53e3\u889c\u5b50",
+        "product_type": "\u666e\u901a\u5546\u54c1",
+        "sales": {
+          "last_30_days": 0,
+          "total": 1
+        },
+        "shop_id": "818358918",
+        "shop_name": "PLANDOO\u5e15\u5170\u6735\u670d\u9970\u6253\u5e95\u88e4\u5b98\u65b9\u65d7\u8230\u5e97",
+        "sku_count": 15,
+        "stock": {
+          "reserved": 0,
+          "total": 14011
+        },
+        "thumbnail_url": "https://img.pddpic.com/gaudit-image/2026-03-29/aef58d7060fea764ed1f0033ac78e177.jpeg",
+        "updated_time": "2026-03-31 05:39:05"
+      }
+    ]
+  },
+  "success": true
+}

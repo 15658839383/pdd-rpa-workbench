@@ -1,0 +1,1927 @@
+
+{
+	"success":	true,
+	"error_code":	1000000,
+	"result":	{
+		"id":	51082,
+		"source_template_id":	43439,
+		"name":	"丝袜(23350)",
+		"cat_ids":	[
+			23350
+		],
+		"cats":	[
+			{
+				"cat_id":	23350,
+				"cat_name":	"丝袜"
+			}
+		],
+		"dark_launch_type":	0,
+		"dark_launch_rule":	"*",
+		"dark_launch_rate":	100,
+		"dark_launch_option":	[
+			
+		],
+		"sort_order":	2,
+		"status":	0,
+		"input_max_spec_num":	0,
+		"choose_all_qualify_spec":	false,
+		"single_spec_value_num":	0,
+		"spec_tip":	"",
+		"is_single_item":	false,
+		"channel":	1,
+		"type":	0,
+		"modules":	[
+			{
+				"id":	68702,
+				"module_id":	1,
+				"sort_order":	1,
+				"status":	0,
+				"propertys":	[
+					{
+						"id":	437003,
+						"name_alias":	"品牌",
+						"pid":	5,
+						"value_unit":	"",
+						"value_precision":	0,
+						"max_value":	"",
+						"min_value":	"",
+						"top_tip":	"",
+						"bottom_tip":	"",
+						"sort_order":	1,
+						"required":	false,
+						"required_type":	0,
+						"required_rule_type":	0,
+						"status":	0,
+						"show_type":	0,
+						"values":	{
+							"content":	[
+								{
+									"vid":	4643510,
+									"value":	"无品牌/无注册商标"
+								},
+								{
+									"vid":	60,
+									"value":	"Yaloo/雅鹿"
+								},
+								{
+									"vid":	10737,
+									"value":	"Calvin Klein/卡尔文克雷恩"
+								},
+								{
+									"vid":	11682,
+									"value":	"Wacoal/华歌尔"
+								},
+								{
+									"vid":	11703,
+									"value":	"Louis Vuitton/路易威登"
+								},
+								{
+									"vid":	11707,
+									"value":	"GUCCI/古驰"
+								},
+								{
+									"vid":	1003,
+									"value":	"YSL/圣罗兰"
+								},
+								{
+									"vid":	14194,
+									"value":	"FENDI/芬迪"
+								},
+								{
+									"vid":	14201,
+									"value":	"Valentino/华伦天奴"
+								},
+								{
+									"vid":	14202,
+									"value":	"Chloe/蔻依"
+								},
+								{
+									"vid":	14471,
+									"value":	"AIMER/爱慕"
+								},
+								{
+									"vid":	143,
+									"value":	"BURBERRY/博柏利"
+								},
+								{
+									"vid":	16571,
+									"value":	"KENZO/高田贤三"
+								},
+								{
+									"vid":	16572,
+									"value":	"Lacoste/拉科斯特"
+								},
+								{
+									"vid":	193818,
+									"value":	"THOM BROWNE"
+								},
+								{
+									"vid":	197196,
+									"value":	"Happy Socks"
+								},
+								{
+									"vid":	200732,
+									"value":	"MSGM"
+								},
+								{
+									"vid":	197,
+									"value":	"Ferragamo/菲拉格慕"
+								},
+								{
+									"vid":	287440,
+									"value":	"ALEXANDER MCQUEEN/亚历山大·麦昆"
+								},
+								{
+									"vid":	289861,
+									"value":	"KARL LAGERFELD/卡尔·拉格斐"
+								},
+								{
+									"vid":	32051,
+									"value":	"Moschino/莫斯奇诺"
+								},
+								{
+									"vid":	34079,
+									"value":	"MARC JACOBS/莫杰"
+								},
+								{
+									"vid":	39468,
+									"value":	"Emporio Armani/阿玛尼"
+								},
+								{
+									"vid":	386642,
+									"value":	"Bottega?Veneta/葆蝶家"
+								},
+								{
+									"vid":	42534,
+									"value":	"BALLY/巴利"
+								},
+								{
+									"vid":	3966,
+									"value":	"VICTORIA'S SECRET/维多利亚的秘密"
+								},
+								{
+									"vid":	49338,
+									"value":	"OFF-WHITE"
+								},
+								{
+									"vid":	49979,
+									"value":	"GCDS"
+								},
+								{
+									"vid":	50050,
+									"value":	"Falke"
+								},
+								{
+									"vid":	50228,
+									"value":	"COS"
+								},
+								{
+									"vid":	103,
+									"value":	"Dior/迪奥"
+								},
+								{
+									"vid":	8985,
+									"value":	"Givenchy/纪梵希"
+								},
+								{
+									"vid":	9043,
+									"value":	"Uniqlo/优衣库"
+								},
+								{
+									"vid":	45,
+									"value":	"Bosideng/波司登"
+								},
+								{
+									"vid":	10821,
+									"value":	"静韵"
+								},
+								{
+									"vid":	1370432,
+									"value":	"AIMER NYC"
+								},
+								{
+									"vid":	125,
+									"value":	"Hush Puppies/暇步士"
+								},
+								{
+									"vid":	11463,
+									"value":	"Ralph Lauren/拉夫劳伦"
+								},
+								{
+									"vid":	11683,
+									"value":	"Embry Form/安莉芳"
+								},
+								{
+									"vid":	11685,
+									"value":	"GU"
+								},
+								{
+									"vid":	11704,
+									"value":	"PRADA/普拉达"
+								},
+								{
+									"vid":	11711,
+									"value":	"Triumph/黛安芬"
+								},
+								{
+									"vid":	11712,
+									"value":	"Maniform/曼妮芬"
+								},
+								{
+									"vid":	11728,
+									"value":	"YINER/音儿"
+								},
+								{
+									"vid":	124333,
+									"value":	"有棵树"
+								},
+								{
+									"vid":	130536,
+									"value":	"ubras"
+								},
+								{
+									"vid":	13793,
+									"value":	"Bershka"
+								},
+								{
+									"vid":	14203,
+									"value":	"Zegna/杰尼亚"
+								},
+								{
+									"vid":	14219,
+									"value":	"ZARA"
+								}
+							],
+							"total":	49,
+							"pageable":	{
+								"page_number":	1,
+								"page_size":	49,
+								"offset":	0,
+								"need_count":	true
+							},
+							"last_page":	true,
+							"first_page":	true,
+							"total_pages":	1,
+							"number":	1,
+							"size":	49
+						},
+						"value_ids":	[
+							4643510,
+							60,
+							10737,
+							11682,
+							11703,
+							11707,
+							1003,
+							14194,
+							14201,
+							14202,
+							14471,
+							143,
+							16571,
+							16572,
+							193818,
+							197196,
+							200732,
+							197,
+							287440,
+							289861,
+							32051,
+							34079,
+							39468,
+							386642,
+							42534,
+							3966,
+							49338,
+							49979,
+							50050,
+							50228,
+							103,
+							8985,
+							9043,
+							45,
+							10821,
+							1370432,
+							125,
+							11463,
+							11683,
+							11685,
+							11704,
+							11711,
+							11712,
+							11728,
+							124333,
+							130536,
+							13793,
+							14203,
+							14219
+						],
+						"control_type":	1,
+						"value_type":	0,
+						"choose_max_num":	1,
+						"parent_template_pid":	0,
+						"ref_pid":	310,
+						"rule":	{
+							
+						},
+						"auto_compute_type":	0,
+						"is_key":	false,
+						"is_important":	false,
+						"value_source":	1,
+						"rule_property_type":	0,
+						"is_editable":	true,
+						"value_can_sort":	false,
+						"show_feedback":	false,
+						"entity_type":	0,
+						"mask_rule_type":	0,
+						"is_ref_only":	false
+					},
+					{
+						"id":	437004,
+						"name_alias":	"面料俗称",
+						"pid":	7,
+						"value_unit":	"",
+						"value_precision":	0,
+						"max_value":	"",
+						"min_value":	"",
+						"top_tip":	"",
+						"bottom_tip":	"",
+						"sort_order":	2,
+						"required":	false,
+						"required_type":	0,
+						"required_rule_type":	0,
+						"status":	0,
+						"show_type":	0,
+						"values":	{
+							"content":	[
+								{
+									"id":	37681883,
+									"vid":	10367,
+									"value":	"天鹅绒",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681884,
+									"vid":	14075,
+									"value":	"包芯丝",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681885,
+									"vid":	10348,
+									"value":	"棉",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681886,
+									"vid":	10387,
+									"value":	"其它",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681887,
+									"vid":	13473,
+									"value":	"涤纶",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681888,
+									"vid":	13616,
+									"value":	"锦纶",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681889,
+									"vid":	10358,
+									"value":	"莫代尔",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681890,
+									"vid":	13472,
+									"value":	"涤棉",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681891,
+									"vid":	813027,
+									"value":	"锦氨混纺",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681892,
+									"vid":	13474,
+									"value":	"冰丝",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681893,
+									"vid":	14073,
+									"value":	"竹浆纤维面料",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681894,
+									"vid":	10349,
+									"value":	"麻",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681895,
+									"vid":	847765,
+									"value":	"绢丝",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681896,
+									"vid":	10366,
+									"value":	"珊瑚绒",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681897,
+									"vid":	952852,
+									"value":	"德绒",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681898,
+									"vid":	10371,
+									"value":	"羊毛",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681899,
+									"vid":	794334,
+									"value":	"精梳棉",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	38742265,
+									"vid":	10355,
+									"value":	"天丝",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	38742266,
+									"vid":	12975,
+									"value":	"竹纤维",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	38742267,
+									"vid":	13226,
+									"value":	"棉麻",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	38742268,
+									"vid":	828727,
+									"value":	"丝光棉",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	38742269,
+									"vid":	1429177,
+									"value":	"澳绒",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	38742270,
+									"vid":	1931075,
+									"value":	"匹马棉",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	38742271,
+									"vid":	1979641,
+									"value":	"长绒棉",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	38742272,
+									"vid":	1999753,
+									"value":	"桑蚕丝",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	38742273,
+									"vid":	2095731,
+									"value":	"水貂绒",
+									"p_unit":	"",
+									"img_url":	""
+								}
+							],
+							"total":	26,
+							"pageable":	{
+								"page_number":	1,
+								"page_size":	26,
+								"offset":	0,
+								"need_count":	true
+							},
+							"last_page":	true,
+							"first_page":	true,
+							"total_pages":	1,
+							"number":	1,
+							"size":	26
+						},
+						"value_ids":	[
+							10367,
+							14075,
+							10348,
+							10387,
+							13473,
+							13616,
+							10358,
+							13472,
+							813027,
+							13474,
+							14073,
+							10349,
+							847765,
+							10366,
+							952852,
+							10371,
+							794334,
+							10355,
+							12975,
+							13226,
+							828727,
+							1429177,
+							1931075,
+							1979641,
+							1999753,
+							2095731
+						],
+						"control_type":	1,
+						"value_type":	0,
+						"choose_max_num":	1,
+						"parent_template_pid":	0,
+						"ref_pid":	349,
+						"rule":	{
+							"details":	[
+								
+							]
+						},
+						"auto_compute_type":	0,
+						"is_key":	false,
+						"is_important":	true,
+						"value_source":	0,
+						"rule_property_type":	0,
+						"is_editable":	true,
+						"value_can_sort":	false,
+						"has_sub":	true,
+						"show_feedback":	false,
+						"entity_type":	0,
+						"mask_rule_type":	0,
+						"is_ref_only":	false
+					},
+					{
+						"id":	437016,
+						"name_alias":	"筒高",
+						"pid":	28,
+						"value_unit":	"",
+						"value_precision":	0,
+						"max_value":	"",
+						"min_value":	"",
+						"top_tip":	"",
+						"bottom_tip":	"",
+						"sort_order":	5,
+						"required":	false,
+						"required_type":	0,
+						"required_rule_type":	0,
+						"status":	0,
+						"show_type":	0,
+						"values":	{
+							"content":	[
+								{
+									"id":	37682014,
+									"vid":	12766,
+									"value":	"短筒",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37682015,
+									"vid":	12767,
+									"value":	"中筒",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37682016,
+									"vid":	12768,
+									"value":	"高筒",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37682017,
+									"vid":	13381,
+									"value":	"船袜",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37682018,
+									"vid":	13382,
+									"value":	"连裤",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37682019,
+									"vid":	13384,
+									"value":	"九分裤袜",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37682020,
+									"vid":	13385,
+									"value":	"七分裤袜",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37682021,
+									"vid":	13386,
+									"value":	"五分裤袜",
+									"p_unit":	"",
+									"img_url":	""
+								}
+							],
+							"total":	8,
+							"pageable":	{
+								"page_number":	1,
+								"page_size":	8,
+								"offset":	0,
+								"need_count":	true
+							},
+							"last_page":	true,
+							"first_page":	true,
+							"total_pages":	1,
+							"number":	1,
+							"size":	8
+						},
+						"value_ids":	[
+							12766,
+							12767,
+							12768,
+							13381,
+							13382,
+							13384,
+							13385,
+							13386
+						],
+						"control_type":	1,
+						"value_type":	0,
+						"choose_max_num":	1,
+						"parent_template_pid":	0,
+						"ref_pid":	360,
+						"rule":	{
+							
+						},
+						"auto_compute_type":	0,
+						"is_key":	false,
+						"is_important":	true,
+						"value_source":	0,
+						"rule_property_type":	0,
+						"is_editable":	true,
+						"value_can_sort":	false,
+						"has_sub":	true,
+						"show_feedback":	false,
+						"entity_type":	0,
+						"mask_rule_type":	0,
+						"is_ref_only":	false
+					},
+					{
+						"id":	437015,
+						"name_alias":	"针数",
+						"pid":	774,
+						"value_unit":	"",
+						"value_precision":	0,
+						"max_value":	"",
+						"min_value":	"",
+						"top_tip":	"",
+						"bottom_tip":	"",
+						"sort_order":	7,
+						"required":	false,
+						"required_type":	0,
+						"required_rule_type":	0,
+						"status":	0,
+						"show_type":	0,
+						"values":	{
+							"content":	[
+								{
+									"id":	37682008,
+									"vid":	4006384,
+									"value":	"320针以下",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37682009,
+									"vid":	4006385,
+									"value":	"320针（含）-480针（不含）",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37682010,
+									"vid":	4006386,
+									"value":	"480针（含）-600针（不含）",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37682011,
+									"vid":	4006387,
+									"value":	"600针（含）-720针（不含）",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37682012,
+									"vid":	4006388,
+									"value":	"720针（含）-900针（不含）",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37682013,
+									"vid":	4006389,
+									"value":	"900针及以上",
+									"p_unit":	"",
+									"img_url":	""
+								}
+							],
+							"total":	6,
+							"pageable":	{
+								"page_number":	1,
+								"page_size":	6,
+								"offset":	0,
+								"need_count":	true
+							},
+							"last_page":	true,
+							"first_page":	true,
+							"total_pages":	1,
+							"number":	1,
+							"size":	6
+						},
+						"value_ids":	[
+							4006384,
+							4006385,
+							4006386,
+							4006387,
+							4006388,
+							4006389
+						],
+						"control_type":	1,
+						"value_type":	0,
+						"choose_max_num":	1,
+						"parent_template_pid":	0,
+						"ref_pid":	3338,
+						"rule":	{
+							
+						},
+						"auto_compute_type":	0,
+						"is_key":	false,
+						"is_important":	true,
+						"value_source":	0,
+						"rule_property_type":	0,
+						"is_editable":	true,
+						"value_can_sort":	false,
+						"show_feedback":	false,
+						"entity_type":	0,
+						"mask_rule_type":	0,
+						"is_ref_only":	false
+					},
+					{
+						"id":	437014,
+						"name_alias":	"上市时节",
+						"pid":	587,
+						"value_unit":	"",
+						"value_precision":	0,
+						"max_value":	"",
+						"min_value":	"",
+						"top_tip":	"",
+						"bottom_tip":	"",
+						"sort_order":	8,
+						"required":	false,
+						"required_type":	0,
+						"required_rule_type":	0,
+						"status":	0,
+						"show_type":	0,
+						"values":	{
+							"content":	[
+								{
+									"id":	37681992,
+									"vid":	1429529,
+									"value":	"2022年春季",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681993,
+									"vid":	1429530,
+									"value":	"2022年夏季",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681994,
+									"vid":	1429531,
+									"value":	"2022年秋季",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681995,
+									"vid":	1429532,
+									"value":	"2022年冬季",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681996,
+									"vid":	1777928,
+									"value":	"2023年春季",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681997,
+									"vid":	1777929,
+									"value":	"2023年夏季",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681998,
+									"vid":	1865889,
+									"value":	"2023年秋季",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681999,
+									"vid":	1865890,
+									"value":	"2023年冬季",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37682000,
+									"vid":	1935864,
+									"value":	"2024年春季",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37682001,
+									"vid":	1935865,
+									"value":	"2024年夏季",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37682002,
+									"vid":	2062233,
+									"value":	"2024年秋季",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37682003,
+									"vid":	2062234,
+									"value":	"2024年冬季",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37682004,
+									"vid":	2236200,
+									"value":	"2025年春季",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37682005,
+									"vid":	2236201,
+									"value":	"2025年夏季",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37682006,
+									"vid":	2236202,
+									"value":	"2025年秋季",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37682007,
+									"vid":	2236203,
+									"value":	"2025年冬季",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	39129191,
+									"vid":	5433145,
+									"value":	"2026年春季",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	39129192,
+									"vid":	5433146,
+									"value":	"2026年夏季",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	39129193,
+									"vid":	5433147,
+									"value":	"2026年秋季",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	39129194,
+									"vid":	5433148,
+									"value":	"2026年冬季",
+									"p_unit":	"",
+									"img_url":	""
+								}
+							],
+							"total":	20,
+							"pageable":	{
+								"page_number":	1,
+								"page_size":	20,
+								"offset":	0,
+								"need_count":	true
+							},
+							"last_page":	true,
+							"first_page":	true,
+							"total_pages":	1,
+							"number":	1,
+							"size":	20
+						},
+						"value_ids":	[
+							1429529,
+							1429530,
+							1429531,
+							1429532,
+							1777928,
+							1777929,
+							1865889,
+							1865890,
+							1935864,
+							1935865,
+							2062233,
+							2062234,
+							2236200,
+							2236201,
+							2236202,
+							2236203,
+							5433145,
+							5433146,
+							5433147,
+							5433148
+						],
+						"control_type":	1,
+						"value_type":	0,
+						"choose_max_num":	1,
+						"parent_template_pid":	0,
+						"ref_pid":	1906,
+						"rule":	{
+							
+						},
+						"auto_compute_type":	0,
+						"is_key":	false,
+						"is_important":	false,
+						"value_source":	0,
+						"rule_property_type":	0,
+						"is_editable":	true,
+						"value_can_sort":	false,
+						"show_feedback":	false,
+						"entity_type":	0,
+						"mask_rule_type":	0,
+						"is_ref_only":	false
+					},
+					{
+						"id":	437008,
+						"name_alias":	"厚薄",
+						"pid":	44,
+						"value_unit":	"",
+						"value_precision":	0,
+						"max_value":	"",
+						"min_value":	"",
+						"top_tip":	"",
+						"bottom_tip":	"",
+						"sort_order":	9,
+						"required":	false,
+						"required_type":	0,
+						"required_rule_type":	0,
+						"status":	0,
+						"show_type":	0,
+						"values":	{
+							"content":	[
+								{
+									"id":	37681932,
+									"vid":	13377,
+									"value":	"超薄",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681933,
+									"vid":	13378,
+									"value":	"薄款",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681934,
+									"vid":	13379,
+									"value":	"加厚",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681935,
+									"vid":	13380,
+									"value":	"常规",
+									"p_unit":	"",
+									"img_url":	""
+								}
+							],
+							"total":	4,
+							"pageable":	{
+								"page_number":	1,
+								"page_size":	4,
+								"offset":	0,
+								"need_count":	true
+							},
+							"last_page":	true,
+							"first_page":	true,
+							"total_pages":	1,
+							"number":	1,
+							"size":	4
+						},
+						"value_ids":	[
+							13377,
+							13378,
+							13379,
+							13380
+						],
+						"control_type":	1,
+						"value_type":	0,
+						"choose_max_num":	1,
+						"parent_template_pid":	0,
+						"ref_pid":	341,
+						"rule":	{
+							
+						},
+						"auto_compute_type":	0,
+						"is_key":	false,
+						"is_important":	true,
+						"value_source":	0,
+						"rule_property_type":	0,
+						"is_editable":	true,
+						"value_can_sort":	false,
+						"show_feedback":	false,
+						"entity_type":	0,
+						"mask_rule_type":	0,
+						"is_ref_only":	false
+					},
+					{
+						"id":	437010,
+						"name_alias":	"服装款式细节",
+						"pid":	13,
+						"value_unit":	"",
+						"value_precision":	0,
+						"max_value":	"",
+						"min_value":	"",
+						"top_tip":	"",
+						"bottom_tip":	"",
+						"sort_order":	10,
+						"required":	false,
+						"required_type":	0,
+						"required_rule_type":	0,
+						"status":	0,
+						"show_type":	0,
+						"values":	{
+							"content":	[
+								{
+									"id":	37681942,
+									"vid":	10513,
+									"value":	"荷叶边",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681943,
+									"vid":	10514,
+									"value":	"镂空",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681944,
+									"vid":	10517,
+									"value":	"亮丝",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681945,
+									"vid":	10537,
+									"value":	"扎染",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681946,
+									"vid":	10555,
+									"value":	"蕾丝",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681947,
+									"vid":	13208,
+									"value":	"花边",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681948,
+									"vid":	13221,
+									"value":	"糖果色",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681949,
+									"vid":	13352,
+									"value":	"提花",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681950,
+									"vid":	13355,
+									"value":	"丝光",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681951,
+									"vid":	13357,
+									"value":	"磨毛",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681952,
+									"vid":	13358,
+									"value":	"毛圈",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681953,
+									"vid":	13359,
+									"value":	"织花",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681954,
+									"vid":	13360,
+									"value":	"蝴蝶边",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681955,
+									"vid":	13361,
+									"value":	"假透肉",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681956,
+									"vid":	13362,
+									"value":	"吊带",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681957,
+									"vid":	13363,
+									"value":	"堆堆袜",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681958,
+									"vid":	13364,
+									"value":	"鱼嘴（露脚趾）",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681959,
+									"vid":	14301,
+									"value":	"银葱",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681960,
+									"vid":	14302,
+									"value":	"珠光",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681961,
+									"vid":	13214,
+									"value":	"纯色",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681962,
+									"vid":	10512,
+									"value":	"破洞",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681963,
+									"vid":	774147,
+									"value":	"脚踩/踏",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681964,
+									"vid":	774148,
+									"value":	"袜套",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681965,
+									"vid":	13188,
+									"value":	"刺绣",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681966,
+									"vid":	1165786,
+									"value":	"提耳",
+									"p_unit":	"",
+									"img_url":	""
+								}
+							],
+							"total":	25,
+							"pageable":	{
+								"page_number":	1,
+								"page_size":	25,
+								"offset":	0,
+								"need_count":	true
+							},
+							"last_page":	true,
+							"first_page":	true,
+							"total_pages":	1,
+							"number":	1,
+							"size":	25
+						},
+						"value_ids":	[
+							10513,
+							10514,
+							10517,
+							10537,
+							10555,
+							13208,
+							13221,
+							13352,
+							13355,
+							13357,
+							13358,
+							13359,
+							13360,
+							13361,
+							13362,
+							13363,
+							13364,
+							14301,
+							14302,
+							13214,
+							10512,
+							774147,
+							774148,
+							13188,
+							1165786
+						],
+						"control_type":	1,
+						"value_type":	0,
+						"choose_max_num":	3,
+						"parent_template_pid":	0,
+						"ref_pid":	348,
+						"rule":	{
+							"details":	[
+								
+							]
+						},
+						"auto_compute_type":	0,
+						"is_key":	false,
+						"is_important":	true,
+						"value_source":	0,
+						"rule_property_type":	0,
+						"is_editable":	true,
+						"value_can_sort":	false,
+						"show_feedback":	false,
+						"entity_type":	0,
+						"mask_rule_type":	0,
+						"is_ref_only":	false
+					},
+					{
+						"id":	437009,
+						"name_alias":	"风格",
+						"pid":	12,
+						"value_unit":	"",
+						"value_precision":	0,
+						"max_value":	"",
+						"min_value":	"",
+						"top_tip":	"",
+						"bottom_tip":	"",
+						"sort_order":	11,
+						"required":	false,
+						"required_type":	0,
+						"required_rule_type":	0,
+						"status":	0,
+						"show_type":	0,
+						"values":	{
+							"content":	[
+								{
+									"id":	37681936,
+									"vid":	10487,
+									"value":	"甜美",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681937,
+									"vid":	10495,
+									"value":	"简约",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681938,
+									"vid":	10499,
+									"value":	"性感",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681939,
+									"vid":	12892,
+									"value":	"运动",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681940,
+									"vid":	13389,
+									"value":	"卡通",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681941,
+									"vid":	13390,
+									"value":	"奢华",
+									"p_unit":	"",
+									"img_url":	""
+								}
+							],
+							"total":	6,
+							"pageable":	{
+								"page_number":	1,
+								"page_size":	6,
+								"offset":	0,
+								"need_count":	true
+							},
+							"last_page":	true,
+							"first_page":	true,
+							"total_pages":	1,
+							"number":	1,
+							"size":	6
+						},
+						"value_ids":	[
+							10487,
+							10495,
+							10499,
+							12892,
+							13389,
+							13390
+						],
+						"control_type":	1,
+						"value_type":	0,
+						"choose_max_num":	1,
+						"parent_template_pid":	0,
+						"ref_pid":	322,
+						"rule":	{
+							
+						},
+						"auto_compute_type":	0,
+						"is_key":	false,
+						"is_important":	false,
+						"value_source":	0,
+						"rule_property_type":	0,
+						"is_editable":	true,
+						"value_can_sort":	false,
+						"show_feedback":	false,
+						"entity_type":	0,
+						"mask_rule_type":	0,
+						"is_ref_only":	false
+					},
+					{
+						"id":	437012,
+						"name_alias":	"功能",
+						"pid":	34,
+						"value_unit":	"",
+						"value_precision":	0,
+						"max_value":	"",
+						"min_value":	"",
+						"top_tip":	"",
+						"bottom_tip":	"",
+						"sort_order":	12,
+						"required":	false,
+						"required_type":	0,
+						"required_rule_type":	0,
+						"status":	0,
+						"show_type":	0,
+						"values":	{
+							"content":	[
+								{
+									"id":	37681981,
+									"vid":	30818,
+									"value":	"保暖",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681982,
+									"vid":	13397,
+									"value":	"抗菌",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681983,
+									"vid":	30809,
+									"value":	"吸湿排汗",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681984,
+									"vid":	912733,
+									"value":	"防臭",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681985,
+									"vid":	13409,
+									"value":	"隐形",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681986,
+									"vid":	912735,
+									"value":	"防勾丝",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681987,
+									"vid":	912734,
+									"value":	"美腿塑形",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681988,
+									"vid":	82566,
+									"value":	"防静电",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681989,
+									"vid":	82568,
+									"value":	"防晒",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681990,
+									"vid":	326912,
+									"value":	"遮瑕",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681991,
+									"vid":	2021663,
+									"value":	"提臀收腹",
+									"p_unit":	"",
+									"img_url":	""
+								}
+							],
+							"total":	11,
+							"pageable":	{
+								"page_number":	1,
+								"page_size":	11,
+								"offset":	0,
+								"need_count":	true
+							},
+							"last_page":	true,
+							"first_page":	true,
+							"total_pages":	1,
+							"number":	1,
+							"size":	11
+						},
+						"value_ids":	[
+							30818,
+							13397,
+							30809,
+							912733,
+							13409,
+							912735,
+							912734,
+							82566,
+							82568,
+							326912,
+							2021663
+						],
+						"control_type":	1,
+						"value_type":	0,
+						"choose_max_num":	1,
+						"parent_template_pid":	0,
+						"ref_pid":	351,
+						"rule":	{
+							
+						},
+						"auto_compute_type":	0,
+						"is_key":	false,
+						"is_important":	false,
+						"value_source":	0,
+						"rule_property_type":	0,
+						"is_editable":	true,
+						"value_can_sort":	false,
+						"show_feedback":	false,
+						"entity_type":	0,
+						"mask_rule_type":	0,
+						"is_ref_only":	false
+					},
+					{
+						"id":	437011,
+						"name_alias":	"图案",
+						"pid":	205,
+						"value_unit":	"",
+						"value_precision":	0,
+						"max_value":	"",
+						"min_value":	"",
+						"top_tip":	"",
+						"bottom_tip":	"",
+						"sort_order":	13,
+						"required":	false,
+						"required_type":	0,
+						"required_rule_type":	0,
+						"status":	0,
+						"show_type":	0,
+						"values":	{
+							"content":	[
+								{
+									"id":	37681967,
+									"vid":	56754,
+									"value":	"纯色",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681968,
+									"vid":	56750,
+									"value":	"格子",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681969,
+									"vid":	56749,
+									"value":	"条纹",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681970,
+									"vid":	56751,
+									"value":	"圆点",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681971,
+									"vid":	855262,
+									"value":	"爱心",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681972,
+									"vid":	56755,
+									"value":	"豹纹",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681973,
+									"vid":	514943,
+									"value":	"字母",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681974,
+									"vid":	790579,
+									"value":	"数字",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681975,
+									"vid":	87554,
+									"value":	"植物花卉",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681976,
+									"vid":	87548,
+									"value":	"动物图案",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681977,
+									"vid":	56752,
+									"value":	"卡通动漫",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681978,
+									"vid":	98687,
+									"value":	"骷髅/骨头",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681979,
+									"vid":	912732,
+									"value":	"踩小人",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681980,
+									"vid":	920762,
+									"value":	"星星",
+									"p_unit":	"",
+									"img_url":	""
+								}
+							],
+							"total":	14,
+							"pageable":	{
+								"page_number":	1,
+								"page_size":	14,
+								"offset":	0,
+								"need_count":	true
+							},
+							"last_page":	true,
+							"first_page":	true,
+							"total_pages":	1,
+							"number":	1,
+							"size":	14
+						},
+						"value_ids":	[
+							56754,
+							56750,
+							56749,
+							56751,
+							855262,
+							56755,
+							514943,
+							790579,
+							87554,
+							87548,
+							56752,
+							98687,
+							912732,
+							920762
+						],
+						"control_type":	1,
+						"value_type":	0,
+						"choose_max_num":	1,
+						"parent_template_pid":	0,
+						"ref_pid":	750,
+						"rule":	{
+							
+						},
+						"auto_compute_type":	0,
+						"is_key":	false,
+						"is_important":	false,
+						"value_source":	0,
+						"rule_property_type":	0,
+						"is_editable":	true,
+						"value_can_sort":	false,
+						"show_feedback":	false,
+						"entity_type":	0,
+						"mask_rule_type":	0,
+						"is_ref_only":	false
+					},
+					{
+						"id":	437013,
+						"name_alias":	"商品货号",
+						"pid":	6,
+						"value_unit":	"",
+						"value_precision":	0,
+						"max_value":	"64",
+						"min_value":	"",
+						"top_tip":	"",
+						"bottom_tip":	"",
+						"sort_order":	14,
+						"required":	false,
+						"required_type":	0,
+						"required_rule_type":	0,
+						"status":	0,
+						"show_type":	0,
+						"control_type":	0,
+						"value_type":	0,
+						"choose_max_num":	0,
+						"parent_template_pid":	0,
+						"ref_pid":	2119,
+						"rule":	{
+							
+						},
+						"auto_compute_type":	0,
+						"is_key":	false,
+						"is_important":	false,
+						"value_source":	0,
+						"need_regex_check":	2,
+						"rule_property_type":	0,
+						"is_editable":	true,
+						"value_can_sort":	false,
+						"show_feedback":	false,
+						"entity_type":	0,
+						"mask_rule_type":	0,
+						"is_ref_only":	false
+					},
+					{
+						"id":	437007,
+						"name_alias":	"适用性别",
+						"pid":	32,
+						"value_unit":	"",
+						"value_precision":	0,
+						"max_value":	"",
+						"min_value":	"",
+						"top_tip":	"",
+						"bottom_tip":	"",
+						"sort_order":	15,
+						"required":	false,
+						"required_type":	0,
+						"required_rule_type":	0,
+						"status":	0,
+						"show_type":	0,
+						"values":	{
+							"content":	[
+								{
+									"id":	37681928,
+									"vid":	13286,
+									"value":	"男",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681929,
+									"vid":	13287,
+									"value":	"女",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681930,
+									"vid":	13288,
+									"value":	"情侣",
+									"p_unit":	"",
+									"img_url":	""
+								},
+								{
+									"id":	37681931,
+									"vid":	13289,
+									"value":	"亲子",
+									"p_unit":	"",
+									"img_url":	""
+								}
+							],
+							"total":	4,
+							"pageable":	{
+								"page_number":	1,
+								"page_size":	4,
+								"offset":	0,
+								"need_count":	true
+							},
+							"last_page":	true,
+							"first_page":	true,
+							"total_pages":	1,
+							"number":	1,
+							"size":	4
+						},
+						"value_ids":	[
+							13286,
+							13287,
+							13288,
+							13289
+						],
+						"control_type":	1,
+						"value_type":	0,
+						"choose_max_num":	1,
+						"parent_template_pid":	0,
+						"ref_pid":	340,
+						"rule":	{
+							"details":	[
+								
+							]
+						},
+						"auto_compute_type":	0,
+						"is_key":	false,
+						"is_important":	true,
+						"value_source":	0,
+						"rule_property_type":	0,
+						"is_editable":	true,
+						"value_can_sort":	false,
+						"show_feedback":	false,
+						"entity_type":	0,
+						"mask_rule_type":	0,
+						"is_ref_only":	false
+					}
+				],
+				"type":	0
+			}
+		],
+		"spec_module":	{
+			
+		},
+		"is_spec":	false,
+		"max_sku_num":	900,
+		"custom_upload_pic":	false
+	}
+}

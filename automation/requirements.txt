@@ -1,0 +1,2 @@
+# Legacy dependency for automation/automation_bridge.py reference only.
+DrissionPage==4.1.1.2

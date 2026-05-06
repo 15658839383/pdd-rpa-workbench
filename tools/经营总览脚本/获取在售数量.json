@@ -1,0 +1,18 @@
+{
+    "success": true,
+    "errorCode": 1000000,
+    "errorMsg": null,
+    "result": {
+        "on_sale_num": 49,
+        "off_sale_num": 0,
+        "sold_out_num": 0,
+        "commit_num": 14,
+        "wait_check_or_rejected_num": 0,
+        "editing_num": 14,
+        "wait_check_num": 0,
+        "reject_num": 0,
+        "is_lack_of_goods": false,
+        "message": null,
+        "tab_sort": null
+    }
+}

@@ -1,0 +1,279 @@
+{
+    "success": true,
+    "error_code": 1000000,
+    "error_msg": null,
+    "result": [
+        {
+            "key": "type1",
+            "value": "颜色",
+            "label": "颜色",
+            "id": 1215,
+            "is_recommended": true,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "款式",
+            "label": "款式",
+            "id": 1218,
+            "is_recommended": true,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "尺寸",
+            "label": "尺寸",
+            "id": 1216,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "型号",
+            "label": "型号",
+            "id": 1473,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "器型",
+            "label": "器型",
+            "id": 173120,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "材质",
+            "label": "材质",
+            "id": 1282,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "口味",
+            "label": "口味",
+            "id": 1219,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "色号",
+            "label": "色号",
+            "id": 3203,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "适用人群",
+            "label": "适用人群",
+            "id": 2499,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "颜色",
+            "label": "颜色",
+            "id": 27205,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "容量",
+            "label": "容量",
+            "id": 1287,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "花型",
+            "label": "花型",
+            "id": 8137,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "尺码",
+            "label": "尺码",
+            "id": 1226,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "颜色",
+            "label": "颜色",
+            "id": 3852,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "地点",
+            "label": "地点",
+            "id": 61011436,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "包装方式",
+            "label": "包装方式",
+            "id": 167129144,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "香型",
+            "label": "香型",
+            "id": 1488,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "货号",
+            "label": "货号",
+            "id": 8277,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "组合",
+            "label": "组合",
+            "id": 2774,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "成份",
+            "label": "成份",
+            "id": 174495,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "版本",
+            "label": "版本",
+            "id": 10593,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "尺寸",
+            "label": "尺寸",
+            "id": 24930,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "度数",
+            "label": "度数",
+            "id": 6883,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "运营商",
+            "label": "运营商",
+            "id": 175974,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "属性",
+            "label": "属性",
+            "id": 4773,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "重量",
+            "label": "重量",
+            "id": 1253,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "尺寸",
+            "label": "尺寸",
+            "id": 3302,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "地区",
+            "label": "地区",
+            "id": 61209667,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "套餐",
+            "label": "套餐",
+            "id": 20711,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "类别",
+            "label": "类别",
+            "id": 1384,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "适用年龄",
+            "label": "适用年龄",
+            "id": 3818,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "功效",
+            "label": "功效",
+            "id": 1900,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "品类",
+            "label": "品类",
+            "id": 3820,
+            "is_recommended": false,
+            "active_goods_num": null
+        },
+        {
+            "key": "type1",
+            "value": "时间",
+            "label": "时间",
+            "id": 61011218,
+            "is_recommended": false,
+            "active_goods_num": null
+        }
+    ]
+}

@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>宜承多多工作台</title>
+  <link rel="icon" type="image/png" href="./ico.png">
+  <link rel="stylesheet" href="./商家属性填写.css">
+  <link rel="stylesheet" href="./zapier-refresh.css">
+</head>
+<body>
+  <div id="authNotice" class="auth-notice" hidden></div>
+
+  <section id="authGate" class="auth-gate" aria-live="polite">
+    <div class="auth-gate__grid auth-gate__grid--compact">
+      <div class="auth-card auth-card--solo">
+        <div class="auth-card__head">
+          <p class="auth-card__eyebrow">PDD Goods Desktop</p>
+          <h1 class="auth-card__title">宜承多多工作台</h1>
+          <p id="authStatusText" class="auth-card__status">正在检查本地会话…</p>
+        </div>
+
+        <form id="loginForm" class="auth-form" novalidate>
+          <label class="field-block">
+            <span class="field-block__label">用户名</span>
+            <input id="loginUsernameInput" type="text" placeholder="请输入用户名" autocomplete="username">
+          </label>
+          <label class="field-block">
+            <span class="field-block__label">密码</span>
+            <input id="loginPasswordInput" type="password" placeholder="请输入密码" autocomplete="current-password">
+          </label>
+
+          <label class="check-item auth-form__remember">
+            <input id="loginRememberPasswordInput" type="checkbox">
+            <span>保存密码</span>
+          </label>
+
+          <div id="loginError" class="auth-error" hidden></div>
+
+          <button type="submit" class="primary-button auth-form__submit" id="loginSubmitBtn">登录并进入工作台</button>
+
+          <p class="auth-form__tip">测试阶段，工作台很多功能都未完善。</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <div id="appShell" class="app-shell" hidden>
+    <header class="app-header">
+      <div class="app-header__brand">
+        <p class="app-header__eyebrow">PDD Goods Desktop</p>
+        <div class="app-header__copy">
+          <h1 class="app-header__title">宜承多多工作台</h1>
+        </div>
+      </div>
+      <div class="app-header__meta">
+        <div class="app-header__meta-item">
+          <span class="app-header__meta-label">当前店铺</span>
+          <strong id="appHeaderCurrentShop">未选择</strong>
+        </div>
+        <div class="app-header__meta-item">
+          <span class="app-header__meta-label">当前账号</span>
+          <strong id="appHeaderAccountName">未登录</strong>
+        </div>
+        <div class="app-header__actions">
+          <button type="button" class="ghost-button" id="openShopPickerBtn">切换店铺</button>
+          <button type="button" class="ghost-button" id="openSecondaryDrawerBtn">更多工具</button>
+          <button type="button" class="ghost-button" id="logoutBtn">退出登录</button>
+        </div>
+      </div>
+    </header>
+
+    <nav class="app-tabs" aria-label="主导航">
+      <button type="button" class="app-tab" data-app-tab="workspace">上架工作台</button>
+      <button type="button" class="app-tab" data-app-tab="shops">店铺</button>
+      <button type="button" class="app-tab" data-app-tab="overview">经营总览</button>
+      <button type="button" class="app-tab" data-app-tab="0">开车助手(待开发)</button>
+      <button type="button" class="app-tab" data-app-tab="1">售后总览(待开发)</button>
+      <button type="button" class="app-tab" data-app-tab="2">开票总览(待开发)</button>
+      <button type="button" class="app-tab" data-app-tab="3">申诉总览(待开发)</button>
+    </nav>
+
+    <main class="app-main">
+
+      <section id="shopSelectionPage" class="shop-selection-page surface-page" aria-live="polite" hidden>
+        <section class="shop-selection-shell panel-card panel-card--hero">
+          <div class="shop-selection-shell__head">
+            <div>
+              <p class="shop-selection-shell__eyebrow">Shop Selector</p>
+              <h2 class="shop-selection-shell__title">选择本次操作店铺</h2>
+              <p id="shopPickerDesc" class="shop-selection-shell__desc">可随时查看或切换当前操作店铺。</p>
+            </div>
+            <div class="shop-selection-shell__actions">
+              <button type="button" class="ghost-button" id="openSalesOverviewBtn" hidden>经营总览</button>
+              <button type="button" class="ghost-button" id="shopSelectionBackBtn" hidden>返回工作台</button>
+            </div>
+          </div>
+
+          <div class="shop-selection-account__grid shop-selection-account__grid--compact">
+            <article class="shop-selection-account__item">
+              <span class="shop-selection-account__label">账号</span>
+              <strong id="shopSelectionAccountName" class="shop-selection-account__value">未登录</strong>
+            </article>
+            <article class="shop-selection-account__item">
+              <span class="shop-selection-account__label">角色</span>
+              <strong id="shopSelectionAccountRole" class="shop-selection-account__value">-</strong>
+            </article>
+            <article class="shop-selection-account__item">
+              <span class="shop-selection-account__label">用户名</span>
+              <strong id="shopSelectionAccountUsername" class="shop-selection-account__value">-</strong>
+            </article>
+            <article class="shop-selection-account__item">
+              <span class="shop-selection-account__label">可见范围</span>
+              <strong id="shopAccessScope" class="shop-selection-account__value">未加载</strong>
+            </article>
+          </div>
+
+          <p id="shopSelectionCurrentShop" class="shop-selection-account__current">当前店铺：尚未确认</p>
+
+          <div class="shop-picker">
+            <div class="shop-picker__toolbar">
+              <label class="field-block">
+                <span class="field-block__label">搜索店铺</span>
+                <input id="shopSearchInput" type="text" placeholder="按店铺名、店铺ID、运营姓名搜索" autocomplete="off">
+              </label>
+              <div class="shop-picker__meta">
+                <span id="shopCountBadge" class="count-badge">0</span>
+              </div>
+            </div>
+
+            <div id="shopSelectionError" class="auth-error" hidden></div>
+
+            <div id="shopSelectionList" class="shop-selection-list">
+              <div class="empty-state">正在准备店铺列表...</div>
+            </div>
+
+            <div class="shop-picker__actions">
+              <button type="button" class="ghost-button" id="shopPickerLogoutBtn">退出登录</button>
+              <button type="button" class="ghost-button" id="shopSelectionRefreshBtn">刷新店铺</button>
+              <button type="button" class="primary-button" id="shopSelectionConfirmBtn">确认进入工作台</button>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section id="salesOverviewPage" class="surface-page sales-overview-page" aria-live="polite" hidden>
+        <div class="sales-overview-shell">
+          <header class="sales-overview-hero sales-overview-hero--compact panel-card">
+            <div class="surface-head__copy sales-overview-hero__copy">
+              <p class="surface-head__eyebrow">Shop Overview</p>
+              <h2 class="surface-head__title">经营总览</h2>
+            </div>
+            <div class="hero-stats sales-overview-hero__stats">
+              <div class="hero-stat">
+                <span class="hero-stat__label">已选店铺</span>
+                <strong id="salesOverviewSelectedCount" class="hero-stat__value">0 家</strong>
+              </div>
+              <div class="hero-stat">
+                <span class="hero-stat__label">当前状态</span>
+                <strong id="salesOverviewStatusText" class="hero-stat__value">未启动</strong>
+              </div>
+              <div class="hero-stat">
+                <span class="hero-stat__label">最近获取</span>
+                <strong id="salesOverviewLastFetched" class="hero-stat__value">尚未获取</strong>
+              </div>
+            </div>
+          </header>
+
+          <section class="panel-card sales-overview-toolbar-card">
+            <div class="sales-overview-toolbar-card__head">
+              <div class="status-stack sales-overview-toolbar-card__status">
+                <div id="salesOverviewStatus" class="status-pill">未启动</div>
+                <div class="status-copy">
+                  <strong id="salesOverviewSummary">默认将查询当前账号可见的全部店铺。</strong>
+                  <p id="salesOverviewScopeMeta">已选择 0 家店铺，结果会展示在下方表格。</p>
+                </div>
+              </div>
+              <button type="button" class="ghost-button" id="salesOverviewBackBtn">返回选择店铺</button>
+            </div>
+
+            <div class="sales-overview-toolbar">
+              <div class="sales-overview-toolbar__actions">
+                <button type="button" class="ghost-button" id="salesOverviewSelectAllBtn">全选店铺</button>
+                <button type="button" class="ghost-button" id="salesOverviewClearBtn">清空选择</button>
+                <button type="button" class="secondary-button" id="salesOverviewFetchBtn">开始获取</button>
+                <button type="button" class="ghost-button" id="salesOverviewStopBtn">停止获取</button>
+                <button type="button" class="ghost-button" id="salesOverviewExportBtn">导出 Excel</button>
+              </div>
+
+              <label class="field-block sales-overview-search">
+                <span class="field-block__label">结果搜索</span>
+                <input id="salesOverviewSearchInput" type="text" placeholder="按店铺名、店铺ID、运营人搜索" autocomplete="off">
+              </label>
+            </div>
+
+            <div class="sales-overview-filters">
+              <label class="field-block sales-overview-filter">
+                <span class="field-block__label">运营筛选</span>
+                <select id="salesOverviewOperatorFilterSelect">
+                  <option value="all">全部运营</option>
+                </select>
+              </label>
+
+              <label class="field-block sales-overview-filter">
+                <span class="field-block__label">比较指标</span>
+                <select id="salesOverviewTrendMetricSelect">
+                  <option value="todayGmv">交易额</option>
+                  <option value="todayOrderCount">订单数</option>
+                  <option value="todayBuyerCount">支付买家数</option>
+                  <option value="todayVisitors">访客数</option>
+                  <option value="todayViews">浏览量</option>
+                  <option value="todayVisitedGoodsCount">访问商品数</option>
+                  <option value="todayPayRate">支付转化率</option>
+                </select>
+              </label>
+
+              <label class="field-block sales-overview-filter">
+                <span class="field-block__label">涨跌筛选</span>
+                <select id="salesOverviewTrendFilterSelect">
+                  <option value="all">全部店铺</option>
+                  <option value="up">仅看上涨</option>
+                  <option value="down">仅看下降</option>
+                  <option value="flat">仅看持平</option>
+                </select>
+              </label>
+
+              <label class="field-block sales-overview-filter">
+                <span class="field-block__label">排序方式</span>
+                <select id="salesOverviewSortSelect">
+                  <option value="default">默认顺序</option>
+                  <option value="delta-desc">按涨跌值从高到低</option>
+                  <option value="delta-asc">按涨跌值从低到高</option>
+                  <option value="current-desc">按今天值从高到低</option>
+                  <option value="current-asc">按今天值从低到高</option>
+                </select>
+              </label>
+            </div>
+
+            <div id="salesOverviewNotice" class="template-meta">当前还没有开始获取经营数据。</div>
+            <div id="salesOverviewError" class="auth-error" hidden></div>
+          </section>
+
+          <section class="panel-card sales-overview-table-card">
+            <div class="panel-inline-head">
+              <h3>店铺经营数据</h3>
+              <span id="salesOverviewResultBadge" class="count-badge">0 行</span>
+            </div>
+
+            <div id="salesOverviewTableWrap" class="sales-table-wrap">
+              <div class="sales-table-sticky-head" aria-hidden="true">
+                <div class="sales-table-sticky-head__viewport">
+                  <table class="sales-table sales-table--sticky">
+                    <colgroup id="salesOverviewStickyTableColgroup"></colgroup>
+                    <thead id="salesOverviewStickyTableHead"></thead>
+                  </table>
+                </div>
+              </div>
+              <div id="salesOverviewTableScroll" class="sales-table-scroll">
+                <table id="salesOverviewTable" class="sales-table">
+                  <colgroup id="salesOverviewTableColgroup"></colgroup>
+                  <thead id="salesOverviewTableHead"></thead>
+                  <tbody id="salesOverviewTableBody">
+                    <tr>
+                      <td colspan="20" class="sales-table__empty-cell">
+                        <div class="empty-state">当前还没有经营数据，点击“开始获取”后会在这里展示结果。</div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot id="salesOverviewTableFoot">
+                    <tr id="salesOverviewSummaryRow">
+                      <td colspan="2">统计</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+  <div id="workspaceShell" class="workspace-shell surface-page" hidden>
+    <div class="mode-banner" id="webModeNotice" hidden>
+      当前是浏览器模式，模板持久化和自动化桥接仅在 Electron 桌面端可用。
+    </div>
+
+    <div class="workspace-layout">
+      <section class="workspace-overview panel-card" id="workspaceOverviewSection" data-workspace-section="overview">
+        <div class="workspace-overview__head">
+          <div class="surface-head__copy">
+            <p class="surface-head__eyebrow">Workspace</p>
+            <h2 class="surface-head__title">当前工作上下文</h2>
+            <p class="surface-head__desc">先确认模板、店铺和导出状态。</p>
+          </div>
+          <div class="workspace-overview__actions">
+            <button type="button" class="secondary-button" id="openProductFillBtn">按商品ID填充</button>
+            <button type="button" class="ghost-button" id="workspaceSaveTemplateBtn">保存当前模板</button>
+            <button type="button" class="ghost-button" id="workspaceOpenWorkspaceBtn">打开工作区</button>
+            <button type="button" class="ghost-button" data-open-secondary-panel="templates">更多工具</button>
+          </div>
+        </div>
+
+        <div class="workspace-summary-grid">
+          <article class="workspace-summary-card">
+            <div class="workspace-summary-card__head">
+              <span class="workspace-summary-card__label">当前模板</span>
+              <button type="button" class="text-button" data-open-secondary-panel="templates">管理</button>
+            </div>
+            <strong id="heroCurrentTemplate" class="workspace-summary-card__value">未选择</strong>
+            <p id="workspaceOverviewTemplateMeta" class="workspace-summary-card__meta">保存后会在这里显示最近更新时间。</p>
+          </article>
+          <article class="workspace-summary-card">
+            <div class="workspace-summary-card__head">
+              <span class="workspace-summary-card__label">最近导出</span>
+              <button type="button" class="text-button" data-open-secondary-panel="export">查看</button>
+            </div>
+            <strong id="workspaceExportSummary" class="workspace-summary-card__value">尚未导出当前模板</strong>
+            <p id="workspaceExportPath" class="workspace-summary-card__meta">导出目录会显示在这里，方便快速确认复用路径。</p>
+          </article>
+          <article class="workspace-summary-card">
+            <div class="workspace-summary-card__head">
+              <span class="workspace-summary-card__label">当前账号</span>
+              <button type="button" class="text-button" data-open-secondary-panel="account">详情</button>
+            </div>
+            <strong id="workspaceAccountDisplayName" class="workspace-summary-card__value">未登录</strong>
+            <p id="workspaceAccountRoleName" class="workspace-summary-card__meta">角色信息会显示在这里。</p>
+          </article>
+        </div>
+      </section>
+
+      <nav class="workspace-stage-nav" aria-label="工作台阶段">
+        <button type="button" class="workspace-stage-link" data-workspace-nav-link data-target="workspaceOverviewSection" data-section="overview">概览</button>
+        <button type="button" class="workspace-stage-link" data-workspace-nav-link data-target="workspaceProductSection" data-section="product">商品信息</button>
+        <button type="button" class="workspace-stage-link" data-workspace-nav-link data-target="workspaceMediaSection" data-section="media">图文素材</button>
+        <button type="button" class="workspace-stage-link" data-workspace-nav-link data-target="workspaceSkuSection" data-section="sku">规格库存</button>
+        <button type="button" class="workspace-stage-link" data-workspace-nav-link data-target="workspacePublishSection" data-section="publish">发布设置</button>
+      </nav>
+
+      <form id="pddForm" class="goods-form" novalidate>
+        <input id="pddForm_id" name="id" type="hidden" value="E610855EAECD4D0FAA6847BCF9C6C36F">
+        <input id="pddForm_firstShopId" name="firstShopId" type="hidden" value="17504212">
+        <input id="pddForm_syncUpdate" name="syncUpdate" type="hidden" value="true">
+        <input id="pddForm_aiFullField" name="aiFullField" type="hidden" value="{}">
+        <input id="pddForm_showGoodsSkuExtra" name="showGoodsSkuExtra" type="hidden" value="">
+        <input id="pddForm_categoryMappingId" name="categoryMappingId" type="hidden" value="">
+        <input id="pddForm_categoryId1" name="categoryId1" type="hidden" value="">
+        <input id="pddForm_categoryId2" name="categoryId2" type="hidden" value="">
+        <input id="pddForm_categoryId3" name="categoryId3" type="hidden" value="">
+        <input id="pddForm_leafCategoryId" name="leafCategoryId" type="hidden" value="">
+        <input id="pddForm_brandNameHide" name="brandNameHide" type="hidden" value="">
+        <input id="pddForm_goodsSpecType1Id" name="goodsSpecType1Id" type="hidden" value="">
+        <input id="pddForm_goodsSpecType1Name" name="goodsSpecType1Name" type="hidden" value="">
+        <input id="pddForm_goodsSpecType1Values" name="goodsSpecType1Values" type="hidden" value="[]">
+        <input id="pddForm_goodsSpecType2Id" name="goodsSpecType2Id" type="hidden" value="">
+        <input id="pddForm_goodsSpecType2Name" name="goodsSpecType2Name" type="hidden" value="">
+        <input id="pddForm_goodsSpecType2Values" name="goodsSpecType2Values" type="hidden" value="[]">
+
+        <section class="section-card" id="workspaceProductSection" data-workspace-section="product">
+          <div class="section-card__head">
+            <div class="section-card__copy">
+              <p class="section-card__eyebrow">Stage 01</p>
+              <h2 class="section-card__title">商品信息</h2>
+              <p id="workspaceProductSummary" class="section-card__summary">等待填写</p>
+            </div>
+            <div class="section-card__actions">
+              <button type="button" class="ghost-button ghost-button--sm" id="openCategoryPickerBtn">选择类目</button>
+              <button type="button" class="ghost-button ghost-button--sm" data-workspace-step-toggle data-section="product">展开</button>
+            </div>
+          </div>
+
+          <div class="section-card__body">
+            <div class="form-row">
+              <label class="form-row__label" for="pddForm_categoryData">商品分类</label>
+              <div class="form-row__control">
+                <div class="input-shell input-shell--readonly input-shell--actionable">
+                  <input id="pddForm_categoryData" name="categoryData" type="text" value="内衣裤袜 > 女士袜子/丝袜/打底裤袜 > 短袜" readonly aria-haspopup="dialog">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <label class="form-row__label" for="pddForm_goodsName">商品标题</label>
+              <div class="form-row__control">
+                <div class="input-shell">
+                  <input id="pddForm_goodsName" name="goodsName" type="text" maxlength="60" value="加厚保暖长筒袜女韩版过膝袜毛圈袜子女中筒秋冬季加绒高筒长袜子">
+                  <span id="goodsNameLengthMeta" class="input-meta">60 / 60</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row form-row--top">
+              <label class="form-row__label" for="pdd_GoodsAttribute">商品属性</label>
+              <div class="form-row__control">
+                <div class="template-tip">
+                  <button type="button" class="text-button">使用属性模板填充</button>
+                </div>
+                <div id="goodsAttributeStatus" class="helper-text">请先选择三级类目，再加载对应的商品属性。</div>
+                <div id="goodsAttributeError" class="auth-error" hidden></div>
+                <div id="pdd_GoodsAttribute" class="attribute-grid">
+                  <div class="empty-state">商品属性会根据当前三级类目动态加载。</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-card" id="workspaceMediaSection" data-workspace-section="media">
+          <div class="section-card__head">
+            <div class="section-card__copy">
+              <p class="section-card__eyebrow">Stage 02</p>
+              <h2 class="section-card__title">图文素材</h2>
+              <p id="workspaceMediaSummary" class="section-card__summary">等待上传</p>
+            </div>
+            <div class="section-card__actions">
+              <button type="button" class="ghost-button ghost-button--sm" data-workspace-step-toggle data-section="media">展开</button>
+            </div>
+          </div>
+
+          <div class="section-card__body">
+            <div class="form-row form-row--top">
+              <label class="form-row__label" for="pddForm_mainSpareImage">商品轮播图</label>
+              <div class="form-row__control">
+                <div class="image-zone-note image-zone-note--gallery">
+                  <div class="image-zone-note__copy">
+                    <strong class="image-zone-note__title">轮播图上传</strong>
+                    <span class="image-zone-count" data-zone-count="mainGallery">已上传 0/10 张</span>
+                  </div>
+                  <button type="button" class="secondary-button secondary-button--sm" data-zone-upload="mainGallery">本地上传</button>
+                </div>
+                <div id="pddForm_mainSpareImage" class="image-zone image-zone--gallery" data-required-zone="true"></div>
+              </div>
+            </div>
+
+            <div class="form-row form-row--top">
+              <label class="form-row__label" for="pddForm_detailGallerySlots">商品详情</label>
+              <div class="form-row__control">
+                <div class="detail-designer" id="pddForm_detailGallery">
+                  <aside class="detail-preview-panel">
+                    <div class="detail-preview-panel__head">
+                      <h3>页面预览</h3>
+                      <button type="button" class="text-button" id="detailPreviewRefreshBtn">刷新</button>
+                    </div>
+                    <div id="detailPreviewCanvas" class="detail-preview-canvas" aria-live="polite"></div>
+                  </aside>
+
+                  <div class="detail-workbench">
+                    <div class="detail-toolbar-card">
+                      <div class="detail-toolbar-card__head">
+                        <div class="detail-toolbar-card__copy">
+                          <div class="detail-toolbar-card__title-line">
+                            <strong class="detail-toolbar-card__title">快捷编辑</strong>
+                            <span class="image-zone-count image-zone-count--accent" data-zone-count="detailGallery">已上传 0/100 张</span>
+                          </div>
+                        </div>
+                        <div class="detail-toolbar-card__actions">
+                          <button type="button" class="ghost-button ghost-button--sm" data-zone-upload="detailGallery">图片空间上传</button>
+                          <button type="button" class="secondary-button secondary-button--sm" data-zone-upload="detailGallery">本地上传</button>
+                        </div>
+                      </div>
+                      <div id="pddForm_detailGallerySlots" class="image-zone image-zone--detail" data-required-zone="true"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row form-row--top">
+              <label class="form-row__label" for="pddForm_materialGallery">商品活动素材图</label>
+              <div class="form-row__control">
+                <div id="pddForm_materialGallery" class="material-grid">
+                  <div class="material-card">
+                    <div class="material-card__head">
+                      <h3>商品白底图</h3>
+                      <span class="material-card__tag">推荐</span>
+                    </div>
+                    <div id="pddForm_whiteImage" class="image-slot image-slot--single" data-image-zone="single-upload" data-asset-zone="whiteImage" data-frame-label="白底图"><input type="file" accept="image/*"></div>
+                  </div>
+                  <div class="material-card">
+                    <div class="material-card__head">
+                      <h3>商品长图</h3>
+                      <span class="material-card__tag">可选</span>
+                    </div>
+                    <div id="pddForm_longImage" class="image-slot image-slot--single" data-image-zone="single-upload" data-asset-zone="longImage" data-frame-label="长图"><input type="file" accept="image/*"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-card" id="workspaceSkuSection" data-workspace-section="sku">
+          <div class="section-card__head">
+            <div class="section-card__copy">
+              <p class="section-card__eyebrow">Stage 03</p>
+              <h2 class="section-card__title">规格库存</h2>
+              <p id="workspaceSkuSummary" class="section-card__summary">等待配置</p>
+            </div>
+            <div class="section-card__actions">
+              <button type="button" class="text-button">规格值排序</button>
+              <button type="button" class="text-button">规格映射小工具</button>
+              <button type="button" class="ghost-button ghost-button--sm" data-workspace-step-toggle data-section="sku">展开</button>
+            </div>
+          </div>
+
+          <div class="section-card__body">
+            <div class="form-row form-row--top">
+              <label class="form-row__label" for="pddForm_goodsSku">商品规格</label>
+              <div class="form-row__control">
+                <div id="pddForm_goodsSku" class="sku-spec-board">
+                  <div class="empty-state empty-state--compact">选择类目后会在这里配置规格。</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row form-row--top">
+              <label class="form-row__label" for="pddForm_goodsSkuDetail">价格与库存</label>
+              <div class="form-row__control">
+                <div class="sku-table-wrap">
+                  <table id="pddForm_goodsSkuDetail" class="sku-table">
+                    <colgroup>
+                      <col class="sku-table__col sku-table__col--image">
+                      <col class="sku-table__col sku-table__col--name">
+                      <col class="sku-table__col sku-table__col--number">
+                      <col class="sku-table__col sku-table__col--number">
+                      <col class="sku-table__col sku-table__col--number">
+                      <col class="sku-table__col sku-table__col--number">
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th>规格图</th>
+                        <th>规格名</th>
+                        <th>拼单价</th>
+                        <th>单买价</th>
+                        <th>库存</th>
+                        <th>重量</th>
+                      </tr>
+                    </thead>
+                    <tbody id="skuTableBody">
+                      <tr>
+                        <td class="sku-table__cell sku-table__cell--image"><div id="pddForm_goodsSkuDetail_0_pic" class="image-slot image-slot--sku" data-image-zone="sku-thumb" data-asset-zone="skuThumbs" data-slot-index="0" data-frame-label="SKU图1"><input type="file" accept="image/*"></div></td>
+                        <td class="sku-table__cell sku-table__cell--name"><input class="sku-table__input sku-table__input--name" name="goodsSkuDetail[0][specName]" type="text" value="黑色1+1黑色--过膝款 / （均码）毛圈加厚"></td>
+                        <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[0][groupPrice]" type="number" step="0.01" value="15.90"></td>
+                        <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[0][singlePrice]" type="number" step="0.01" value="19.90"></td>
+                        <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[0][stock]" type="number" value="500"></td>
+                        <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[0][weight]" type="number" step="0.01" value="0.18"></td>
+                      </tr>
+                      <tr>
+                        <td class="sku-table__cell sku-table__cell--image"><div id="pddForm_goodsSkuDetail_1_pic" class="image-slot image-slot--sku" data-image-zone="sku-thumb" data-asset-zone="skuThumbs" data-slot-index="1" data-frame-label="SKU图2"><input type="file" accept="image/*"></div></td>
+                        <td class="sku-table__cell sku-table__cell--name"><input class="sku-table__input sku-table__input--name" name="goodsSkuDetail[1][specName]" type="text" value="奶白色--中筒款 / （均码）毛圈加厚"></td>
+                        <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[1][groupPrice]" type="number" step="0.01" value="15.90"></td>
+                        <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[1][singlePrice]" type="number" step="0.01" value="19.90"></td>
+                        <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[1][stock]" type="number" value="420"></td>
+                        <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[1][weight]" type="number" step="0.01" value="0.18"></td>
+                      </tr>
+                      <tr>
+                        <td class="sku-table__cell sku-table__cell--image"><div id="pddForm_goodsSkuDetail_2_pic" class="image-slot image-slot--sku" data-image-zone="sku-thumb" data-asset-zone="skuThumbs" data-slot-index="2" data-frame-label="SKU图3"><input type="file" accept="image/*"></div></td>
+                        <td class="sku-table__cell sku-table__cell--name"><input class="sku-table__input sku-table__input--name" name="goodsSkuDetail[2][specName]" type="text" value="麻灰色--高筒款 / （均码）毛圈加厚"></td>
+                        <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[2][groupPrice]" type="number" step="0.01" value="16.50"></td>
+                        <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[2][singlePrice]" type="number" step="0.01" value="20.50"></td>
+                        <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[2][stock]" type="number" value="360"></td>
+                        <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[2][weight]" type="number" step="0.01" value="0.19"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <label class="form-row__label" for="pddForm_marketPrice">商品市场价</label>
+              <div class="form-row__control"><div class="input-shell input-shell--short"><input id="pddForm_marketPrice" name="marketPrice" type="number" step="0.01" value="39.90"></div></div>
+            </div>
+
+            <div class="form-row">
+              <label class="form-row__label" for="pddForm_styleCode">满2件折扣</label>
+              <div class="form-row__control"><div class="input-shell input-shell--short"><input id="pddForm_styleCode" name="styleCode" type="number" step="1" value="88"></div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-card" id="workspacePublishSection" data-workspace-section="publish">
+          <div class="section-card__head">
+            <div class="section-card__copy">
+              <p class="section-card__eyebrow">Stage 04</p>
+              <h2 class="section-card__title">发布设置</h2>
+              <p id="workspacePublishSummary" class="section-card__summary">默认配置</p>
+            </div>
+            <div class="section-card__actions">
+              <button type="button" class="ghost-button ghost-button--sm" data-workspace-step-toggle data-section="publish">展开</button>
+            </div>
+          </div>
+
+          <div class="section-card__body">
+            <div class="form-row">
+              <label class="form-row__label" for="pddForm_goodsType">商品类型</label>
+              <div class="form-row__control"><div id="pddForm_goodsType" class="choice-group"><label class="choice-pill"><input name="goodsType" type="radio" value="1" checked><span>普通商品</span></label><label class="choice-pill"><input name="goodsType" type="radio" value="2"><span>海外进口</span></label></div></div>
+            </div>
+
+            <div class="form-row">
+              <label class="form-row__label" for="pddForm_secondHand">是否二手</label>
+              <div class="form-row__control"><div id="pddForm_secondHand" class="choice-group"><label class="choice-pill"><input name="secondHand" type="radio" value="false" checked><span>非二手</span></label><label class="choice-pill"><input name="secondHand" type="radio" value="true"><span>二手</span></label></div></div>
+            </div>
+
+            <div class="form-row">
+              <label class="form-row__label" for="pddForm_preSaleConfig">是否预售</label>
+              <div class="form-row__control"><div id="pddForm_preSaleConfig" class="choice-group choice-group--wrap"><label class="choice-pill"><input name="preSaleConfig" type="radio" value="0" checked><span>非预售</span></label><label class="choice-pill"><input name="preSaleConfig" type="radio" value="isPreSale"><span>定时预售</span></label><label class="choice-pill"><input name="preSaleConfig" type="radio" value="isGroupPreSale"><span>时段预售</span></label><label class="choice-pill"><input name="preSaleConfig" type="radio" value="skuPreSale"><span>SKU 预售</span></label></div></div>
+            </div>
+
+            <div class="form-row">
+              <label class="form-row__label" for="pddForm_shipmentLimitSecond">承诺发货时间</label>
+              <div class="form-row__control"><div id="pddForm_shipmentLimitSecond" class="choice-group"><label class="choice-pill"><input name="shipmentLimitSecond" type="radio" value="0"><span>当日发货</span></label><label class="choice-pill"><input name="shipmentLimitSecond" type="radio" value="86400"><span>24小时</span></label><label class="choice-pill"><input name="shipmentLimitSecond" type="radio" value="172800" checked><span>48小时</span></label></div></div>
+            </div>
+
+            <div class="form-row">
+              <label class="form-row__label" for="pddForm_shopShelvesFreights_select">运费模板</label>
+              <div class="form-row__control">
+                <div id="pddForm_shopShelvesFreights" class="freight-box">
+                  <div class="freight-box__meta"><span class="platform-pill">拼</span><span>YUZHAOLIN俞兆林服饰内衣官方旗舰店</span></div>
+                  <div class="freight-box__picker">
+                    <div class="input-shell input-shell--medium"><select id="pddForm_shopShelvesFreights_select" name="shopShelvesFreights[0]"><option value="cn-free">大陆地区包邮模板</option><option value="express-default">全国通用运费模板</option></select></div>
+                    <button type="button" class="text-button">刷新模板</button>
+                  </div>
+                </div>
+                <div id="freightNotice" class="info-stack" hidden><p>当前不是推荐运费模板，请再次确认。</p></div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <label class="form-row__label" for="pddForm_customerNum">拼单要求</label>
+              <div class="form-row__control"><div class="number-inline"><span>拼单人数</span><div class="input-shell input-shell--short"><input id="pddForm_customerNum" name="customerNum" type="number" min="2" value="2" readonly></div></div></div>
+            </div>
+
+            <div class="form-row">
+              <label class="form-row__label" for="pddForm_commitment">承诺</label>
+              <div class="form-row__control"><div id="pddForm_commitment" class="checkbox-stack"><label class="check-item"><input type="checkbox" name="commitment[]" value="7天无理由退换货" checked><span>7天无理由退换货</span></label><label class="check-item"><input type="checkbox" name="commitment[]" value="假一赔十" checked><span>假一赔十</span></label></div></div>
+            </div>
+
+            <div class="form-row">
+              <label class="form-row__label" for="pddForm_publishType">上架设置</label>
+              <div class="form-row__control"><div id="pddForm_publishType" class="choice-group"><label class="choice-pill"><input name="publishType" type="radio" value="SALE" checked><span>立即上架</span></label><label class="choice-pill"><input name="publishType" type="radio" value="DRAFT"><span>放入草稿箱</span></label></div></div>
+            </div>
+
+            <div class="form-row form-row--top">
+              <label class="form-row__label" for="pddForm_ignoreEditWarn">特殊情况处理</label>
+              <div class="form-row__control">
+                <div id="pddForm_ignoreEditWarn" class="choice-group"><label class="choice-pill"><input name="ignoreEditWarn" type="radio" value="false" checked><span>遵循平台提示</span></label><label class="choice-pill"><input name="ignoreEditWarn" type="radio" value="true"><span>忽略平台提示</span></label></div>
+                <div id="ignoreEditWarnNotice" class="info-stack" hidden><p>忽略平台提示可能带来发布风险，请确认后再继续。</p></div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <label class="form-row__label" for="pddForm_autoFillSpuProperty">是否预填标品属性</label>
+              <div class="form-row__control"><div id="pddForm_autoFillSpuProperty" class="choice-group"><label class="choice-pill"><input name="autoFillSpuProperty" type="radio" value="true"><span>是</span></label><label class="choice-pill"><input name="autoFillSpuProperty" type="radio" value="false" checked><span>否</span></label></div></div>
+            </div>
+          </div>
+        </section>
+      </form>
+
+      <div id="secondaryDrawer" class="secondary-drawer" hidden>
+        <div class="secondary-drawer__backdrop" id="secondaryDrawerBackdrop"></div>
+        <aside class="secondary-drawer__panel" role="dialog" aria-modal="true" aria-labelledby="secondaryDrawerTitle">
+          <div class="secondary-drawer__head">
+            <div>
+              <p class="panel-card__eyebrow">Workspace Tools</p>
+              <h2 id="secondaryDrawerTitle" class="panel-card__title">更多工具</h2>
+            </div>
+            <button type="button" class="ghost-button ghost-button--sm" id="closeSecondaryDrawerBtn">关闭</button>
+          </div>
+
+          <nav class="secondary-drawer__tabs" aria-label="更多工具">
+            <button type="button" class="secondary-drawer__tab" data-secondary-panel-trigger data-panel="templates">模板</button>
+            <button type="button" class="secondary-drawer__tab" data-secondary-panel-trigger data-panel="export">导出</button>
+            <button type="button" class="secondary-drawer__tab" data-secondary-panel-trigger data-panel="account">账号</button>
+            <button type="button" class="secondary-drawer__tab" data-secondary-panel-trigger data-panel="logs">日志</button>
+          </nav>
+
+          <div class="secondary-drawer__body">
+            <section class="secondary-drawer__content" data-secondary-panel="templates">
+              <section class="panel-card">
+                <div class="panel-card__head">
+                  <p class="panel-card__eyebrow">Templates</p>
+                  <h2 class="panel-card__title">模板管理</h2>
+                </div>
+
+                <div class="template-editor">
+                  <label class="field-block">
+                    <span class="field-block__label">当前模板名</span>
+                    <input id="templateNameInput" type="text" placeholder="请输入模板名称">
+                  </label>
+                  <div class="template-meta" id="currentTemplateMeta">尚未载入模板</div>
+                </div>
+
+                <div class="toolbar-grid">
+                  <button type="button" class="secondary-button" id="newTemplateBtn">新建模板</button>
+                  <button type="button" class="secondary-button" id="saveTemplateBtn">保存模板</button>
+                  <button type="button" class="secondary-button" id="duplicateTemplateBtn">复制模板</button>
+                  <button type="button" class="secondary-button" id="deleteTemplateBtn">删除模板</button>
+                  <button type="button" class="ghost-button" id="setDefaultTemplateBtn">设为默认</button>
+                  <button type="button" class="ghost-button" id="openWorkspaceBtn">打开工作区</button>
+                </div>
+
+                <div class="template-list-wrap">
+                  <div class="panel-inline-head">
+                    <h3>模板列表</h3>
+                    <span id="templateCountBadge" class="count-badge">0</span>
+                  </div>
+                  <div id="templateList" class="template-list">
+                    <div class="empty-state">正在加载模板...</div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="panel-card">
+                <div class="panel-inline-head">
+                  <h3>工作区</h3>
+                  <button type="button" class="text-button" id="openAssetsBtn">打开素材目录</button>
+                </div>
+                <dl class="path-list" id="workspaceSummary">
+                  <div class="path-list__item">
+                    <dt>根目录</dt>
+                    <dd>等待 Electron 工作区初始化</dd>
+                  </div>
+                </dl>
+              </section>
+            </section>
+
+            <section class="secondary-drawer__content" data-secondary-panel="export" hidden>
+              <section class="panel-card">
+                <div class="panel-card__head">
+                  <p class="panel-card__eyebrow">Template Export</p>
+                  <h2 class="panel-card__title">模板导出</h2>
+                </div>
+
+                <div class="status-stack">
+                  <div class="status-pill" id="templateExportStatus">Idle</div>
+                  <div class="status-copy">
+                    <strong id="templateExportSummary">尚未导出当前模板</strong>
+                    <p id="templateExportPath">导出后会在所选文件夹中生成模板快照目录。</p>
+                  </div>
+                </div>
+
+                <div class="toolbar-grid toolbar-grid--single">
+                  <button type="button" class="secondary-button" id="exportTemplateBtn">保存模板到文件夹</button>
+                  <button type="button" class="ghost-button" id="openExportFolderBtn">打开导出目录</button>
+                </div>
+
+                <div id="templateExportError" class="auth-error" hidden></div>
+                <pre id="templateExportOutput" class="code-view">导出结果会显示在这里。</pre>
+              </section>
+            </section>
+
+            <section class="secondary-drawer__content" data-secondary-panel="account" hidden>
+              <section class="panel-card panel-card--account">
+                <div class="panel-inline-head">
+                  <h3>当前账号</h3>
+                  <button type="button" class="ghost-button ghost-button--sm" id="openChangePasswordBtn">修改密码</button>
+                </div>
+
+                <div class="account-overview">
+                  <div class="account-overview__item">
+                    <span class="account-overview__label">姓名</span>
+                    <strong id="accountDisplayName" class="account-overview__value">未登录</strong>
+                  </div>
+                  <div class="account-overview__item">
+                    <span class="account-overview__label">角色</span>
+                    <strong id="accountRoleName" class="account-overview__value">-</strong>
+                  </div>
+                </div>
+
+                <dl class="account-meta">
+                  <div class="account-meta__row">
+                    <dt>用户名</dt>
+                    <dd id="accountUsername">-</dd>
+                  </div>
+                  <div class="account-meta__row">
+                    <dt>当前店铺</dt>
+                    <dd id="accountCurrentShop">-</dd>
+                  </div>
+                  <div class="account-meta__row">
+                    <dt>角色标识</dt>
+                    <dd id="accountRole">-</dd>
+                  </div>
+                  <div class="account-meta__row">
+                    <dt>用户 UID</dt>
+                    <dd id="accountUid">-</dd>
+                  </div>
+                </dl>
+              </section>
+            </section>
+
+            <section class="secondary-drawer__content" data-secondary-panel="logs" hidden>
+              <section class="panel-card">
+                <div class="panel-inline-head">
+                  <h3>操作日志</h3>
+                  <span id="logCountBadge" class="count-badge">0</span>
+                </div>
+                <div id="automationLogList" class="log-list">
+                  <div class="empty-state">操作记录会显示在这里。</div>
+                </div>
+              </section>
+            </section>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+    </main>
+  </div>
+
+  <div id="categoryPickerModal" class="modal-shell" hidden>
+    <div class="modal-shell__backdrop" id="categoryPickerBackdrop"></div>
+    <div class="modal-card modal-card--wide" role="dialog" aria-modal="true" aria-labelledby="categoryPickerTitle">
+      <div class="modal-card__head">
+        <div>
+          <p class="modal-card__eyebrow">Category Picker</p>
+          <h2 id="categoryPickerTitle" class="modal-card__title">手动选择商品类目</h2>
+          <p id="categoryPickerDesc" class="modal-card__desc">按当前店铺加载可选类目。</p>
+        </div>
+        <button type="button" class="ghost-button ghost-button--sm" id="closeCategoryPickerBtn">关闭</button>
+      </div>
+
+      <div class="category-picker">
+        <div id="categoryPickerSummary" class="template-meta">当前类目：未选择</div>
+        <div id="categoryPickerError" class="auth-error" hidden></div>
+
+        <div class="category-picker__grid">
+          <label class="field-block">
+            <span class="field-block__label">一级类目</span>
+            <select id="categoryLevel1Select"></select>
+          </label>
+          <label class="field-block">
+            <span class="field-block__label">二级类目</span>
+            <select id="categoryLevel2Select"></select>
+          </label>
+          <label class="field-block">
+            <span class="field-block__label">三级类目</span>
+            <select id="categoryLevel3Select"></select>
+          </label>
+        </div>
+
+        <div id="categoryPickerNotice" class="template-meta" hidden></div>
+
+        <div class="modal-form__actions category-picker__actions">
+          <button type="button" class="ghost-button" id="categoryPickerRefreshBtn">刷新类目</button>
+          <button type="button" class="primary-button" id="categoryPickerConfirmBtn">确认使用该类目</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="changePasswordModal" class="modal-shell" hidden>
+    <div class="modal-shell__backdrop" id="changePasswordBackdrop"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="changePasswordTitle">
+      <div class="modal-card__head">
+        <div>
+          <p class="modal-card__eyebrow">Account Security</p>
+          <h2 id="changePasswordTitle" class="modal-card__title">修改当前账号密码</h2>
+        </div>
+        <button type="button" class="ghost-button ghost-button--sm" id="closeChangePasswordBtn">关闭</button>
+      </div>
+
+      <form id="changePasswordForm" class="modal-form" novalidate>
+        <label class="field-block">
+          <span class="field-block__label">当前密码</span>
+          <input id="currentPasswordInput" type="password" placeholder="请输入当前密码" autocomplete="current-password">
+        </label>
+        <label class="field-block">
+          <span class="field-block__label">新密码</span>
+          <input id="newPasswordInput" type="password" placeholder="请输入新密码" autocomplete="new-password">
+        </label>
+        <label class="field-block">
+          <span class="field-block__label">确认新密码</span>
+          <input id="confirmPasswordInput" type="password" placeholder="请再次输入新密码" autocomplete="new-password">
+        </label>
+
+        <div id="changePasswordError" class="auth-error" hidden></div>
+        <div id="changePasswordSuccess" class="auth-success" hidden></div>
+
+        <div class="modal-form__actions">
+          <button type="submit" class="primary-button" id="changePasswordSubmitBtn">确认修改</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="productFillModal" class="modal-shell" hidden>
+    <div class="modal-shell__backdrop" id="productFillBackdrop"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="productFillTitle">
+      <div class="modal-card__head">
+        <div>
+          <p class="modal-card__eyebrow">Product Fill</p>
+          <h2 id="productFillTitle" class="modal-card__title">按商品ID填充</h2>
+          <p class="modal-card__desc">输入商品 ID 后自动识别所属店铺并覆盖当前模板。</p>
+        </div>
+        <button type="button" class="ghost-button ghost-button--sm" id="closeProductFillBtn">关闭</button>
+      </div>
+
+      <form id="productFillForm" class="modal-form product-fill" novalidate>
+        <label class="field-block">
+          <span class="field-block__label">商品 ID</span>
+          <input id="productFillIdInput" type="text" inputmode="numeric" placeholder="请输入商品ID">
+        </label>
+
+        <div id="productFillSummary" class="product-fill__summary">输入商品 ID 后，会自动识别所属店铺，并覆盖当前模板中的类目、标题、商品属性、主图、详情图和 SKU 库存。</div>
+        <div id="productFillError" class="auth-error" hidden></div>
+
+        <div class="modal-form__actions product-fill__actions">
+          <button type="submit" class="primary-button" id="productFillConfirmBtn">开始填充</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="./商家属性填写.js"></script>
+</body>
+</html>

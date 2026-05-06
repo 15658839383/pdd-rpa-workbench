@@ -1,0 +1,4062 @@
+{
+    "success": true,
+    "total": null,
+    "data": [
+        {
+            "shopId": "17504212",
+            "shopName": "YUZHAOLIN俞兆林服饰内衣官方旗舰店",
+            "leafCategoryId": "26901",
+            "lastCategoryId": null,
+            "categoryIdList": [
+                "8583",
+                "8606",
+                "26901"
+            ],
+            "errMsg": "",
+            "errMsgMapping": null,
+            "errCode": "",
+            "publishRule": {
+                "goods_properties_rule": {
+                    "input_max_spec_num": 0,
+                    "properties": [
+                        {
+                            "is_sale": false,
+                            "is_important": false,
+                            "show_condition": null,
+                            "is_sku": false,
+                            "parent_spec_id": null,
+                            "values": [
+                                {
+                                    "vid": 2531,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "Yuzhaolin/俞兆林",
+                                    "group": null
+                                }
+                            ],
+                            "required_rule": null,
+                            "value_precision": 0,
+                            "input_max_num": 0,
+                            "required": true,
+                            "required_rule_type": 0,
+                            "choose_max_num": 1,
+                            "min_value": "",
+                            "can_note": false,
+                            "ref_pid": 310,
+                            "name": "品牌",
+                            "value_unit": [
+                                ""
+                            ],
+                            "max_value": "",
+                            "property_value_type": 0
+                        },
+                        {
+                            "is_sale": false,
+                            "is_important": true,
+                            "show_condition": null,
+                            "is_sku": false,
+                            "parent_spec_id": null,
+                            "values": [
+                                {
+                                    "vid": 10367,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "天鹅绒",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 14075,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "包芯丝",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 10348,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "棉",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 10387,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "其它",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13473,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "涤纶",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13616,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "锦纶",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 10358,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "莫代尔",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13472,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "涤棉",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 813027,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "锦氨混纺",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13474,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "冰丝",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 14073,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "竹浆纤维面料",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 10349,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "麻",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 847765,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "绢丝",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 10366,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "珊瑚绒",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 952852,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "德绒",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 10371,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "羊毛",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 794334,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "精梳棉",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 10355,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "天丝",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 12975,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "竹纤维",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13226,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "棉麻",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 828727,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "丝光棉",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 1429177,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "澳绒",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 1931075,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "匹马棉",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 1979641,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "长绒棉",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 1999753,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "桑蚕丝",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 2095731,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "水貂绒",
+                                    "group": null
+                                }
+                            ],
+                            "required_rule": null,
+                            "value_precision": 0,
+                            "input_max_num": 0,
+                            "required": false,
+                            "required_rule_type": 0,
+                            "choose_max_num": 1,
+                            "min_value": "",
+                            "can_note": false,
+                            "ref_pid": 349,
+                            "name": "面料俗称",
+                            "value_unit": [
+                                ""
+                            ],
+                            "max_value": "",
+                            "property_value_type": 0
+                        },
+                        {
+                            "is_sale": false,
+                            "is_important": false,
+                            "show_condition": [
+                                {
+                                    "parent_ref_pid": 349,
+                                    "parent_vids": [
+                                        10368,
+                                        10369,
+                                        10371,
+                                        10372,
+                                        10374,
+                                        10387,
+                                        1999753,
+                                        847765,
+                                        952852,
+                                        13467,
+                                        13468,
+                                        13472,
+                                        13473,
+                                        13474,
+                                        13226,
+                                        13227,
+                                        1429177,
+                                        13229,
+                                        12975,
+                                        13616,
+                                        12976,
+                                        13234,
+                                        13235,
+                                        12980,
+                                        13236,
+                                        13237,
+                                        13239,
+                                        13240,
+                                        828727,
+                                        13243,
+                                        13247,
+                                        13251,
+                                        794334,
+                                        14042,
+                                        14044,
+                                        14045,
+                                        14046,
+                                        1931075,
+                                        14049,
+                                        14051,
+                                        14052,
+                                        1979641,
+                                        14057,
+                                        14058,
+                                        14059,
+                                        2095731,
+                                        10348,
+                                        10349,
+                                        10350,
+                                        813027,
+                                        14063,
+                                        10352,
+                                        10354,
+                                        10355,
+                                        10356,
+                                        10358,
+                                        10359,
+                                        14073,
+                                        14074,
+                                        10363,
+                                        14075,
+                                        10364,
+                                        10365,
+                                        10366,
+                                        10367
+                                    ]
+                                }
+                            ],
+                            "is_sku": false,
+                            "parent_spec_id": null,
+                            "values": [
+                                {
+                                    "vid": 12960,
+                                    "parent_vids": [
+                                        10387
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "丙纶",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 12961,
+                                    "parent_vids": [
+                                        10387,
+                                        847765,
+                                        14042,
+                                        952852
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "氨纶",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 14081,
+                                    "parent_vids": [
+                                        10387,
+                                        14046,
+                                        2095731,
+                                        952852,
+                                        10366,
+                                        1429177
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "腈纶",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 12962,
+                                    "parent_vids": [
+                                        10387,
+                                        2095731,
+                                        14052,
+                                        10367,
+                                        13473,
+                                        13472,
+                                        847765,
+                                        952852,
+                                        10366,
+                                        1429177,
+                                        13616,
+                                        14051
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "涤纶（聚酯纤维）",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 75939,
+                                    "parent_vids": [
+                                        10349,
+                                        10387,
+                                        13226
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "苎麻",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 12964,
+                                    "parent_vids": [
+                                        10387,
+                                        13474,
+                                        10367,
+                                        10365,
+                                        847765,
+                                        952852
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "粘胶纤维",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 12965,
+                                    "parent_vids": [
+                                        10358
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "莫代尔纤维",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 10629,
+                                    "parent_vids": [
+                                        10387,
+                                        13235
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "其它",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 12966,
+                                    "parent_vids": [
+                                        10387
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "醋酯纤维",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 12967,
+                                    "parent_vids": [
+                                        10387,
+                                        2095731,
+                                        10367,
+                                        10366,
+                                        1429177,
+                                        13616,
+                                        813027
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "锦纶",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 14090,
+                                    "parent_vids": [
+                                        10387,
+                                        14049
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "竹炭纤维",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 10571,
+                                    "parent_vids": [
+                                        10387,
+                                        1931075,
+                                        14046,
+                                        14059,
+                                        10363,
+                                        1979641,
+                                        13229,
+                                        14058,
+                                        14074,
+                                        13239,
+                                        10367,
+                                        13226,
+                                        14057,
+                                        13472,
+                                        14063,
+                                        10352,
+                                        10372,
+                                        13467,
+                                        14045,
+                                        10354,
+                                        14044,
+                                        10348,
+                                        828727,
+                                        13468,
+                                        13237,
+                                        794334
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "棉",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13483,
+                                    "parent_vids": [
+                                        10387,
+                                        12975,
+                                        14073
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "竹纤维",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 12973,
+                                    "parent_vids": [
+                                        10355
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "天丝（莱赛尔纤维）",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 2341134,
+                                    "parent_vids": [
+                                        14075
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "包芯丝",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 10573,
+                                    "parent_vids": [
+                                        10387,
+                                        10359,
+                                        12980,
+                                        10365,
+                                        10356,
+                                        847765,
+                                        10350,
+                                        13243,
+                                        10354
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "蚕丝",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 10574,
+                                    "parent_vids": [
+                                        13234,
+                                        10387,
+                                        13251,
+                                        10369,
+                                        10371,
+                                        14046,
+                                        10374,
+                                        10368,
+                                        13240,
+                                        13236,
+                                        10364
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "羊毛",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 1705482,
+                                    "parent_vids": [
+                                        10349,
+                                        10387,
+                                        13226
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "汉麻",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 10580,
+                                    "parent_vids": [
+                                        10387,
+                                        10374,
+                                        12976,
+                                        13247
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "羊绒",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 18325,
+                                    "parent_vids": [
+                                        1999753
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "桑蚕丝",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 408179,
+                                    "parent_vids": [
+                                        10387
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "玉米纤维",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 12796,
+                                    "parent_vids": [
+                                        10349,
+                                        10387,
+                                        13226,
+                                        13227
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "亚麻",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 20253,
+                                    "parent_vids": [
+                                        10387
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "貂绒",
+                                    "group": null
+                                }
+                            ],
+                            "required_rule": null,
+                            "value_precision": 0,
+                            "input_max_num": 0,
+                            "required": true,
+                            "required_rule_type": 0,
+                            "choose_max_num": 1,
+                            "min_value": "",
+                            "can_note": false,
+                            "ref_pid": 353,
+                            "name": "面料主材质",
+                            "value_unit": [
+                                ""
+                            ],
+                            "max_value": "",
+                            "property_value_type": 0
+                        },
+                        {
+                            "is_sale": false,
+                            "is_important": false,
+                            "show_condition": [
+                                {
+                                    "parent_ref_pid": 353,
+                                    "parent_vids": [
+                                        14081,
+                                        18374,
+                                        28551,
+                                        14090,
+                                        10571,
+                                        10573,
+                                        10574,
+                                        10575,
+                                        1705482,
+                                        10580,
+                                        18325,
+                                        20253,
+                                        17181,
+                                        12960,
+                                        12961,
+                                        12962,
+                                        75939,
+                                        12964,
+                                        12965,
+                                        12966,
+                                        12967,
+                                        13483,
+                                        12973,
+                                        408179,
+                                        12796
+                                    ]
+                                }
+                            ],
+                            "is_sku": false,
+                            "parent_spec_id": null,
+                            "values": [
+                                {
+                                    "vid": 88515,
+                                    "parent_vids": [
+                                        12967,
+                                        12962,
+                                        20253,
+                                        17181,
+                                        10571,
+                                        14081,
+                                        10580,
+                                        12964,
+                                        13483,
+                                        18325,
+                                        408179,
+                                        12961,
+                                        18374,
+                                        14090,
+                                        12960,
+                                        12973,
+                                        12796,
+                                        12966,
+                                        10573,
+                                        10574,
+                                        28551,
+                                        75939,
+                                        1705482,
+                                        12965
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "100%",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 14499,
+                                    "parent_vids": [
+                                        12967,
+                                        12962,
+                                        20253,
+                                        17181,
+                                        10571,
+                                        14081,
+                                        10580,
+                                        12964,
+                                        13483,
+                                        18325,
+                                        408179,
+                                        12961,
+                                        18374,
+                                        14090,
+                                        12960,
+                                        12973,
+                                        12796,
+                                        12966,
+                                        10573,
+                                        10574,
+                                        10575,
+                                        28551,
+                                        75939,
+                                        1705482,
+                                        12965
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "91%（含）—95%（含）",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 88514,
+                                    "parent_vids": [
+                                        12967,
+                                        12962,
+                                        20253,
+                                        17181,
+                                        10571,
+                                        14081,
+                                        10580,
+                                        12964,
+                                        13483,
+                                        18325,
+                                        408179,
+                                        12961,
+                                        18374,
+                                        14090,
+                                        12960,
+                                        12973,
+                                        12796,
+                                        12966,
+                                        10573,
+                                        10574,
+                                        28551,
+                                        75939,
+                                        1705482,
+                                        12965
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "96%（含）—100%（不含）",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 14500,
+                                    "parent_vids": [
+                                        12967,
+                                        12962,
+                                        20253,
+                                        17181,
+                                        10571,
+                                        14081,
+                                        10580,
+                                        12964,
+                                        13483,
+                                        18325,
+                                        408179,
+                                        12961,
+                                        18374,
+                                        14090,
+                                        12960,
+                                        12973,
+                                        12796,
+                                        12966,
+                                        10573,
+                                        10574,
+                                        10575,
+                                        28551,
+                                        75939,
+                                        1705482,
+                                        12965
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "81%（含）—90%（含）",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 14501,
+                                    "parent_vids": [
+                                        12967,
+                                        12962,
+                                        20253,
+                                        17181,
+                                        10571,
+                                        14081,
+                                        10580,
+                                        12964,
+                                        13483,
+                                        18325,
+                                        408179,
+                                        12961,
+                                        18374,
+                                        14090,
+                                        12960,
+                                        12973,
+                                        12796,
+                                        12966,
+                                        10573,
+                                        10574,
+                                        10575,
+                                        28551,
+                                        75939,
+                                        1705482,
+                                        12965
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "71%（含）—80%（含）",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 14502,
+                                    "parent_vids": [
+                                        12967,
+                                        12962,
+                                        20253,
+                                        17181,
+                                        10571,
+                                        14081,
+                                        10580,
+                                        12964,
+                                        13483,
+                                        18325,
+                                        408179,
+                                        12961,
+                                        18374,
+                                        14090,
+                                        12960,
+                                        12973,
+                                        12796,
+                                        12966,
+                                        10573,
+                                        10574,
+                                        10575,
+                                        28551,
+                                        75939,
+                                        1705482,
+                                        12965
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "51%（含）—70%（含）",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 14503,
+                                    "parent_vids": [
+                                        12967,
+                                        12962,
+                                        20253,
+                                        17181,
+                                        10571,
+                                        14081,
+                                        10580,
+                                        12964,
+                                        13483,
+                                        18325,
+                                        408179,
+                                        12961,
+                                        18374,
+                                        14090,
+                                        12960,
+                                        12973,
+                                        12796,
+                                        12966,
+                                        10573,
+                                        10574,
+                                        10575,
+                                        28551,
+                                        75939,
+                                        1705482,
+                                        12965
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "31%（含）—50%（含）",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 14504,
+                                    "parent_vids": [
+                                        12967,
+                                        12962,
+                                        20253,
+                                        17181,
+                                        10571,
+                                        14081,
+                                        10580,
+                                        12964,
+                                        13483,
+                                        18325,
+                                        408179,
+                                        12961,
+                                        18374,
+                                        14090,
+                                        12960,
+                                        12973,
+                                        12796,
+                                        12966,
+                                        10573,
+                                        10574,
+                                        10575,
+                                        28551,
+                                        75939,
+                                        1705482,
+                                        12965
+                                    ],
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "30%及以下",
+                                    "group": null
+                                }
+                            ],
+                            "required_rule": null,
+                            "value_precision": 255,
+                            "input_max_num": 0,
+                            "required": true,
+                            "required_rule_type": 0,
+                            "choose_max_num": 1,
+                            "min_value": "",
+                            "can_note": false,
+                            "ref_pid": 396,
+                            "name": "成分含量",
+                            "value_unit": [
+                                ""
+                            ],
+                            "max_value": "",
+                            "property_value_type": 1
+                        },
+                        {
+                            "is_sale": false,
+                            "is_important": true,
+                            "show_condition": null,
+                            "is_sku": false,
+                            "parent_spec_id": null,
+                            "values": [
+                                {
+                                    "vid": 13382,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "连裤",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13384,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "九分裤袜",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13385,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "七分裤袜",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13386,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "五分裤袜",
+                                    "group": null
+                                }
+                            ],
+                            "required_rule": null,
+                            "value_precision": 0,
+                            "input_max_num": 0,
+                            "required": false,
+                            "required_rule_type": 0,
+                            "choose_max_num": 1,
+                            "min_value": "",
+                            "can_note": false,
+                            "ref_pid": 360,
+                            "name": "筒高",
+                            "value_unit": [
+                                ""
+                            ],
+                            "max_value": "",
+                            "property_value_type": 0
+                        },
+                        {
+                            "is_sale": false,
+                            "is_important": true,
+                            "show_condition": null,
+                            "is_sku": false,
+                            "parent_spec_id": null,
+                            "values": [
+                                {
+                                    "vid": 4006415,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "一线裆",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 4006416,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "T裆",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 4006417,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "比基尼裆",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 4006418,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "无缝裆",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 4006419,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "单面加裆",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 4006420,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "双面加裆",
+                                    "group": null
+                                }
+                            ],
+                            "required_rule": null,
+                            "value_precision": 0,
+                            "input_max_num": 0,
+                            "required": false,
+                            "required_rule_type": 0,
+                            "choose_max_num": 1,
+                            "min_value": "",
+                            "can_note": false,
+                            "ref_pid": 3573,
+                            "name": "裆位款式",
+                            "value_unit": [
+                                ""
+                            ],
+                            "max_value": "",
+                            "property_value_type": 0
+                        },
+                        {
+                            "is_sale": false,
+                            "is_important": true,
+                            "show_condition": null,
+                            "is_sku": false,
+                            "parent_spec_id": null,
+                            "values": [
+                                {
+                                    "vid": 4006384,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "320针以下",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 4006385,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "320针（含）-480针（不含）",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 4006386,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "480针（含）-600针（不含）",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 4006387,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "600针（含）-720针（不含）",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 4006388,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "720针（含）-900针（不含）",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 4006389,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "900针及以上",
+                                    "group": null
+                                }
+                            ],
+                            "required_rule": null,
+                            "value_precision": 0,
+                            "input_max_num": 0,
+                            "required": false,
+                            "required_rule_type": 0,
+                            "choose_max_num": 1,
+                            "min_value": "",
+                            "can_note": false,
+                            "ref_pid": 3338,
+                            "name": "针数",
+                            "value_unit": [
+                                ""
+                            ],
+                            "max_value": "",
+                            "property_value_type": 0
+                        },
+                        {
+                            "is_sale": false,
+                            "is_important": true,
+                            "show_condition": null,
+                            "is_sku": false,
+                            "parent_spec_id": null,
+                            "values": [
+                                {
+                                    "vid": 1562419,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "单层",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 1562420,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "双层",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 2391719,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "三层及以上",
+                                    "group": null
+                                }
+                            ],
+                            "required_rule": null,
+                            "value_precision": 255,
+                            "input_max_num": 0,
+                            "required": false,
+                            "required_rule_type": 0,
+                            "choose_max_num": 1,
+                            "min_value": "",
+                            "can_note": false,
+                            "ref_pid": 1233,
+                            "name": "层数",
+                            "value_unit": [
+                                ""
+                            ],
+                            "max_value": "",
+                            "property_value_type": 1
+                        },
+                        {
+                            "is_sale": false,
+                            "is_important": false,
+                            "show_condition": null,
+                            "is_sku": false,
+                            "parent_spec_id": null,
+                            "values": [
+                                {
+                                    "vid": 1429529,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "2022年春季",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 1429530,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "2022年夏季",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 1429531,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "2022年秋季",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 1429532,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "2022年冬季",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 1777928,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "2023年春季",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 1777929,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "2023年夏季",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 1865889,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "2023年秋季",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 1865890,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "2023年冬季",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 1935864,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "2024年春季",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 1935865,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "2024年夏季",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 2062233,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "2024年秋季",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 2062234,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "2024年冬季",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 2236200,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "2025年春季",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 2236201,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "2025年夏季",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 2236202,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "2025年秋季",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 2236203,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "2025年冬季",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 5433145,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "2026年春季",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 5433146,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "2026年夏季",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 5433147,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "2026年秋季",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 5433148,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "2026年冬季",
+                                    "group": null
+                                }
+                            ],
+                            "required_rule": null,
+                            "value_precision": 0,
+                            "input_max_num": 0,
+                            "required": false,
+                            "required_rule_type": 0,
+                            "choose_max_num": 1,
+                            "min_value": "",
+                            "can_note": false,
+                            "ref_pid": 1906,
+                            "name": "上市时节",
+                            "value_unit": [
+                                ""
+                            ],
+                            "max_value": "",
+                            "property_value_type": 0
+                        },
+                        {
+                            "is_sale": false,
+                            "is_important": true,
+                            "show_condition": null,
+                            "is_sku": false,
+                            "parent_spec_id": null,
+                            "values": [
+                                {
+                                    "vid": 13377,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "超薄",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13378,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "薄款",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13379,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "加厚",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13380,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "常规",
+                                    "group": null
+                                }
+                            ],
+                            "required_rule": null,
+                            "value_precision": 0,
+                            "input_max_num": 0,
+                            "required": false,
+                            "required_rule_type": 0,
+                            "choose_max_num": 1,
+                            "min_value": "",
+                            "can_note": false,
+                            "ref_pid": 341,
+                            "name": "厚薄",
+                            "value_unit": [
+                                ""
+                            ],
+                            "max_value": "",
+                            "property_value_type": 0
+                        },
+                        {
+                            "is_sale": false,
+                            "is_important": true,
+                            "show_condition": null,
+                            "is_sku": false,
+                            "parent_spec_id": null,
+                            "values": [
+                                {
+                                    "vid": 10513,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "荷叶边",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 10514,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "镂空",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 10517,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "亮丝",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 10537,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "扎染",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 10555,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "蕾丝",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13208,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "花边",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13221,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "糖果色",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13352,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "提花",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13357,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "磨毛",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13358,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "毛圈",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13359,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "织花",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13360,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "蝴蝶边",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13361,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "假透肉",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13362,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "吊带",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13363,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "堆堆袜",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13364,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "鱼嘴（露脚趾）",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 14301,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "银葱",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 14302,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "珠光",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13214,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "纯色",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 10512,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "破洞",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 774147,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "脚踩/踏",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 774148,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "袜套",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13188,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "刺绣",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 1165786,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "提耳",
+                                    "group": null
+                                }
+                            ],
+                            "required_rule": null,
+                            "value_precision": 0,
+                            "input_max_num": 0,
+                            "required": false,
+                            "required_rule_type": 0,
+                            "choose_max_num": 3,
+                            "min_value": "",
+                            "can_note": false,
+                            "ref_pid": 348,
+                            "name": "服装款式细节",
+                            "value_unit": [
+                                ""
+                            ],
+                            "max_value": "",
+                            "property_value_type": 0
+                        },
+                        {
+                            "is_sale": false,
+                            "is_important": false,
+                            "show_condition": null,
+                            "is_sku": false,
+                            "parent_spec_id": null,
+                            "values": [
+                                {
+                                    "vid": 10487,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "甜美",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 10495,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "简约",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 10499,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "性感",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 12892,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "运动",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13389,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "卡通",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13390,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "奢华",
+                                    "group": null
+                                }
+                            ],
+                            "required_rule": null,
+                            "value_precision": 0,
+                            "input_max_num": 0,
+                            "required": false,
+                            "required_rule_type": 0,
+                            "choose_max_num": 1,
+                            "min_value": "",
+                            "can_note": false,
+                            "ref_pid": 322,
+                            "name": "风格",
+                            "value_unit": [
+                                ""
+                            ],
+                            "max_value": "",
+                            "property_value_type": 0
+                        },
+                        {
+                            "is_sale": false,
+                            "is_important": false,
+                            "show_condition": null,
+                            "is_sku": false,
+                            "parent_spec_id": null,
+                            "values": [
+                                {
+                                    "vid": 30818,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "保暖",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13397,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "抗菌",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 30809,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "吸湿排汗",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 912733,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "防臭",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13409,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "隐形",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 912735,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "防勾丝",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 912734,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "美腿塑形",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 82566,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "防静电",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 2021663,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "提臀收腹",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 2021664,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "微压",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 2021665,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "不掉裆",
+                                    "group": null
+                                }
+                            ],
+                            "required_rule": null,
+                            "value_precision": 0,
+                            "input_max_num": 0,
+                            "required": false,
+                            "required_rule_type": 0,
+                            "choose_max_num": 1,
+                            "min_value": "",
+                            "can_note": false,
+                            "ref_pid": 351,
+                            "name": "功能",
+                            "value_unit": [
+                                ""
+                            ],
+                            "max_value": "",
+                            "property_value_type": 0
+                        },
+                        {
+                            "is_sale": false,
+                            "is_important": false,
+                            "show_condition": null,
+                            "is_sku": false,
+                            "parent_spec_id": null,
+                            "values": [
+                                {
+                                    "vid": 56754,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "纯色",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 56750,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "格子",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 56749,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "条纹",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 56751,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "圆点",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 855262,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "爱心",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 56755,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "豹纹",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 514943,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "字母",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 790579,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "数字",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 87554,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "植物花卉",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 87548,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "动物图案",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 56752,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "卡通动漫",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 98687,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "骷髅/骨头",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 912732,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "踩小人",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 920762,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "星星",
+                                    "group": null
+                                }
+                            ],
+                            "required_rule": null,
+                            "value_precision": 0,
+                            "input_max_num": 0,
+                            "required": false,
+                            "required_rule_type": 0,
+                            "choose_max_num": 1,
+                            "min_value": "",
+                            "can_note": false,
+                            "ref_pid": 750,
+                            "name": "图案",
+                            "value_unit": [
+                                ""
+                            ],
+                            "max_value": "",
+                            "property_value_type": 0
+                        },
+                        {
+                            "is_sale": false,
+                            "is_important": true,
+                            "show_condition": null,
+                            "is_sku": false,
+                            "parent_spec_id": null,
+                            "values": [
+                                {
+                                    "vid": 13286,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "男",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13287,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "女",
+                                    "group": null
+                                },
+                                {
+                                    "vid": 13059,
+                                    "parent_vids": null,
+                                    "spec_id": null,
+                                    "extend_info": null,
+                                    "value": "通用",
+                                    "group": null
+                                }
+                            ],
+                            "required_rule": null,
+                            "value_precision": 0,
+                            "input_max_num": 0,
+                            "required": false,
+                            "required_rule_type": 0,
+                            "choose_max_num": 1,
+                            "min_value": "",
+                            "can_note": false,
+                            "ref_pid": 340,
+                            "name": "适用性别",
+                            "value_unit": [
+                                ""
+                            ],
+                            "max_value": "",
+                            "property_value_type": 0
+                        },
+                        {
+                            "is_sale": true,
+                            "is_important": false,
+                            "show_condition": null,
+                            "is_sku": false,
+                            "parent_spec_id": 8640,
+                            "values": [
+                                {
+                                    "vid": 59500,
+                                    "parent_vids": null,
+                                    "spec_id": 54780,
+                                    "extend_info": "(255,255,255,1)",
+                                    "value": "白色",
+                                    "group": {
+                                        "name": "白色系",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 59501,
+                                    "parent_vids": null,
+                                    "spec_id": 12762277,
+                                    "extend_info": "(238,222,176,1)",
+                                    "value": "米白色",
+                                    "group": {
+                                        "name": "白色系",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 59502,
+                                    "parent_vids": null,
+                                    "spec_id": 12762278,
+                                    "extend_info": "(102,102,102,1)",
+                                    "value": "深灰色",
+                                    "group": {
+                                        "name": "灰色系",
+                                        "id": 2
+                                    }
+                                },
+                                {
+                                    "vid": 59503,
+                                    "parent_vids": null,
+                                    "spec_id": 155165,
+                                    "extend_info": "(228,228,228,1)",
+                                    "value": "浅灰色",
+                                    "group": {
+                                        "name": "灰色系",
+                                        "id": 2
+                                    }
+                                },
+                                {
+                                    "vid": 59504,
+                                    "parent_vids": null,
+                                    "spec_id": 83183614,
+                                    "extend_info": "(234,234,234,1)",
+                                    "value": "奶奶灰",
+                                    "group": {
+                                        "name": "灰色系",
+                                        "id": 2
+                                    }
+                                },
+                                {
+                                    "vid": 59505,
+                                    "parent_vids": null,
+                                    "spec_id": 119253,
+                                    "extend_info": "(128,128,128,1)",
+                                    "value": "灰色",
+                                    "group": {
+                                        "name": "灰色系",
+                                        "id": 2
+                                    }
+                                },
+                                {
+                                    "vid": 60460,
+                                    "parent_vids": null,
+                                    "spec_id": 63964849,
+                                    "extend_info": "(255,251,240,1)",
+                                    "value": "乳白色",
+                                    "group": {
+                                        "name": "白色系",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60461,
+                                    "parent_vids": null,
+                                    "spec_id": 63091474,
+                                    "extend_info": "(255,255,240,1)",
+                                    "value": "象牙白",
+                                    "group": {
+                                        "name": "白色系",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60462,
+                                    "parent_vids": null,
+                                    "spec_id": 63079585,
+                                    "extend_info": "(192,192,192,1)",
+                                    "value": "银色",
+                                    "group": {
+                                        "name": "灰色系",
+                                        "id": 2
+                                    }
+                                },
+                                {
+                                    "vid": 60463,
+                                    "parent_vids": null,
+                                    "spec_id": 89583982,
+                                    "extend_info": "(114,119,123,1)",
+                                    "value": "铅色",
+                                    "group": {
+                                        "name": "灰色系",
+                                        "id": 2
+                                    }
+                                },
+                                {
+                                    "vid": 60464,
+                                    "parent_vids": null,
+                                    "spec_id": 93488873,
+                                    "extend_info": "(112,128,144,1)",
+                                    "value": "石板灰",
+                                    "group": {
+                                        "name": "灰色系",
+                                        "id": 2
+                                    }
+                                },
+                                {
+                                    "vid": 60465,
+                                    "parent_vids": null,
+                                    "spec_id": 49751,
+                                    "extend_info": "(0,0,0,1)",
+                                    "value": "黑色",
+                                    "group": {
+                                        "name": "黑色系",
+                                        "id": 3
+                                    }
+                                },
+                                {
+                                    "vid": 60466,
+                                    "parent_vids": null,
+                                    "spec_id": 60366840,
+                                    "extend_info": "(255,117,0,1)",
+                                    "value": "桔红色",
+                                    "group": {
+                                        "name": "红色系",
+                                        "id": 4
+                                    }
+                                },
+                                {
+                                    "vid": 60467,
+                                    "parent_vids": null,
+                                    "spec_id": 49753,
+                                    "extend_info": "(223,27,118,1)",
+                                    "value": "玫红色",
+                                    "group": {
+                                        "name": "红色系",
+                                        "id": 4
+                                    }
+                                },
+                                {
+                                    "vid": 60468,
+                                    "parent_vids": null,
+                                    "spec_id": 130167,
+                                    "extend_info": "(255,182,193,1)",
+                                    "value": "粉红色",
+                                    "group": {
+                                        "name": "红色系",
+                                        "id": 4
+                                    }
+                                },
+                                {
+                                    "vid": 60469,
+                                    "parent_vids": null,
+                                    "spec_id": 74787780,
+                                    "extend_info": "(245,143,152,1)",
+                                    "value": "桃色",
+                                    "group": {
+                                        "name": "红色系",
+                                        "id": 4
+                                    }
+                                },
+                                {
+                                    "vid": 60470,
+                                    "parent_vids": null,
+                                    "spec_id": 89783276,
+                                    "extend_info": "(240,91,114,1)",
+                                    "value": "蔷薇色",
+                                    "group": {
+                                        "name": "红色系",
+                                        "id": 4
+                                    }
+                                },
+                                {
+                                    "vid": 60471,
+                                    "parent_vids": null,
+                                    "spec_id": 88212173,
+                                    "extend_info": "(255,20,147,1)",
+                                    "value": "深粉红",
+                                    "group": {
+                                        "name": "红色系",
+                                        "id": 4
+                                    }
+                                },
+                                {
+                                    "vid": 60472,
+                                    "parent_vids": null,
+                                    "spec_id": 78990926,
+                                    "extend_info": "(179,66,74,1)",
+                                    "value": "胭脂色",
+                                    "group": {
+                                        "name": "红色系",
+                                        "id": 4
+                                    }
+                                },
+                                {
+                                    "vid": 60473,
+                                    "parent_vids": null,
+                                    "spec_id": 24503179197,
+                                    "extend_info": "(255,0,0,1)",
+                                    "value": "红色",
+                                    "group": {
+                                        "name": "红色系",
+                                        "id": 4
+                                    }
+                                },
+                                {
+                                    "vid": 60474,
+                                    "parent_vids": null,
+                                    "spec_id": 62303212,
+                                    "extend_info": "(238,208,216,1)",
+                                    "value": "藕色",
+                                    "group": {
+                                        "name": "红色系",
+                                        "id": 4
+                                    }
+                                },
+                                {
+                                    "vid": 60475,
+                                    "parent_vids": null,
+                                    "spec_id": 62513835,
+                                    "extend_info": "(240,86,84,1)",
+                                    "value": "西瓜红",
+                                    "group": {
+                                        "name": "红色系",
+                                        "id": 4
+                                    }
+                                },
+                                {
+                                    "vid": 60476,
+                                    "parent_vids": null,
+                                    "spec_id": 107533,
+                                    "extend_info": "(153,0,0,1)",
+                                    "value": "酒红色",
+                                    "group": {
+                                        "name": "红色系",
+                                        "id": 4
+                                    }
+                                },
+                                {
+                                    "vid": 60477,
+                                    "parent_vids": null,
+                                    "spec_id": 102952331,
+                                    "extend_info": "(220,20,60,1)",
+                                    "value": "猩红色",
+                                    "group": {
+                                        "name": "红色系",
+                                        "id": 4
+                                    }
+                                },
+                                {
+                                    "vid": 60478,
+                                    "parent_vids": null,
+                                    "spec_id": 74856455,
+                                    "extend_info": "(255,105,180,1)",
+                                    "value": "亮粉色",
+                                    "group": {
+                                        "name": "红色系",
+                                        "id": 4
+                                    }
+                                },
+                                {
+                                    "vid": 60479,
+                                    "parent_vids": null,
+                                    "spec_id": 74374321,
+                                    "extend_info": "(255,0,255,1)",
+                                    "value": "洋红色",
+                                    "group": {
+                                        "name": "红色系",
+                                        "id": 4
+                                    }
+                                },
+                                {
+                                    "vid": 60480,
+                                    "parent_vids": null,
+                                    "spec_id": 75292353,
+                                    "extend_info": "(255,127,80,1)",
+                                    "value": "珊瑚色",
+                                    "group": {
+                                        "name": "红色系",
+                                        "id": 4
+                                    }
+                                },
+                                {
+                                    "vid": 60481,
+                                    "parent_vids": null,
+                                    "spec_id": 73830150,
+                                    "extend_info": "(255,69,0,1)",
+                                    "value": "橙红色",
+                                    "group": {
+                                        "name": "红色系",
+                                        "id": 4
+                                    }
+                                },
+                                {
+                                    "vid": 60482,
+                                    "parent_vids": null,
+                                    "spec_id": 73542843,
+                                    "extend_info": "(178,34,34,1)",
+                                    "value": "砖红色",
+                                    "group": {
+                                        "name": "红色系",
+                                        "id": 4
+                                    }
+                                },
+                                {
+                                    "vid": 60483,
+                                    "parent_vids": null,
+                                    "spec_id": 62517177,
+                                    "extend_info": "(139,0,0,1)",
+                                    "value": "深红色",
+                                    "group": {
+                                        "name": "红色系",
+                                        "id": 4
+                                    }
+                                },
+                                {
+                                    "vid": 60484,
+                                    "parent_vids": null,
+                                    "spec_id": 123384,
+                                    "extend_info": "(195,176,145,1)",
+                                    "value": "卡其色",
+                                    "group": {
+                                        "name": "黄色系",
+                                        "id": 5
+                                    }
+                                },
+                                {
+                                    "vid": 60485,
+                                    "parent_vids": null,
+                                    "spec_id": 62302540,
+                                    "extend_info": "(255,199,115,1)",
+                                    "value": "姜黄色",
+                                    "group": {
+                                        "name": "黄色系",
+                                        "id": 5
+                                    }
+                                },
+                                {
+                                    "vid": 60486,
+                                    "parent_vids": null,
+                                    "spec_id": 64709513,
+                                    "extend_info": "(255,255,1,1)",
+                                    "value": "明黄色",
+                                    "group": {
+                                        "name": "黄色系",
+                                        "id": 5
+                                    }
+                                },
+                                {
+                                    "vid": 60487,
+                                    "parent_vids": null,
+                                    "spec_id": 62301142,
+                                    "extend_info": "(247,238,214,1)",
+                                    "value": "杏色",
+                                    "group": {
+                                        "name": "黄色系",
+                                        "id": 5
+                                    }
+                                },
+                                {
+                                    "vid": 60488,
+                                    "parent_vids": null,
+                                    "spec_id": 63795577,
+                                    "extend_info": "(255,236,67,1)",
+                                    "value": "柠檬黄",
+                                    "group": {
+                                        "name": "黄色系",
+                                        "id": 5
+                                    }
+                                },
+                                {
+                                    "vid": 60489,
+                                    "parent_vids": null,
+                                    "spec_id": 62483034,
+                                    "extend_info": "(255,165,0,1)",
+                                    "value": "桔色",
+                                    "group": {
+                                        "name": "黄色系",
+                                        "id": 5
+                                    }
+                                },
+                                {
+                                    "vid": 60490,
+                                    "parent_vids": null,
+                                    "spec_id": 72918868,
+                                    "extend_info": "(234,255,86,1)",
+                                    "value": "荧光黄",
+                                    "group": {
+                                        "name": "黄色系",
+                                        "id": 5
+                                    }
+                                },
+                                {
+                                    "vid": 60491,
+                                    "parent_vids": null,
+                                    "spec_id": 63913938,
+                                    "extend_info": "(255,215,0,1)",
+                                    "value": "金色",
+                                    "group": {
+                                        "name": "黄色系",
+                                        "id": 5
+                                    }
+                                },
+                                {
+                                    "vid": 60492,
+                                    "parent_vids": null,
+                                    "spec_id": 63908066,
+                                    "extend_info": "(247,247,209,1)",
+                                    "value": "香槟色",
+                                    "group": {
+                                        "name": "黄色系",
+                                        "id": 5
+                                    }
+                                },
+                                {
+                                    "vid": 60493,
+                                    "parent_vids": null,
+                                    "spec_id": 49755,
+                                    "extend_info": "(255,255,0,1)",
+                                    "value": "黄色",
+                                    "group": {
+                                        "name": "黄色系",
+                                        "id": 5
+                                    }
+                                },
+                                {
+                                    "vid": 60494,
+                                    "parent_vids": null,
+                                    "spec_id": 62302544,
+                                    "extend_info": "(255,255,224,1)",
+                                    "value": "浅黄色",
+                                    "group": {
+                                        "name": "黄色系",
+                                        "id": 5
+                                    }
+                                },
+                                {
+                                    "vid": 60495,
+                                    "parent_vids": null,
+                                    "spec_id": 73857922,
+                                    "extend_info": "(245,222,179,1)",
+                                    "value": "小麦色",
+                                    "group": {
+                                        "name": "黄色系",
+                                        "id": 5
+                                    }
+                                },
+                                {
+                                    "vid": 60496,
+                                    "parent_vids": null,
+                                    "spec_id": 130166,
+                                    "extend_info": "(255,165,0,1)",
+                                    "value": "橙色",
+                                    "group": {
+                                        "name": "黄色系",
+                                        "id": 5
+                                    }
+                                },
+                                {
+                                    "vid": 60497,
+                                    "parent_vids": null,
+                                    "spec_id": 29132906610,
+                                    "extend_info": "(237,189,101,1)",
+                                    "value": "土黄色",
+                                    "group": {
+                                        "name": "黄色系",
+                                        "id": 5
+                                    }
+                                },
+                                {
+                                    "vid": 60498,
+                                    "parent_vids": null,
+                                    "spec_id": 111007722,
+                                    "extend_info": "(255,194,14,1)",
+                                    "value": "向日葵色",
+                                    "group": {
+                                        "name": "黄色系",
+                                        "id": 5
+                                    }
+                                },
+                                {
+                                    "vid": 60499,
+                                    "parent_vids": null,
+                                    "spec_id": 64563265,
+                                    "extend_info": "(254,220,189,1)",
+                                    "value": "肤色",
+                                    "group": {
+                                        "name": "黄色系",
+                                        "id": 5
+                                    }
+                                },
+                                {
+                                    "vid": 60500,
+                                    "parent_vids": null,
+                                    "spec_id": 62508450,
+                                    "extend_info": "(93,118,42,1)",
+                                    "value": "军绿色",
+                                    "group": {
+                                        "name": "绿色系",
+                                        "id": 6
+                                    }
+                                },
+                                {
+                                    "vid": 60501,
+                                    "parent_vids": null,
+                                    "spec_id": 62302549,
+                                    "extend_info": "(0,100,0,1)",
+                                    "value": "墨绿色",
+                                    "group": {
+                                        "name": "绿色系",
+                                        "id": 6
+                                    }
+                                },
+                                {
+                                    "vid": 60502,
+                                    "parent_vids": null,
+                                    "spec_id": 123383,
+                                    "extend_info": "(144,238,144,1)",
+                                    "value": "浅绿色",
+                                    "group": {
+                                        "name": "绿色系",
+                                        "id": 6
+                                    }
+                                },
+                                {
+                                    "vid": 60503,
+                                    "parent_vids": null,
+                                    "spec_id": 69264,
+                                    "extend_info": "(0,128,0,1)",
+                                    "value": "绿色",
+                                    "group": {
+                                        "name": "绿色系",
+                                        "id": 6
+                                    }
+                                },
+                                {
+                                    "vid": 60504,
+                                    "parent_vids": null,
+                                    "spec_id": 72907717,
+                                    "extend_info": "(10,163,68,1)",
+                                    "value": "翠绿色",
+                                    "group": {
+                                        "name": "绿色系",
+                                        "id": 6
+                                    }
+                                },
+                                {
+                                    "vid": 60506,
+                                    "parent_vids": null,
+                                    "spec_id": 147527,
+                                    "extend_info": "(35,250,7,1)",
+                                    "value": "荧光绿",
+                                    "group": {
+                                        "name": "绿色系",
+                                        "id": 6
+                                    }
+                                },
+                                {
+                                    "vid": 60507,
+                                    "parent_vids": null,
+                                    "spec_id": 76030479,
+                                    "extend_info": "(173,255,47,1)",
+                                    "value": "绿黄色",
+                                    "group": {
+                                        "name": "绿色系",
+                                        "id": 6
+                                    }
+                                },
+                                {
+                                    "vid": 60508,
+                                    "parent_vids": null,
+                                    "spec_id": 130165,
+                                    "extend_info": "(124,252,0,1)",
+                                    "value": "草绿色",
+                                    "group": {
+                                        "name": "绿色系",
+                                        "id": 6
+                                    }
+                                },
+                                {
+                                    "vid": 60509,
+                                    "parent_vids": null,
+                                    "spec_id": 22707317249,
+                                    "extend_info": "(154,205,50,1)",
+                                    "value": "黄绿色",
+                                    "group": {
+                                        "name": "绿色系",
+                                        "id": 6
+                                    }
+                                },
+                                {
+                                    "vid": 60510,
+                                    "parent_vids": null,
+                                    "spec_id": 79646691,
+                                    "extend_info": "(127,255,212,1)",
+                                    "value": "碧绿",
+                                    "group": {
+                                        "name": "绿色系",
+                                        "id": 6
+                                    }
+                                },
+                                {
+                                    "vid": 60511,
+                                    "parent_vids": null,
+                                    "spec_id": 81987219,
+                                    "extend_info": "(64,224,208,1)",
+                                    "value": "绿宝石",
+                                    "group": {
+                                        "name": "绿色系",
+                                        "id": 6
+                                    }
+                                },
+                                {
+                                    "vid": 60512,
+                                    "parent_vids": null,
+                                    "spec_id": 76068549,
+                                    "extend_info": "(46,139,87,1)",
+                                    "value": "海洋绿",
+                                    "group": {
+                                        "name": "绿色系",
+                                        "id": 6
+                                    }
+                                },
+                                {
+                                    "vid": 60513,
+                                    "parent_vids": null,
+                                    "spec_id": 74220645,
+                                    "extend_info": "(128,128,0,1)",
+                                    "value": "橄榄色",
+                                    "group": {
+                                        "name": "绿色系",
+                                        "id": 6
+                                    }
+                                },
+                                {
+                                    "vid": 60514,
+                                    "parent_vids": null,
+                                    "spec_id": 71521218,
+                                    "extend_info": "(78,96,20,1)",
+                                    "value": "橄榄绿",
+                                    "group": {
+                                        "name": "绿色系",
+                                        "id": 6
+                                    }
+                                },
+                                {
+                                    "vid": 60515,
+                                    "parent_vids": null,
+                                    "spec_id": 74571197,
+                                    "extend_info": "(183,186,107,1)",
+                                    "value": "抹茶色",
+                                    "group": {
+                                        "name": "绿色系",
+                                        "id": 6
+                                    }
+                                },
+                                {
+                                    "vid": 60516,
+                                    "parent_vids": null,
+                                    "spec_id": 49750,
+                                    "extend_info": "(68,206,246,1)",
+                                    "value": "天蓝色",
+                                    "group": {
+                                        "name": "蓝色系",
+                                        "id": 7
+                                    }
+                                },
+                                {
+                                    "vid": 60517,
+                                    "parent_vids": null,
+                                    "spec_id": 62302554,
+                                    "extend_info": "(0,164,197,1)",
+                                    "value": "孔雀蓝",
+                                    "group": {
+                                        "name": "蓝色系",
+                                        "id": 7
+                                    }
+                                },
+                                {
+                                    "vid": 60518,
+                                    "parent_vids": null,
+                                    "spec_id": 107534,
+                                    "extend_info": "(65,105,225,1)",
+                                    "value": "宝蓝色",
+                                    "group": {
+                                        "name": "蓝色系",
+                                        "id": 7
+                                    }
+                                },
+                                {
+                                    "vid": 60519,
+                                    "parent_vids": null,
+                                    "spec_id": 147596,
+                                    "extend_info": "(210,240,244,1)",
+                                    "value": "浅蓝色",
+                                    "group": {
+                                        "name": "蓝色系",
+                                        "id": 7
+                                    }
+                                },
+                                {
+                                    "vid": 60520,
+                                    "parent_vids": null,
+                                    "spec_id": 54779,
+                                    "extend_info": "(0,0,255,1)",
+                                    "value": "蓝色",
+                                    "group": {
+                                        "name": "蓝色系",
+                                        "id": 7
+                                    }
+                                },
+                                {
+                                    "vid": 60521,
+                                    "parent_vids": null,
+                                    "spec_id": 62302614,
+                                    "extend_info": "(48,223,243,1)",
+                                    "value": "湖蓝色",
+                                    "group": {
+                                        "name": "蓝色系",
+                                        "id": 7
+                                    }
+                                },
+                                {
+                                    "vid": 60522,
+                                    "parent_vids": null,
+                                    "spec_id": 227501671,
+                                    "extend_info": "(176,196,222,1)",
+                                    "value": "亮钢蓝",
+                                    "group": {
+                                        "name": "蓝色系",
+                                        "id": 7
+                                    }
+                                },
+                                {
+                                    "vid": 60523,
+                                    "parent_vids": null,
+                                    "spec_id": 87688330,
+                                    "extend_info": "(30,144,255,1)",
+                                    "value": "道奇蓝",
+                                    "group": {
+                                        "name": "蓝色系",
+                                        "id": 7
+                                    }
+                                },
+                                {
+                                    "vid": 60525,
+                                    "parent_vids": null,
+                                    "spec_id": 74911361,
+                                    "extend_info": "(0,191,255,1)",
+                                    "value": "深天蓝",
+                                    "group": {
+                                        "name": "蓝色系",
+                                        "id": 7
+                                    }
+                                },
+                                {
+                                    "vid": 60526,
+                                    "parent_vids": null,
+                                    "spec_id": 1211571855,
+                                    "extend_info": "(95,158,160,1)",
+                                    "value": "军服蓝",
+                                    "group": {
+                                        "name": "蓝色系",
+                                        "id": 7
+                                    }
+                                },
+                                {
+                                    "vid": 60527,
+                                    "parent_vids": null,
+                                    "spec_id": 74763076,
+                                    "extend_info": "(240,255,255,1)",
+                                    "value": "蔚蓝色",
+                                    "group": {
+                                        "name": "蓝色系",
+                                        "id": 7
+                                    }
+                                },
+                                {
+                                    "vid": 60528,
+                                    "parent_vids": null,
+                                    "spec_id": 79817938,
+                                    "extend_info": "(224,255,255,1)",
+                                    "value": "淡青色",
+                                    "group": {
+                                        "name": "蓝色系",
+                                        "id": 7
+                                    }
+                                },
+                                {
+                                    "vid": 60529,
+                                    "parent_vids": null,
+                                    "spec_id": 130176,
+                                    "extend_info": "(0,255,255,1)",
+                                    "value": "青色",
+                                    "group": {
+                                        "name": "蓝色系",
+                                        "id": 7
+                                    }
+                                },
+                                {
+                                    "vid": 60530,
+                                    "parent_vids": null,
+                                    "spec_id": 276917889,
+                                    "extend_info": "(0,139,139,1)",
+                                    "value": "暗青色",
+                                    "group": {
+                                        "name": "蓝色系",
+                                        "id": 7
+                                    }
+                                },
+                                {
+                                    "vid": 60531,
+                                    "parent_vids": null,
+                                    "spec_id": 123399,
+                                    "extend_info": "(46,78,126,1)",
+                                    "value": "藏青色",
+                                    "group": {
+                                        "name": "蓝色系",
+                                        "id": 7
+                                    }
+                                },
+                                {
+                                    "vid": 60532,
+                                    "parent_vids": null,
+                                    "spec_id": 64585632,
+                                    "extend_info": "(176,224,230,1)",
+                                    "value": "粉蓝色",
+                                    "group": {
+                                        "name": "蓝色系",
+                                        "id": 7
+                                    }
+                                },
+                                {
+                                    "vid": 60534,
+                                    "parent_vids": null,
+                                    "spec_id": 49754,
+                                    "extend_info": "(237,224,230,1)",
+                                    "value": "浅紫色",
+                                    "group": {
+                                        "name": "紫色系",
+                                        "id": 8
+                                    }
+                                },
+                                {
+                                    "vid": 60535,
+                                    "parent_vids": null,
+                                    "spec_id": 62513261,
+                                    "extend_info": "(67,6,83,1)",
+                                    "value": "深紫色",
+                                    "group": {
+                                        "name": "紫色系",
+                                        "id": 8
+                                    }
+                                },
+                                {
+                                    "vid": 60536,
+                                    "parent_vids": null,
+                                    "spec_id": 62517120,
+                                    "extend_info": "(139,0,98,1)",
+                                    "value": "紫红色",
+                                    "group": {
+                                        "name": "紫色系",
+                                        "id": 8
+                                    }
+                                },
+                                {
+                                    "vid": 60537,
+                                    "parent_vids": null,
+                                    "spec_id": 22707318009,
+                                    "extend_info": "(238,130,238,1)",
+                                    "value": "紫罗兰",
+                                    "group": {
+                                        "name": "紫色系",
+                                        "id": 8
+                                    }
+                                },
+                                {
+                                    "vid": 60538,
+                                    "parent_vids": null,
+                                    "spec_id": 122298673,
+                                    "extend_info": "(148,0,211,1)",
+                                    "value": "暗紫罗兰",
+                                    "group": {
+                                        "name": "紫色系",
+                                        "id": 8
+                                    }
+                                },
+                                {
+                                    "vid": 60539,
+                                    "parent_vids": null,
+                                    "spec_id": 130179,
+                                    "extend_info": "(128,0,128,1)",
+                                    "value": "紫色",
+                                    "group": {
+                                        "name": "紫色系",
+                                        "id": 8
+                                    }
+                                },
+                                {
+                                    "vid": 60540,
+                                    "parent_vids": null,
+                                    "spec_id": 1211571859,
+                                    "extend_info": "(139,0,139,1)",
+                                    "value": "深洋红色",
+                                    "group": {
+                                        "name": "紫色系",
+                                        "id": 8
+                                    }
+                                },
+                                {
+                                    "vid": 60541,
+                                    "parent_vids": null,
+                                    "spec_id": 77560707,
+                                    "extend_info": "(75,0,130,1)",
+                                    "value": "紫兰色",
+                                    "group": {
+                                        "name": "紫色系",
+                                        "id": 8
+                                    }
+                                },
+                                {
+                                    "vid": 60543,
+                                    "parent_vids": null,
+                                    "spec_id": 62302863,
+                                    "extend_info": "(96,57,18,1)",
+                                    "value": "咖啡色",
+                                    "group": {
+                                        "name": "棕色系",
+                                        "id": 9
+                                    }
+                                },
+                                {
+                                    "vid": 60544,
+                                    "parent_vids": null,
+                                    "spec_id": 63079598,
+                                    "extend_info": "(210,105,30,1)",
+                                    "value": "巧克力色",
+                                    "group": {
+                                        "name": "棕色系",
+                                        "id": 9
+                                    }
+                                },
+                                {
+                                    "vid": 60545,
+                                    "parent_vids": null,
+                                    "spec_id": 64592407,
+                                    "extend_info": "(128,0,0,1)",
+                                    "value": "栗色",
+                                    "group": {
+                                        "name": "棕色系",
+                                        "id": 9
+                                    }
+                                },
+                                {
+                                    "vid": 60546,
+                                    "parent_vids": null,
+                                    "spec_id": 62589717,
+                                    "extend_info": "(189,183,107,1)",
+                                    "value": "深卡其布色",
+                                    "group": {
+                                        "name": "棕色系",
+                                        "id": 9
+                                    }
+                                },
+                                {
+                                    "vid": 60547,
+                                    "parent_vids": null,
+                                    "spec_id": 66860170,
+                                    "extend_info": "(179,92,68,1)",
+                                    "value": "浅棕色",
+                                    "group": {
+                                        "name": "棕色系",
+                                        "id": 9
+                                    }
+                                },
+                                {
+                                    "vid": 60548,
+                                    "parent_vids": null,
+                                    "spec_id": 66860163,
+                                    "extend_info": "(124,75,0,1)",
+                                    "value": "深棕色",
+                                    "group": {
+                                        "name": "棕色系",
+                                        "id": 9
+                                    }
+                                },
+                                {
+                                    "vid": 60549,
+                                    "parent_vids": null,
+                                    "spec_id": 72099128,
+                                    "extend_info": "(133,91,0,1)",
+                                    "value": "褐色",
+                                    "group": {
+                                        "name": "棕色系",
+                                        "id": 9
+                                    }
+                                },
+                                {
+                                    "vid": 60550,
+                                    "parent_vids": null,
+                                    "spec_id": 66858271,
+                                    "extend_info": "(219,147,112,1)",
+                                    "value": "棕褐色",
+                                    "group": {
+                                        "name": "棕色系",
+                                        "id": 9
+                                    }
+                                },
+                                {
+                                    "vid": 60551,
+                                    "parent_vids": null,
+                                    "spec_id": 62302623,
+                                    "extend_info": "(168,132,98,1)",
+                                    "value": "驼色",
+                                    "group": {
+                                        "name": "棕色系",
+                                        "id": 9
+                                    }
+                                },
+                                {
+                                    "vid": 60552,
+                                    "parent_vids": null,
+                                    "spec_id": 1211571861,
+                                    "extend_info": "(111,79,40,1)",
+                                    "value": "橄榄棕色",
+                                    "group": {
+                                        "name": "棕色系",
+                                        "id": 9
+                                    }
+                                },
+                                {
+                                    "vid": 60553,
+                                    "parent_vids": null,
+                                    "spec_id": 61701873,
+                                    "extend_info": "(89,35,33,1)",
+                                    "value": "红褐色",
+                                    "group": {
+                                        "name": "棕色系",
+                                        "id": 9
+                                    }
+                                },
+                                {
+                                    "vid": 60554,
+                                    "parent_vids": null,
+                                    "spec_id": 73901958,
+                                    "extend_info": "(210,180,140,1)",
+                                    "value": "茶色",
+                                    "group": {
+                                        "name": "棕色系",
+                                        "id": 9
+                                    }
+                                },
+                                {
+                                    "vid": 60555,
+                                    "parent_vids": null,
+                                    "spec_id": 73555594,
+                                    "extend_info": "(182,153,104,1)",
+                                    "value": "亚麻色",
+                                    "group": {
+                                        "name": "棕色系",
+                                        "id": 9
+                                    }
+                                },
+                                {
+                                    "vid": 60556,
+                                    "parent_vids": null,
+                                    "spec_id": 1211571862,
+                                    "extend_info": "(160,82,45,1)",
+                                    "value": "黄土赭色",
+                                    "group": {
+                                        "name": "棕色系",
+                                        "id": 9
+                                    }
+                                },
+                                {
+                                    "vid": 60557,
+                                    "parent_vids": null,
+                                    "spec_id": 73890504,
+                                    "extend_info": "(183,111,64,1)",
+                                    "value": "琥珀色",
+                                    "group": {
+                                        "name": "棕色系",
+                                        "id": 9
+                                    }
+                                },
+                                {
+                                    "vid": 60558,
+                                    "parent_vids": null,
+                                    "spec_id": 1211571865,
+                                    "extend_info": "(143,75,74,1)",
+                                    "value": "小豆色",
+                                    "group": {
+                                        "name": "棕色系",
+                                        "id": 9
+                                    }
+                                },
+                                {
+                                    "vid": 60559,
+                                    "parent_vids": null,
+                                    "spec_id": 72599301,
+                                    "extend_info": "(176,119,72,1)",
+                                    "value": "焦糖色",
+                                    "group": {
+                                        "name": "棕色系",
+                                        "id": 9
+                                    }
+                                },
+                                {
+                                    "vid": 60560,
+                                    "parent_vids": null,
+                                    "spec_id": 75624207,
+                                    "extend_info": "(218,118,91,1)",
+                                    "value": "肉桂色",
+                                    "group": {
+                                        "name": "棕色系",
+                                        "id": 9
+                                    }
+                                },
+                                {
+                                    "vid": 60561,
+                                    "parent_vids": null,
+                                    "spec_id": 146680947,
+                                    "extend_info": "(188,143,143,1)",
+                                    "value": "玫瑰棕色",
+                                    "group": {
+                                        "name": "棕色系",
+                                        "id": 9
+                                    }
+                                },
+                                {
+                                    "vid": 60562,
+                                    "parent_vids": null,
+                                    "spec_id": 63875795,
+                                    "extend_info": "(202,133,106,1)",
+                                    "value": "玫瑰金",
+                                    "group": {
+                                        "name": "棕色系",
+                                        "id": 9
+                                    }
+                                },
+                                {
+                                    "vid": 60563,
+                                    "parent_vids": null,
+                                    "spec_id": 29132896837,
+                                    "extend_info": "(184,115,51,1)",
+                                    "value": "古铜色",
+                                    "group": {
+                                        "name": "棕色系",
+                                        "id": 9
+                                    }
+                                },
+                                {
+                                    "vid": 60564,
+                                    "parent_vids": null,
+                                    "spec_id": 64114056,
+                                    "extend_info": "(0,0,0,0)",
+                                    "value": "透明",
+                                    "group": {
+                                        "name": "透明系",
+                                        "id": 10
+                                    }
+                                },
+                                {
+                                    "vid": 60645,
+                                    "parent_vids": null,
+                                    "spec_id": 172866273,
+                                    "extend_info": "(230,230,250,1)",
+                                    "value": "薰衣草淡紫",
+                                    "group": {
+                                        "name": "紫色系",
+                                        "id": 8
+                                    }
+                                },
+                                {
+                                    "vid": 74833,
+                                    "parent_vids": null,
+                                    "spec_id": 73568117,
+                                    "extend_info": "(24,116,131,1)",
+                                    "value": "孔雀绿",
+                                    "group": {
+                                        "name": "绿色系",
+                                        "id": 6
+                                    }
+                                },
+                                {
+                                    "vid": 74834,
+                                    "parent_vids": null,
+                                    "spec_id": 147713,
+                                    "extend_info": "(255,255,255,0)",
+                                    "value": "花色",
+                                    "group": {
+                                        "name": "花色系",
+                                        "id": 12
+                                    }
+                                },
+                                {
+                                    "vid": 841266,
+                                    "parent_vids": null,
+                                    "spec_id": 63875782,
+                                    "extend_info": "(192,192,192,1)",
+                                    "value": "银灰色",
+                                    "group": {
+                                        "name": "灰色系",
+                                        "id": 2
+                                    }
+                                },
+                                {
+                                    "vid": 877086,
+                                    "parent_vids": null,
+                                    "spec_id": 75294429,
+                                    "extend_info": "(169,169,169,1)",
+                                    "value": "深空灰",
+                                    "group": {
+                                        "name": "灰色系",
+                                        "id": 2
+                                    }
+                                },
+                                {
+                                    "vid": 1018850,
+                                    "parent_vids": null,
+                                    "spec_id": 71425989,
+                                    "extend_info": "(105,103,100,1)",
+                                    "value": "石墨色",
+                                    "group": {
+                                        "name": "灰色系",
+                                        "id": 2
+                                    }
+                                },
+                                {
+                                    "vid": 1018852,
+                                    "parent_vids": null,
+                                    "spec_id": 62470911,
+                                    "extend_info": "(76,104,116,1)",
+                                    "value": "海蓝色",
+                                    "group": {
+                                        "name": "蓝色系",
+                                        "id": 7
+                                    }
+                                },
+                                {
+                                    "vid": 1778713,
+                                    "parent_vids": null,
+                                    "spec_id": 84387985,
+                                    "extend_info": "(147,171,165,1)",
+                                    "value": "原野绿",
+                                    "group": {
+                                        "name": "绿色系",
+                                        "id": 6
+                                    }
+                                }
+                            ],
+                            "required_rule": null,
+                            "value_precision": 0,
+                            "input_max_num": 100,
+                            "required": false,
+                            "required_rule_type": null,
+                            "choose_max_num": 2147483647,
+                            "min_value": "",
+                            "can_note": true,
+                            "ref_pid": 843,
+                            "name": "颜色分类",
+                            "value_unit": [
+                                ""
+                            ],
+                            "max_value": "160",
+                            "property_value_type": 0
+                        },
+                        {
+                            "is_sale": true,
+                            "is_important": false,
+                            "show_condition": null,
+                            "is_sku": false,
+                            "parent_spec_id": 1226,
+                            "values": [
+                                {
+                                    "vid": 59516,
+                                    "parent_vids": null,
+                                    "spec_id": 218376,
+                                    "extend_info": "",
+                                    "value": "XXS",
+                                    "group": {
+                                        "name": "中国码",
+                                        "id": 2
+                                    }
+                                },
+                                {
+                                    "vid": 59517,
+                                    "parent_vids": null,
+                                    "spec_id": 2254,
+                                    "extend_info": "",
+                                    "value": "XS",
+                                    "group": {
+                                        "name": "中国码",
+                                        "id": 2
+                                    }
+                                },
+                                {
+                                    "vid": 59518,
+                                    "parent_vids": null,
+                                    "spec_id": 1478,
+                                    "extend_info": "",
+                                    "value": "S",
+                                    "group": {
+                                        "name": "中国码",
+                                        "id": 2
+                                    }
+                                },
+                                {
+                                    "vid": 59515,
+                                    "parent_vids": null,
+                                    "spec_id": 1479,
+                                    "extend_info": "",
+                                    "value": "M",
+                                    "group": {
+                                        "name": "中国码",
+                                        "id": 2
+                                    }
+                                },
+                                {
+                                    "vid": 59521,
+                                    "parent_vids": null,
+                                    "spec_id": 1227,
+                                    "extend_info": "",
+                                    "value": "L",
+                                    "group": {
+                                        "name": "中国码",
+                                        "id": 2
+                                    }
+                                },
+                                {
+                                    "vid": 59522,
+                                    "parent_vids": null,
+                                    "spec_id": 1228,
+                                    "extend_info": "",
+                                    "value": "XL",
+                                    "group": {
+                                        "name": "中国码",
+                                        "id": 2
+                                    }
+                                },
+                                {
+                                    "vid": 59514,
+                                    "parent_vids": null,
+                                    "spec_id": 3566,
+                                    "extend_info": "",
+                                    "value": "2XL",
+                                    "group": {
+                                        "name": "中国码",
+                                        "id": 2
+                                    }
+                                },
+                                {
+                                    "vid": 59520,
+                                    "parent_vids": null,
+                                    "spec_id": 3567,
+                                    "extend_info": "",
+                                    "value": "3XL",
+                                    "group": {
+                                        "name": "中国码",
+                                        "id": 2
+                                    }
+                                },
+                                {
+                                    "vid": 59523,
+                                    "parent_vids": null,
+                                    "spec_id": 3611,
+                                    "extend_info": "",
+                                    "value": "4XL",
+                                    "group": {
+                                        "name": "中国码",
+                                        "id": 2
+                                    }
+                                },
+                                {
+                                    "vid": 59519,
+                                    "parent_vids": null,
+                                    "spec_id": 3612,
+                                    "extend_info": "",
+                                    "value": "5XL",
+                                    "group": {
+                                        "name": "中国码",
+                                        "id": 2
+                                    }
+                                },
+                                {
+                                    "vid": 59524,
+                                    "parent_vids": null,
+                                    "spec_id": 20606,
+                                    "extend_info": "",
+                                    "value": "6XL",
+                                    "group": {
+                                        "name": "中国码",
+                                        "id": 2
+                                    }
+                                },
+                                {
+                                    "vid": 60154,
+                                    "parent_vids": null,
+                                    "spec_id": 3208524,
+                                    "extend_info": "",
+                                    "value": "150/56A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60155,
+                                    "parent_vids": null,
+                                    "spec_id": 4018331,
+                                    "extend_info": "",
+                                    "value": "155/60A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60599,
+                                    "parent_vids": null,
+                                    "spec_id": 6385239,
+                                    "extend_info": "",
+                                    "value": "155/62A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60156,
+                                    "parent_vids": null,
+                                    "spec_id": 993633,
+                                    "extend_info": "",
+                                    "value": "160/64A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60600,
+                                    "parent_vids": null,
+                                    "spec_id": 243509,
+                                    "extend_info": "",
+                                    "value": "160/66A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60158,
+                                    "parent_vids": null,
+                                    "spec_id": 243511,
+                                    "extend_info": "",
+                                    "value": "165/68A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60601,
+                                    "parent_vids": null,
+                                    "spec_id": 3226260,
+                                    "extend_info": "",
+                                    "value": "165/70A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60159,
+                                    "parent_vids": null,
+                                    "spec_id": 13491667,
+                                    "extend_info": "",
+                                    "value": "170/70A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60160,
+                                    "parent_vids": null,
+                                    "spec_id": 243510,
+                                    "extend_info": "",
+                                    "value": "170/72A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60602,
+                                    "parent_vids": null,
+                                    "spec_id": 973092,
+                                    "extend_info": "",
+                                    "value": "170/74A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60603,
+                                    "parent_vids": null,
+                                    "spec_id": 176902,
+                                    "extend_info": "",
+                                    "value": "170/76A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60604,
+                                    "parent_vids": null,
+                                    "spec_id": 973093,
+                                    "extend_info": "",
+                                    "value": "170/78A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60162,
+                                    "parent_vids": null,
+                                    "spec_id": 439449,
+                                    "extend_info": "",
+                                    "value": "175/74A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60163,
+                                    "parent_vids": null,
+                                    "spec_id": 176903,
+                                    "extend_info": "",
+                                    "value": "175/76A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60164,
+                                    "parent_vids": null,
+                                    "spec_id": 177038,
+                                    "extend_info": "",
+                                    "value": "175/80A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60607,
+                                    "parent_vids": null,
+                                    "spec_id": 973094,
+                                    "extend_info": "",
+                                    "value": "175/82A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60608,
+                                    "parent_vids": null,
+                                    "spec_id": 973095,
+                                    "extend_info": "",
+                                    "value": "175/84A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60609,
+                                    "parent_vids": null,
+                                    "spec_id": 1193301,
+                                    "extend_info": "",
+                                    "value": "175/86A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60166,
+                                    "parent_vids": null,
+                                    "spec_id": 35407299,
+                                    "extend_info": "",
+                                    "value": "180/78A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60167,
+                                    "parent_vids": null,
+                                    "spec_id": 34845719,
+                                    "extend_info": "",
+                                    "value": "180/80A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60168,
+                                    "parent_vids": null,
+                                    "spec_id": 177039,
+                                    "extend_info": "",
+                                    "value": "180/84A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60169,
+                                    "parent_vids": null,
+                                    "spec_id": 973097,
+                                    "extend_info": "",
+                                    "value": "180/88A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60612,
+                                    "parent_vids": null,
+                                    "spec_id": 4034339,
+                                    "extend_info": "",
+                                    "value": "180/90A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60613,
+                                    "parent_vids": null,
+                                    "spec_id": 409324,
+                                    "extend_info": "",
+                                    "value": "180/92A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60614,
+                                    "parent_vids": null,
+                                    "spec_id": 613831,
+                                    "extend_info": "",
+                                    "value": "180/94A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60170,
+                                    "parent_vids": null,
+                                    "spec_id": 918439352,
+                                    "extend_info": "",
+                                    "value": "185/82A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60171,
+                                    "parent_vids": null,
+                                    "spec_id": 74790148,
+                                    "extend_info": "",
+                                    "value": "185/84A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60172,
+                                    "parent_vids": null,
+                                    "spec_id": 6738986,
+                                    "extend_info": "",
+                                    "value": "185/86A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60173,
+                                    "parent_vids": null,
+                                    "spec_id": 7922384,
+                                    "extend_info": "",
+                                    "value": "185/88A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60174,
+                                    "parent_vids": null,
+                                    "spec_id": 5113788,
+                                    "extend_info": "",
+                                    "value": "185/92A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60176,
+                                    "parent_vids": null,
+                                    "spec_id": 64328935,
+                                    "extend_info": "",
+                                    "value": "190/90A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60177,
+                                    "parent_vids": null,
+                                    "spec_id": 82093713,
+                                    "extend_info": "",
+                                    "value": "190/92A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60178,
+                                    "parent_vids": null,
+                                    "spec_id": 7917627,
+                                    "extend_info": "",
+                                    "value": "190/94A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60179,
+                                    "parent_vids": null,
+                                    "spec_id": 2278749,
+                                    "extend_info": "",
+                                    "value": "190/96A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60180,
+                                    "parent_vids": null,
+                                    "spec_id": 8077552,
+                                    "extend_info": "",
+                                    "value": "190/98A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60181,
+                                    "parent_vids": null,
+                                    "spec_id": 477539,
+                                    "extend_info": "",
+                                    "value": "190/100A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60182,
+                                    "parent_vids": null,
+                                    "spec_id": 29569854,
+                                    "extend_info": "",
+                                    "value": "195/102A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60183,
+                                    "parent_vids": null,
+                                    "spec_id": 1548592,
+                                    "extend_info": "",
+                                    "value": "195/104A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60184,
+                                    "parent_vids": null,
+                                    "spec_id": 3946280,
+                                    "extend_info": "",
+                                    "value": "195/106A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60185,
+                                    "parent_vids": null,
+                                    "spec_id": 245930,
+                                    "extend_info": "",
+                                    "value": "195/108A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60186,
+                                    "parent_vids": null,
+                                    "spec_id": 51817592,
+                                    "extend_info": "",
+                                    "value": "195/110A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60187,
+                                    "parent_vids": null,
+                                    "spec_id": 280503,
+                                    "extend_info": "",
+                                    "value": "195/112A",
+                                    "group": {
+                                        "name": "通用",
+                                        "id": 1
+                                    }
+                                },
+                                {
+                                    "vid": 60316,
+                                    "parent_vids": null,
+                                    "spec_id": 1329,
+                                    "extend_info": "",
+                                    "value": "均码",
+                                    "group": {
+                                        "name": "均码",
+                                        "id": 13
+                                    }
+                                }
+                            ],
+                            "required_rule": null,
+                            "value_precision": 0,
+                            "input_max_num": 100,
+                            "required": false,
+                            "required_rule_type": null,
+                            "choose_max_num": 2147483647,
+                            "min_value": "",
+                            "can_note": true,
+                            "ref_pid": 841,
+                            "name": "尺码",
+                            "value_unit": [
+                                ""
+                            ],
+                            "max_value": "160",
+                            "property_value_type": 0
+                        }
+                    ],
+                    "choose_all_qualify_spec": false
+                },
+                "goods_sku_rule": {
+                    "price_range_ratio": 0.0,
+                    "spec_num_limit": 44
+                },
+                "two_pieces_discount_rule": {
+                    "if_must_two_pieces_discount": true,
+                    "max_two_pieces_discount": 99,
+                    "min_two_pieces_discount": 50,
+                    "recommend_two_pieces_discount": 95
+                },
+                "goods_service_rule": {
+                    "goods_service_rule_map": {
+                        "1": {
+                            "folt_rule": 1,
+                            "can_select_delivery_type": false,
+                            "quan_guo_lian_bao_rule": 0,
+                            "refundable_rule": 1,
+                            "privacy_delivery_rule": 0,
+                            "delivery_one_day_rule": 1,
+                            "zhi_huan_bu_xiu_rule": 0,
+                            "lack_of_weight_claim_rule": 0,
+                            "shipment_limit_second_list": [
+                                86400,
+                                172800
+                            ],
+                            "bad_claim_rule": 0
+                        },
+                        "2": {
+                            "folt_rule": 1,
+                            "can_select_delivery_type": false,
+                            "quan_guo_lian_bao_rule": 0,
+                            "refundable_rule": 1,
+                            "privacy_delivery_rule": 0,
+                            "delivery_one_day_rule": 1,
+                            "zhi_huan_bu_xiu_rule": 0,
+                            "lack_of_weight_claim_rule": 0,
+                            "shipment_limit_second_list": [
+                                86400,
+                                172800
+                            ],
+                            "bad_claim_rule": 0
+                        }
+                    },
+                    "goods_type_list": [
+                        1,
+                        2
+                    ]
+                },
+                "spu_rule": null
+            }
+        }
+    ],
+    "message": null,
+    "code": "0000",
+    "hasNext": false,
+    "now": 1774776214632,
+    "extra": {}
+}
