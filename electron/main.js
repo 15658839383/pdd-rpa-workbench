@@ -375,6 +375,7 @@ function registerIpcHandlers() {
     return services.assetService.importRemoteAsset(payload);
   });
   const simpleAssetHandlers = {
+    "asset:writeGeneratedBatch": (_event, payload) => services.assetService.writeGeneratedBatch(payload),
     "asset:remove": (_event, payload) => services.assetService.removeAsset(payload),
     "asset:list": (_event, payload) => services.assetService.listAssets(payload)
   };
@@ -393,6 +394,7 @@ function registerIpcHandlers() {
     "auth:listPublishCategories": (_event, payload) => services.backendClient.listPublishCategories(payload),
     "auth:listCategoryAttributes": (_event, payload) => services.backendClient.listCategoryAttributes(payload),
     "auth:listCategorySkuSpecs": (_event, payload) => services.backendClient.listCategorySkuSpecs(payload),
+    "auth:rewriteSkuSpecNames": (_event, payload) => services.backendClient.rewriteSkuSpecNames(payload),
     "auth:getProductFullDetail": (_event, payload) => services.backendClient.getProductFullDetail(payload),
     "auth:getShopOverview": (_event, payload) => services.backendClient.getShopOverview(payload),
     "auth:testProductsData": (_event, payload) => services.backendClient.testProductsData(payload),

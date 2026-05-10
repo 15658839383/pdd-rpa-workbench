@@ -4,6 +4,7 @@ const { listSpecNamesByCookie } = require("./shopSpecNameService");
 const { getGoodsDetailByCookie } = require("./shopGoodsDetailService");
 const { quickLoginShopByCookie } = require("./shopQuickLoginService");
 const { getShopOverviewByCookie } = require("./shopOverviewService");
+const { renameSkuSpecsWithAi } = require("./aiSpecRenameService");
 
 const DEFAULT_BASE_URL = "http://106.75.215.11:8080";
 const DEFAULT_TIMEOUT_MS = 10000;
@@ -1107,6 +1108,35 @@ function createBackendClient({
     }
   }
 
+  async function rewriteSkuSpecNames(payload = {}) {
+    if (!currentUser) {
+      return failure({
+        code: "AUTH_EXPIRED",
+        message: "登录已失效，请重新登录"
+      });
+    }
+
+    try {
+      const result = await renameSkuSpecsWithAi(payload);
+      if (!result.ok) {
+        return failure({
+          code: result.code || "AI_SPEC_RENAME_FAILED",
+          message: result.message || "AI 改写规格名失败"
+        });
+      }
+
+      return {
+        ok: true,
+        dimensions: result.dimensions
+      };
+    } catch (error) {
+      return failure({
+        code: error?.code || "AI_SPEC_RENAME_FAILED",
+        message: error?.message || "AI 改写规格名失败"
+      });
+    }
+  }
+
   async function clearSession(options = {}) {
     resetAuthenticatedState();
 
@@ -1287,6 +1317,7 @@ function createBackendClient({
     logout,
     me,
     quickLoginShop,
+    rewriteSkuSpecNames,
     restoreSession,
     testProductsData
   };

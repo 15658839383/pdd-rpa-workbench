@@ -52,7 +52,8 @@ function buildInitialAttributeState() {
     message: '请先选择三级类目。',
     schema: [],
     shopCode: '',
-    categoryId: ''
+    categoryId: '',
+    meta: {}
   };
 }
 
@@ -63,6 +64,48 @@ function buildInitialProductFillState() {
     productId: '',
     error: '',
     summary: '输入商品 ID 后自动识别所属店铺并覆盖当前模板。'
+  };
+}
+
+function buildInitialLogoBatchConfig() {
+  return {
+    logoRef: null,
+    sourceRefs: [],
+    areaPercent: 5,
+    centerXRatio: 0.784,
+    centerYRatio: 0.784,
+    updatedAt: '',
+    pendingGeneratedRefs: null
+  };
+}
+
+function buildInitialLogoBatchState() {
+  return {
+    isOpen: false,
+    zoneKey: '',
+    status: 'idle',
+    summary: '仅桌面版支持批量加 LOGO。',
+    activePreviewIndex: 0,
+    drag: {
+      isActive: false,
+      pointerId: null,
+      startX: 0,
+      startY: 0,
+      originCenterXRatio: 0.784,
+      originCenterYRatio: 0.784
+    },
+    preview: {
+      imageNaturalWidth: 0,
+      imageNaturalHeight: 0,
+      displayWidth: 0,
+      displayHeight: 0,
+      logoDisplayWidth: 0,
+      logoDisplayHeight: 0
+    },
+    configs: {
+      mainGallery: buildInitialLogoBatchConfig(),
+      skuThumbs: buildInitialLogoBatchConfig()
+    }
   };
 }
 
@@ -112,7 +155,10 @@ function buildInitialSkuSpecState() {
     shopCode: '',
     categoryId: '',
     selectedSlots: [createEmptySkuSpecSelection(), createEmptySkuSpecSelection()],
-    valueLists: [[], []]
+    valueLists: [[], []],
+    aiRenameStatus: 'idle',
+    aiRenameError: '',
+    aiRenameMessage: ''
   };
 }
 
@@ -195,34 +241,52 @@ const ASSET_LAYOUT = {
   skuThumbs: { selector: '[data-asset-zone="skuThumbs"]', type: 'array' }
 };
 
+const LOGO_BATCH_ZONE_META = {
+  mainGallery: {
+    zoneKey: 'mainGallery',
+    title: '轮播图批量加 LOGO',
+    desc: '上传一张 LOGO，调整面积占比与位置后，一键应用到全部商品轮播图。',
+    previewLabel: '轮播图预览',
+    internalLogoZone: 'logoBatchMainGallery'
+  },
+  skuThumbs: {
+    zoneKey: 'skuThumbs',
+    title: 'SKU图批量加 LOGO',
+    desc: '上传一张 LOGO，调整面积占比与位置后，一键应用到全部 SKU 图。',
+    previewLabel: 'SKU图预览',
+    internalLogoZone: 'logoBatchSkuThumbs'
+  }
+};
+
 const BRAND_ATTRIBUTE_KEYS = {
   primary: 'pddForm_goodsAttribute_310',
   secondary: 'goodsAttribute[310]'
 };
 
-const SKU_FIELD_NAMES = ['specName', 'groupPrice', 'singlePrice', 'stock', 'weight'];
+const SKU_FIELD_NAMES = ['specName', 'groupPrice', 'singlePrice', 'stock', 'outSkuSn'];
 const SKU_DIMENSION_LABELS = ['规格一', '规格二', '规格三'];
+const SHIPMENT_LIMIT_RADIO_VALUES = new Set(['0', '86400', '172800']);
 const DEFAULT_SKU_ROWS = [
   {
-    specName: '黑色1+1黑色--过膝款 / （均码）毛圈加厚',
+    specName: '黑色 / 均码',
     groupPrice: '15.90',
     singlePrice: '19.90',
     stock: '500',
-    weight: '0.18'
+    outSkuSn: ''
   },
   {
-    specName: '奶白色--中筒款 / （均码）毛圈加厚',
+    specName: '黑色 / 加大码',
     groupPrice: '15.90',
     singlePrice: '19.90',
     stock: '420',
-    weight: '0.18'
+    outSkuSn: ''
   },
   {
-    specName: '麻灰色--高筒款 / （均码）毛圈加厚',
+    specName: '奶白色 / 均码',
     groupPrice: '16.50',
     singlePrice: '20.50',
     stock: '360',
-    weight: '0.19'
+    outSkuSn: ''
   }
 ];
 
@@ -571,6 +635,16 @@ function cacheDom() {
   dom.goodsAttributeContainer = document.getElementById('pdd_GoodsAttribute');
   dom.goodsSkuBoard = document.getElementById('pddForm_goodsSku');
   dom.goodsSkuTableBody = document.getElementById('skuTableBody');
+  dom.skuBulkToolbar = document.getElementById('skuBulkToolbar');
+  dom.skuBulkGroupPriceInput = document.getElementById('skuBulkGroupPriceInput');
+  dom.skuBulkSinglePriceInput = document.getElementById('skuBulkSinglePriceInput');
+  dom.skuBulkStockInput = document.getElementById('skuBulkStockInput');
+  dom.skuBulkSkuCodeSearchInput = document.getElementById('skuBulkSkuCodeSearchInput');
+  dom.skuBulkSkuCodeReplaceInput = document.getElementById('skuBulkSkuCodeReplaceInput');
+  dom.applySkuBulkStockBtn = document.getElementById('applySkuBulkStockBtn');
+  dom.applySkuBulkCodeReplaceBtn = document.getElementById('applySkuBulkCodeReplaceBtn');
+  dom.openMainGalleryLogoBatchBtn = document.getElementById('openMainGalleryLogoBatchBtn');
+  dom.openSkuLogoBatchBtn = document.getElementById('openSkuLogoBatchBtn');
   dom.exportTemplateBtn = document.getElementById('exportTemplateBtn');
   dom.templateExportStatus = document.getElementById('templateExportStatus');
   dom.templateExportSummary = document.getElementById('templateExportSummary');
@@ -596,6 +670,30 @@ function cacheDom() {
   dom.productFillSummary = document.getElementById('productFillSummary');
   dom.productFillError = document.getElementById('productFillError');
   dom.productFillConfirmBtn = document.getElementById('productFillConfirmBtn');
+  dom.imagePreviewModal = document.getElementById('imagePreviewModal');
+  dom.imagePreviewBackdrop = document.getElementById('imagePreviewBackdrop');
+  dom.closeImagePreviewBtn = document.getElementById('closeImagePreviewBtn');
+  dom.imagePreviewTitle = document.getElementById('imagePreviewTitle');
+  dom.imagePreviewImage = document.getElementById('imagePreviewImage');
+  dom.imagePreviewMeta = document.getElementById('imagePreviewMeta');
+  dom.logoBatchModal = document.getElementById('logoBatchModal');
+  dom.logoBatchBackdrop = document.getElementById('logoBatchBackdrop');
+  dom.closeLogoBatchBtn = document.getElementById('closeLogoBatchBtn');
+  dom.logoBatchTitle = document.getElementById('logoBatchTitle');
+  dom.logoBatchDesc = document.getElementById('logoBatchDesc');
+  dom.logoBatchPreviewLabel = document.getElementById('logoBatchPreviewLabel');
+  dom.logoBatchPreviewMeta = document.getElementById('logoBatchPreviewMeta');
+  dom.logoBatchStage = document.getElementById('logoBatchStage');
+  dom.logoBatchSummary = document.getElementById('logoBatchSummary');
+  dom.logoBatchUploadBtn = document.getElementById('logoBatchUploadBtn');
+  dom.logoBatchResetPositionBtn = document.getElementById('logoBatchResetPositionBtn');
+  dom.logoBatchLogoStatus = document.getElementById('logoBatchLogoStatus');
+  dom.logoBatchAreaRange = document.getElementById('logoBatchAreaRange');
+  dom.logoBatchAreaInput = document.getElementById('logoBatchAreaInput');
+  dom.logoBatchRestoreBtn = document.getElementById('logoBatchRestoreBtn');
+  dom.logoBatchApplyBtn = document.getElementById('logoBatchApplyBtn');
+  dom.logoBatchPrevBtn = document.getElementById('logoBatchPrevBtn');
+  dom.logoBatchNextBtn = document.getElementById('logoBatchNextBtn');
   dom.webModeNotice = document.getElementById('webModeNotice');
   dom.form = document.getElementById('pddForm');
   dom.goodsNameInput = document.getElementById('pddForm_goodsName');
@@ -631,6 +729,7 @@ function cacheDom() {
   dom.actionCurrentTemplate = document.getElementById('actionCurrentTemplate');
   dom.automationLogList = document.getElementById('automationLogList');
   dom.logCountBadge = document.getElementById('logCountBadge');
+  dom.detailPreviewCanvas = document.getElementById('detailPreviewCanvas');
   dom.detailPreviewRefreshBtn = document.getElementById('detailPreviewRefreshBtn');
 }
 
@@ -670,6 +769,12 @@ function bindUiEvents() {
   dom.salesOverviewTableBody?.addEventListener('change', handleSalesOverviewTableSelectionChange);
   dom.salesOverviewTableBody?.addEventListener('click', handleSalesOverviewTableClick);
   dom.openProductFillBtn?.addEventListener('click', openProductFillModal);
+  document.addEventListener('change', (event) => {
+    const target = event.target;
+    if (target && target.name === 'shipmentLimitSecond') {
+      syncShipmentLimitCustomShell();
+    }
+  });
   dom.workspaceSaveTemplateBtn?.addEventListener('click', () => saveCurrentTemplate({ silent: false }));
   dom.workspaceOpenWorkspaceBtn?.addEventListener('click', () => openWorkspaceFolder('root'));
   dom.openSecondaryDrawerBtn?.addEventListener('click', () => openSecondaryDrawer({ panel: 'templates' }));
@@ -705,6 +810,48 @@ function bindUiEvents() {
   dom.closeProductFillBtn?.addEventListener('click', closeProductFillModal);
   dom.productFillForm?.addEventListener('submit', handleProductFillSubmit);
   dom.productFillIdInput?.addEventListener('input', handleProductFillIdInput);
+  dom.imagePreviewBackdrop?.addEventListener('click', closeImagePreviewModal);
+  dom.closeImagePreviewBtn?.addEventListener('click', closeImagePreviewModal);
+  dom.openMainGalleryLogoBatchBtn?.addEventListener('click', () => {
+    openLogoBatchModal('mainGallery').catch((error) => {
+      console.error(error);
+    });
+  });
+  dom.openSkuLogoBatchBtn?.addEventListener('click', () => {
+    openLogoBatchModal('skuThumbs').catch((error) => {
+      console.error(error);
+    });
+  });
+  dom.logoBatchBackdrop?.addEventListener('click', closeLogoBatchModal);
+  dom.closeLogoBatchBtn?.addEventListener('click', closeLogoBatchModal);
+  dom.logoBatchUploadBtn?.addEventListener('click', () => {
+    handleLogoBatchUpload().catch((error) => {
+      console.error(error);
+    });
+  });
+  dom.logoBatchResetPositionBtn?.addEventListener('click', handleLogoBatchResetPosition);
+  dom.logoBatchAreaRange?.addEventListener('input', handleLogoBatchAreaRangeInput);
+  dom.logoBatchAreaInput?.addEventListener('input', handleLogoBatchAreaInput);
+  dom.logoBatchAreaInput?.addEventListener('blur', normalizeLogoBatchAreaInput);
+  dom.logoBatchRestoreBtn?.addEventListener('click', () => {
+    handleLogoBatchRestore().catch((error) => {
+      console.error(error);
+    });
+  });
+  dom.logoBatchApplyBtn?.addEventListener('click', () => {
+    handleLogoBatchApply().catch((error) => {
+      console.error(error);
+    });
+  });
+  dom.logoBatchPrevBtn?.addEventListener('click', () => shiftLogoBatchPreviewIndex(-1));
+  dom.logoBatchNextBtn?.addEventListener('click', () => shiftLogoBatchPreviewIndex(1));
+  dom.skuBulkToolbar?.addEventListener('click', handleSkuBulkToolbarClick);
+  dom.skuBulkGroupPriceInput?.addEventListener('keydown', handleSkuBulkPriceInputKeyDown);
+  dom.skuBulkSinglePriceInput?.addEventListener('keydown', handleSkuBulkPriceInputKeyDown);
+  dom.applySkuBulkStockBtn?.addEventListener('click', handleApplySkuBulkStock);
+  dom.skuBulkStockInput?.addEventListener('keydown', handleSkuBulkStockKeyDown);
+  dom.skuBulkSkuCodeSearchInput?.addEventListener('keydown', handleSkuBulkCodeReplaceKeyDown);
+  dom.skuBulkSkuCodeReplaceInput?.addEventListener('keydown', handleSkuBulkCodeReplaceKeyDown);
   dom.goodsSkuTableBody?.addEventListener('click', handleSkuTableClick);
   dom.goodsSkuTableBody?.addEventListener('input', handleSkuTableInput);
   dom.goodsSkuBoard?.addEventListener('click', handleSkuSpecBoardClick);
@@ -720,6 +867,7 @@ function bindUiEvents() {
   document.getElementById('setDefaultTemplateBtn')?.addEventListener('click', handleSetDefaultTemplate);
   document.getElementById('openWorkspaceBtn')?.addEventListener('click', () => openWorkspaceFolder('root'));
   document.getElementById('openAssetsBtn')?.addEventListener('click', () => openWorkspaceFolder('assets'));
+  dom.detailPreviewCanvas?.addEventListener('click', handleDetailPreviewCanvasClick);
   dom.detailPreviewRefreshBtn?.addEventListener('click', () => {
     renderDetailGalleryPreview(getArrayZoneRefs('detailGallery'));
   });
@@ -761,6 +909,16 @@ function bindUiEvents() {
   });
 
   document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && dom.imagePreviewModal && !dom.imagePreviewModal.hidden) {
+      closeImagePreviewModal();
+      return;
+    }
+
+    if (event.key === 'Escape' && dom.logoBatchModal && !dom.logoBatchModal.hidden) {
+      closeLogoBatchModal();
+      return;
+    }
+
     if (event.key === 'Escape' && !dom.categoryPickerModal.hidden) {
       closeCategoryPicker();
       return;
@@ -1159,6 +1317,9 @@ function renderWorkspaceStepSummaries() {
   const detailCount = getArrayZoneRefs('detailGallery').length;
   const hasWhiteImage = Boolean(state.slotRegistry.whiteImage?.[0]?.__assetRef);
   const hasLongImage = Boolean(state.slotRegistry.longImage?.[0]?.__assetRef);
+  const logoBatches = normalizeLogoBatches(state.currentTemplate?.imageRefs?.logoBatches || createEmptyLogoBatchStore());
+  const hasMainGalleryLogo = Boolean(logoBatches.mainGallery?.logoRef);
+  const hasSkuLogo = Boolean(logoBatches.skuThumbs?.logoRef);
   const skuRows = extractSkuRowsFromFormData(formData, { fallbackRows: [] });
   const publishType = readCheckedControlLabel('pddForm_publishType');
   const shipmentLimit = readCheckedControlLabel('pddForm_shipmentLimitSecond');
@@ -1172,6 +1333,7 @@ function renderWorkspaceStepSummaries() {
 
   setNodeText(dom.workspaceMediaSummary, [
     `轮播 ${mainCount}/10`,
+    hasMainGalleryLogo ? '轮播已加LOGO' : '轮播未加LOGO',
     `详情 ${detailCount}`,
     hasWhiteImage ? '白底图已传' : '白底图未传',
     hasLongImage ? '长图已传' : '长图未传'
@@ -1179,6 +1341,7 @@ function renderWorkspaceStepSummaries() {
 
   setNodeText(dom.workspaceSkuSummary, [
     skuRows.length ? `SKU ${skuRows.length} 行` : 'SKU 未配置',
+    hasSkuLogo ? 'SKU图已加LOGO' : 'SKU图未加LOGO',
     formData.styleCode ? `满2件折扣 ${formData.styleCode}` : '满2件折扣未填',
     formData.marketPrice ? `市场价 ${formData.marketPrice}` : '市场价未填'
   ].join(' · '));
@@ -1536,6 +1699,794 @@ function closeProductFillModal() {
   resetProductFillState();
 }
 
+function openImagePreviewModal(slot) {
+  const ref = slot?.__assetRef || null;
+  if (!ref?.fileUrl || !dom.imagePreviewModal) {
+    return;
+  }
+
+  const label = slot.dataset.frameLabel || ref.fileName || '图片';
+  openImagePreviewRef(ref, label);
+}
+
+function openImagePreviewRef(ref, label = '图片') {
+  if (!ref?.fileUrl || !dom.imagePreviewModal) {
+    return;
+  }
+
+  state.ui.imagePreview = {
+    isOpen: true,
+    ref,
+    label
+  };
+  renderImagePreviewModal();
+}
+
+function closeImagePreviewModal() {
+  state.ui.imagePreview = {
+    isOpen: false,
+    ref: null,
+    label: ''
+  };
+  renderImagePreviewModal();
+}
+
+function canUseLogoBatch() {
+  return Boolean(state.bridge?.asset?.import && state.bridge?.asset?.writeGeneratedBatch && state.currentTemplateId);
+}
+
+function createDefaultLogoBatchPosition(areaPercent = 5) {
+  const normalizedPercent = clampLogoBatchAreaPercent(areaPercent);
+  const widthRatio = Math.sqrt(normalizedPercent / 100);
+  const marginRatio = 0.04;
+  const centerRatio = 1 - marginRatio - widthRatio / 2;
+  return {
+    centerXRatio: clamp(0.5, centerRatio, 1),
+    centerYRatio: clamp(0.5, centerRatio, 1)
+  };
+}
+
+function clamp(min, value, max) {
+  return Math.min(Math.max(value, min), max);
+}
+
+function clampLogoBatchAreaPercent(value) {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) {
+    return 5;
+  }
+  return clamp(5, Math.round(numeric * 2) / 2, 200);
+}
+
+function createEmptyLogoBatchStore() {
+  return {
+    mainGallery: null,
+    skuThumbs: null
+  };
+}
+
+function sanitizeLogoBatchRefs(refs, { allowNullItems = false } = {}) {
+  const normalizedRefs = Array.isArray(refs) ? refs : [];
+  return normalizedRefs.map((ref) => {
+    if (!ref) {
+      return allowNullItems ? null : null;
+    }
+    return stripTransientFields(ref);
+  }).filter((item) => allowNullItems || Boolean(item));
+}
+
+function sanitizeLogoBatchConfig(value, zoneKey) {
+  if (!value || typeof value !== 'object') {
+    return null;
+  }
+
+  const fallbackPosition = createDefaultLogoBatchPosition(value.areaPercent);
+  const sourceRefs = zoneKey === 'skuThumbs'
+    ? sanitizeLogoBatchRefs(value.sourceRefs, { allowNullItems: true })
+    : sanitizeLogoBatchRefs(value.sourceRefs);
+
+  return {
+    logoRef: sanitizeAssetRef(value.logoRef),
+    sourceRefs,
+    areaPercent: clampLogoBatchAreaPercent(value.areaPercent),
+    centerXRatio: clamp(0, Number(value.centerXRatio) || fallbackPosition.centerXRatio, 1),
+    centerYRatio: clamp(0, Number(value.centerYRatio) || fallbackPosition.centerYRatio, 1),
+    updatedAt: String(value.updatedAt || '').trim()
+  };
+}
+
+function normalizeLogoBatches(rawLogoBatches = {}) {
+  return {
+    mainGallery: sanitizeLogoBatchConfig(rawLogoBatches?.mainGallery, 'mainGallery'),
+    skuThumbs: sanitizeLogoBatchConfig(rawLogoBatches?.skuThumbs, 'skuThumbs')
+  };
+}
+
+function getCurrentLogoBatchStore() {
+  return normalizeLogoBatches(state.currentTemplate?.imageRefs?.logoBatches || createEmptyLogoBatchStore());
+}
+
+function ensureCurrentTemplateLogoBatchStore() {
+  if (!state.currentTemplate) {
+    return createEmptyLogoBatchStore();
+  }
+  if (!state.currentTemplate.imageRefs) {
+    state.currentTemplate.imageRefs = buildEmptyImageRefs();
+  }
+  if (!state.currentTemplate.imageRefs.logoBatches) {
+    state.currentTemplate.imageRefs.logoBatches = createEmptyLogoBatchStore();
+  }
+  return state.currentTemplate.imageRefs.logoBatches;
+}
+
+function syncUiLogoBatchConfig(zoneKey, persistedConfig = null) {
+  const config = buildInitialLogoBatchConfig();
+  const persisted = sanitizeLogoBatchConfig(persistedConfig, zoneKey);
+  const next = {
+    ...config,
+    ...(persisted || {})
+  };
+  if (!next.centerXRatio || !next.centerYRatio) {
+    const fallback = createDefaultLogoBatchPosition(next.areaPercent);
+    next.centerXRatio = fallback.centerXRatio;
+    next.centerYRatio = fallback.centerYRatio;
+  }
+  next.pendingGeneratedRefs = null;
+  state.ui.logoBatch.configs[zoneKey] = next;
+  return next;
+}
+
+function getLogoBatchConfig(zoneKey) {
+  if (!LOGO_BATCH_ZONE_META[zoneKey]) {
+    return buildInitialLogoBatchConfig();
+  }
+  if (!state.ui.logoBatch.configs[zoneKey]) {
+    state.ui.logoBatch.configs[zoneKey] = buildInitialLogoBatchConfig();
+  }
+  return state.ui.logoBatch.configs[zoneKey];
+}
+
+function getLogoBatchCurrentRefs(zoneKey) {
+  if (zoneKey === 'mainGallery') {
+    return getArrayZoneRefs('mainGallery');
+  }
+  if (zoneKey === 'skuThumbs') {
+    return Array.isArray(state.slotRegistry.skuThumbs)
+      ? state.slotRegistry.skuThumbs.map((slot) => slot.__assetRef || null)
+      : [];
+  }
+  return [];
+}
+
+function getLogoBatchEffectiveSourceRefs(zoneKey) {
+  const config = getLogoBatchConfig(zoneKey);
+  const currentRefs = getLogoBatchCurrentRefs(zoneKey);
+  const hasSourceRefs = Array.isArray(config.sourceRefs) && config.sourceRefs.some((item) => Boolean(item));
+  if (hasSourceRefs) {
+    return zoneKey === 'skuThumbs'
+      ? config.sourceRefs.map((ref) => ref || null)
+      : config.sourceRefs.filter(Boolean);
+  }
+  return zoneKey === 'skuThumbs'
+    ? currentRefs.map((ref) => ref || null)
+    : currentRefs.filter(Boolean);
+}
+
+function getLogoBatchPreviewRefs(zoneKey) {
+  const refs = getLogoBatchEffectiveSourceRefs(zoneKey);
+  return refs.filter(Boolean);
+}
+
+function getLogoBatchPreviewRef(zoneKey) {
+  const previewRefs = getLogoBatchPreviewRefs(zoneKey);
+  const index = clamp(0, state.ui.logoBatch.activePreviewIndex || 0, Math.max(previewRefs.length - 1, 0));
+  state.ui.logoBatch.activePreviewIndex = index;
+  return previewRefs[index] || null;
+}
+
+function getLogoBatchPreviewMetaText(zoneKey) {
+  const previewRefs = getLogoBatchPreviewRefs(zoneKey);
+  if (!previewRefs.length) {
+    return '当前区域暂无图片。';
+  }
+  const currentIndex = clamp(0, state.ui.logoBatch.activePreviewIndex || 0, previewRefs.length - 1);
+  return `预览第 ${currentIndex + 1}/${previewRefs.length} 张，拖动 LOGO 可调整位置。`;
+}
+
+async function openLogoBatchModal(zoneKey) {
+  if (!LOGO_BATCH_ZONE_META[zoneKey]) {
+    return;
+  }
+
+  if (!canUseLogoBatch()) {
+    showAuthNotice('仅桌面版支持批量加 LOGO。');
+    return;
+  }
+
+  closeSecondaryDrawer();
+  const templateLogoBatches = normalizeLogoBatches(state.currentTemplate?.imageRefs?.logoBatches || getCurrentLogoBatchStore() || createEmptyLogoBatchStore());
+  syncUiLogoBatchConfig(zoneKey, templateLogoBatches[zoneKey]);
+  state.ui.logoBatch.isOpen = true;
+  state.ui.logoBatch.zoneKey = zoneKey;
+  state.ui.logoBatch.status = 'idle';
+  state.ui.logoBatch.summary = '拖动预览中的 LOGO 可调整位置，点击“应用到全部图片”后会覆盖当前区域图片，但可随时恢复原图。';
+  state.ui.logoBatch.activePreviewIndex = 0;
+  renderLogoBatchModal();
+}
+
+function closeLogoBatchModal() {
+  if (state.ui.logoBatch.status === 'loading') {
+    return;
+  }
+  state.ui.logoBatch.isOpen = false;
+  state.ui.logoBatch.zoneKey = '';
+  state.ui.logoBatch.status = 'idle';
+  state.ui.logoBatch.drag.isActive = false;
+  state.ui.logoBatch.drag.pointerId = null;
+  state.ui.logoBatch.preview = {
+    imageNaturalWidth: 0,
+    imageNaturalHeight: 0,
+    displayWidth: 0,
+    displayHeight: 0,
+    logoDisplayWidth: 0,
+    logoDisplayHeight: 0
+  };
+  renderLogoBatchModal();
+}
+
+function renderLogoBatchModal() {
+  if (!dom.logoBatchModal) {
+    return;
+  }
+
+  const batchState = state.ui.logoBatch;
+  const zoneKey = batchState.zoneKey;
+  const zoneMeta = LOGO_BATCH_ZONE_META[zoneKey] || null;
+  const isOpen = Boolean(batchState.isOpen && zoneMeta);
+  const available = canUseLogoBatch();
+  const config = zoneMeta ? getLogoBatchConfig(zoneKey) : buildInitialLogoBatchConfig();
+  const previewRef = zoneMeta ? getLogoBatchPreviewRef(zoneKey) : null;
+  const previewRefs = zoneMeta ? getLogoBatchPreviewRefs(zoneKey) : [];
+  const isLoading = batchState.status === 'loading';
+  const hasLogo = Boolean(config.logoRef?.fileUrl);
+  const hasAppliedState = Array.isArray(config.sourceRefs) && config.sourceRefs.some((item) => Boolean(item));
+
+  dom.logoBatchModal.hidden = !isOpen;
+  if (!isOpen) {
+    if (dom.logoBatchStage) {
+      dom.logoBatchStage.innerHTML = '';
+    }
+    return;
+  }
+
+  dom.logoBatchTitle.textContent = zoneMeta.title;
+  dom.logoBatchDesc.textContent = zoneMeta.desc;
+  dom.logoBatchPreviewLabel.textContent = zoneMeta.previewLabel;
+  dom.logoBatchPreviewMeta.textContent = getLogoBatchPreviewMetaText(zoneKey);
+  dom.logoBatchSummary.textContent = batchState.summary || '调整完成后可一键应用到全部图片。';
+  dom.logoBatchLogoStatus.textContent = config.logoRef?.fileName
+    ? `${config.logoRef.fileName}${config.logoRef.importedAt ? ` · ${formatDateTime(config.logoRef.importedAt)}` : ''}`
+    : '尚未上传 LOGO。';
+  dom.logoBatchAreaRange.value = String(config.areaPercent);
+  dom.logoBatchAreaInput.value = String(config.areaPercent);
+  dom.logoBatchUploadBtn.disabled = !available || isLoading;
+  dom.logoBatchResetPositionBtn.disabled = !available || isLoading || !hasLogo;
+  dom.logoBatchRestoreBtn.disabled = !available || isLoading || !hasAppliedState;
+  dom.logoBatchApplyBtn.disabled = !available || isLoading || !hasLogo || !previewRefs.length;
+  dom.logoBatchPrevBtn.disabled = !previewRefs.length || previewRefs.length <= 1 || isLoading;
+  dom.logoBatchNextBtn.disabled = !previewRefs.length || previewRefs.length <= 1 || isLoading;
+  renderLogoBatchPreviewStage(previewRef, config, { isLoading });
+}
+
+function renderLogoBatchPreviewStage(previewRef, config, { isLoading = false } = {}) {
+  if (!dom.logoBatchStage) {
+    return;
+  }
+
+  if (!previewRef?.fileUrl) {
+    dom.logoBatchStage.innerHTML = [
+      '<div class="detail-preview-empty">',
+      '<span class="detail-preview-empty__graphic" aria-hidden="true"></span>',
+      '<strong>暂无可预览图片</strong>',
+      '<span>请先上传当前区域图片。</span>',
+      '</div>'
+    ].join('');
+    return;
+  }
+
+  const draggingClass = state.ui.logoBatch.drag.isActive ? ' is-dragging' : '';
+  const overlayMarkup = config.logoRef?.fileUrl
+    ? [
+      '<div class="logo-batch-modal__overlay" id="logoBatchOverlay">',
+      `<img id="logoBatchLogoImage" class="logo-batch-modal__logo" src="${escapeHtml(config.logoRef.fileUrl)}" alt="LOGO 预览" draggable="false">`,
+      '<div id="logoBatchLogoFrame" class="logo-batch-modal__logo-frame"></div>',
+      '</div>'
+    ].join('')
+    : '';
+
+  dom.logoBatchStage.innerHTML = [
+    `<div id="logoBatchCanvas" class="logo-batch-modal__canvas${draggingClass}"${isLoading ? ' aria-busy="true"' : ''}>`,
+    `<img id="logoBatchBaseImage" class="logo-batch-modal__base" src="${escapeHtml(previewRef.fileUrl)}" alt="图片预览" draggable="false">`,
+    overlayMarkup,
+    '</div>'
+  ].join('');
+
+  const baseImage = document.getElementById('logoBatchBaseImage');
+  if (baseImage) {
+    const syncPreview = () => syncLogoBatchPreviewMetrics();
+    baseImage.addEventListener('load', syncPreview, { once: true });
+    if (baseImage.complete) {
+      syncLogoBatchPreviewMetrics();
+    }
+  }
+
+  const logoImage = document.getElementById('logoBatchLogoImage');
+  if (logoImage) {
+    const syncPreview = () => syncLogoBatchPreviewMetrics();
+    logoImage.addEventListener('load', syncPreview, { once: true });
+    if (logoImage.complete) {
+      syncLogoBatchPreviewMetrics();
+    }
+  }
+
+  const canvas = document.getElementById('logoBatchCanvas');
+  if (canvas) {
+    canvas.addEventListener('pointerdown', handleLogoBatchPointerDown);
+  }
+}
+
+function syncLogoBatchPreviewMetrics() {
+  const zoneKey = state.ui.logoBatch.zoneKey;
+  const config = getLogoBatchConfig(zoneKey);
+  const baseImage = document.getElementById('logoBatchBaseImage');
+  const logoImage = document.getElementById('logoBatchLogoImage');
+  const logoFrame = document.getElementById('logoBatchLogoFrame');
+  const canvas = document.getElementById('logoBatchCanvas');
+  if (!baseImage || !canvas) {
+    return;
+  }
+
+  const rect = baseImage.getBoundingClientRect();
+  state.ui.logoBatch.preview.imageNaturalWidth = baseImage.naturalWidth || 0;
+  state.ui.logoBatch.preview.imageNaturalHeight = baseImage.naturalHeight || 0;
+  state.ui.logoBatch.preview.displayWidth = rect.width || 0;
+  state.ui.logoBatch.preview.displayHeight = rect.height || 0;
+
+  if (!logoImage || !logoFrame || !config.logoRef?.fileUrl || !rect.width || !rect.height) {
+    return;
+  }
+
+  const logoNaturalWidth = logoImage.naturalWidth || 0;
+  const logoNaturalHeight = logoImage.naturalHeight || 0;
+  const displaySize = computeLogoRenderBox({
+    baseWidth: rect.width,
+    baseHeight: rect.height,
+    logoWidth: logoNaturalWidth,
+    logoHeight: logoNaturalHeight,
+    areaPercent: config.areaPercent
+  });
+
+  state.ui.logoBatch.preview.logoDisplayWidth = displaySize.width;
+  state.ui.logoBatch.preview.logoDisplayHeight = displaySize.height;
+  const positioned = clampLogoCenterToFrame({
+    centerX: config.centerXRatio * rect.width,
+    centerY: config.centerYRatio * rect.height,
+    width: displaySize.width,
+    height: displaySize.height,
+    frameWidth: rect.width,
+    frameHeight: rect.height
+  });
+  const left = positioned.centerX - displaySize.width / 2;
+  const top = positioned.centerY - displaySize.height / 2;
+
+  logoImage.style.width = `${displaySize.width}px`;
+  logoImage.style.height = `${displaySize.height}px`;
+  logoImage.style.left = `${left}px`;
+  logoImage.style.top = `${top}px`;
+  logoFrame.style.width = `${displaySize.width}px`;
+  logoFrame.style.height = `${displaySize.height}px`;
+  logoFrame.style.left = `${left}px`;
+  logoFrame.style.top = `${top}px`;
+}
+
+function computeLogoRenderBox({ baseWidth, baseHeight, logoWidth, logoHeight, areaPercent }) {
+  const safeBaseWidth = Number(baseWidth) || 0;
+  const safeBaseHeight = Number(baseHeight) || 0;
+  const safeLogoWidth = Number(logoWidth) || 0;
+  const safeLogoHeight = Number(logoHeight) || 0;
+  if (!safeBaseWidth || !safeBaseHeight || !safeLogoWidth || !safeLogoHeight) {
+    return { width: 0, height: 0 };
+  }
+
+  const targetArea = safeBaseWidth * safeBaseHeight * (clampLogoBatchAreaPercent(areaPercent) / 100);
+  let scale = Math.sqrt(targetArea / (safeLogoWidth * safeLogoHeight));
+  let width = safeLogoWidth * scale;
+  let height = safeLogoHeight * scale;
+  if (width > safeBaseWidth || height > safeBaseHeight) {
+    const shrink = Math.min(safeBaseWidth / width, safeBaseHeight / height);
+    width *= shrink;
+    height *= shrink;
+  }
+  return {
+    width,
+    height
+  };
+}
+
+function clampLogoCenterToFrame({ centerX, centerY, width, height, frameWidth, frameHeight }) {
+  const halfWidth = width / 2;
+  const halfHeight = height / 2;
+  return {
+    centerX: clamp(halfWidth, centerX, Math.max(halfWidth, frameWidth - halfWidth)),
+    centerY: clamp(halfHeight, centerY, Math.max(halfHeight, frameHeight - halfHeight))
+  };
+}
+
+function handleLogoBatchPointerDown(event) {
+  const zoneKey = state.ui.logoBatch.zoneKey;
+  const config = getLogoBatchConfig(zoneKey);
+  if (!config.logoRef?.fileUrl || state.ui.logoBatch.status === 'loading') {
+    return;
+  }
+  const canvas = document.getElementById('logoBatchCanvas');
+  if (!canvas) {
+    return;
+  }
+  const rect = canvas.getBoundingClientRect();
+  if (!rect.width || !rect.height) {
+    return;
+  }
+
+  state.ui.logoBatch.drag.isActive = true;
+  state.ui.logoBatch.drag.pointerId = event.pointerId;
+  state.ui.logoBatch.drag.startX = event.clientX;
+  state.ui.logoBatch.drag.startY = event.clientY;
+  state.ui.logoBatch.drag.originCenterXRatio = config.centerXRatio;
+  state.ui.logoBatch.drag.originCenterYRatio = config.centerYRatio;
+  canvas.classList.add('is-dragging');
+  canvas.setPointerCapture?.(event.pointerId);
+  canvas.addEventListener('pointermove', handleLogoBatchPointerMove);
+  canvas.addEventListener('pointerup', handleLogoBatchPointerUp);
+  canvas.addEventListener('pointercancel', handleLogoBatchPointerUp);
+}
+
+function handleLogoBatchPointerMove(event) {
+  if (!state.ui.logoBatch.drag.isActive || event.pointerId !== state.ui.logoBatch.drag.pointerId) {
+    return;
+  }
+  const zoneKey = state.ui.logoBatch.zoneKey;
+  const config = getLogoBatchConfig(zoneKey);
+  const displayWidth = state.ui.logoBatch.preview.displayWidth;
+  const displayHeight = state.ui.logoBatch.preview.displayHeight;
+  const logoWidth = state.ui.logoBatch.preview.logoDisplayWidth;
+  const logoHeight = state.ui.logoBatch.preview.logoDisplayHeight;
+  if (!displayWidth || !displayHeight || !logoWidth || !logoHeight) {
+    return;
+  }
+
+  const deltaX = event.clientX - state.ui.logoBatch.drag.startX;
+  const deltaY = event.clientY - state.ui.logoBatch.drag.startY;
+  const next = clampLogoCenterToFrame({
+    centerX: state.ui.logoBatch.drag.originCenterXRatio * displayWidth + deltaX,
+    centerY: state.ui.logoBatch.drag.originCenterYRatio * displayHeight + deltaY,
+    width: logoWidth,
+    height: logoHeight,
+    frameWidth: displayWidth,
+    frameHeight: displayHeight
+  });
+  config.centerXRatio = next.centerX / displayWidth;
+  config.centerYRatio = next.centerY / displayHeight;
+  syncLogoBatchPreviewMetrics();
+}
+
+function handleLogoBatchPointerUp(event) {
+  if (state.ui.logoBatch.drag.pointerId !== event.pointerId) {
+    return;
+  }
+  const canvas = document.getElementById('logoBatchCanvas');
+  state.ui.logoBatch.drag.isActive = false;
+  state.ui.logoBatch.drag.pointerId = null;
+  canvas?.classList.remove('is-dragging');
+  canvas?.releasePointerCapture?.(event.pointerId);
+  canvas?.removeEventListener('pointermove', handleLogoBatchPointerMove);
+  canvas?.removeEventListener('pointerup', handleLogoBatchPointerUp);
+  canvas?.removeEventListener('pointercancel', handleLogoBatchPointerUp);
+}
+
+function shiftLogoBatchPreviewIndex(offset) {
+  const zoneKey = state.ui.logoBatch.zoneKey;
+  const previewRefs = getLogoBatchPreviewRefs(zoneKey);
+  if (previewRefs.length <= 1) {
+    return;
+  }
+  const current = state.ui.logoBatch.activePreviewIndex || 0;
+  state.ui.logoBatch.activePreviewIndex = (current + offset + previewRefs.length) % previewRefs.length;
+  renderLogoBatchModal();
+}
+
+function handleLogoBatchAreaRangeInput(event) {
+  updateLogoBatchAreaPercent(event.target?.value, { from: 'range' });
+}
+
+function handleLogoBatchAreaInput(event) {
+  updateLogoBatchAreaPercent(event.target?.value, { from: 'input', deferNormalize: true });
+}
+
+function normalizeLogoBatchAreaInput() {
+  const zoneKey = state.ui.logoBatch.zoneKey;
+  if (!zoneKey) {
+    return;
+  }
+  const config = getLogoBatchConfig(zoneKey);
+  config.areaPercent = clampLogoBatchAreaPercent(config.areaPercent);
+  renderLogoBatchModal();
+}
+
+function updateLogoBatchAreaPercent(rawValue, { from = 'input', deferNormalize = false } = {}) {
+  const zoneKey = state.ui.logoBatch.zoneKey;
+  if (!zoneKey) {
+    return;
+  }
+  const config = getLogoBatchConfig(zoneKey);
+  const nextValue = deferNormalize ? Number(rawValue) : clampLogoBatchAreaPercent(rawValue);
+  if (!Number.isFinite(nextValue)) {
+    return;
+  }
+  config.areaPercent = deferNormalize ? nextValue : clampLogoBatchAreaPercent(nextValue);
+  if (from !== 'range' && dom.logoBatchAreaRange) {
+    dom.logoBatchAreaRange.value = String(clampLogoBatchAreaPercent(config.areaPercent));
+  }
+  if (from !== 'input' && dom.logoBatchAreaInput) {
+    dom.logoBatchAreaInput.value = String(clampLogoBatchAreaPercent(config.areaPercent));
+  }
+  syncLogoBatchPreviewMetrics();
+}
+
+function handleLogoBatchResetPosition() {
+  const zoneKey = state.ui.logoBatch.zoneKey;
+  if (!zoneKey) {
+    return;
+  }
+  const config = getLogoBatchConfig(zoneKey);
+  const fallback = createDefaultLogoBatchPosition(config.areaPercent);
+  config.centerXRatio = fallback.centerXRatio;
+  config.centerYRatio = fallback.centerYRatio;
+  syncLogoBatchPreviewMetrics();
+}
+
+async function handleLogoBatchUpload() {
+  const zoneKey = state.ui.logoBatch.zoneKey;
+  const zoneMeta = LOGO_BATCH_ZONE_META[zoneKey];
+  if (!zoneMeta || !canUseLogoBatch()) {
+    return;
+  }
+  const config = getLogoBatchConfig(zoneKey);
+  const previousRef = config.logoRef;
+  const imported = await state.bridge.asset.import({
+    templateId: state.currentTemplateId,
+    zone: zoneMeta.internalLogoZone,
+    slotIndex: null,
+    multiple: false,
+    maxCount: 1
+  });
+  if (!imported) {
+    return;
+  }
+  if (previousRef && !previousRef.temporary) {
+    await state.bridge.asset.remove({ ref: stripTransientFields(previousRef) }).catch(() => undefined);
+  }
+  config.logoRef = imported;
+  config.updatedAt = new Date().toISOString();
+  renderLogoBatchModal();
+}
+
+async function loadImageElement(src) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = () => reject(new Error('图片加载失败'));
+    image.src = src;
+  });
+}
+
+async function composeLogoImageDataUrl(baseRef, logoRef, { areaPercent, centerXRatio, centerYRatio }) {
+  const baseImage = await loadImageElement(baseRef.fileUrl);
+  const logoImage = await loadImageElement(logoRef.fileUrl);
+  const canvas = document.createElement('canvas');
+  canvas.width = baseImage.naturalWidth || baseImage.width;
+  canvas.height = baseImage.naturalHeight || baseImage.height;
+  const context = canvas.getContext('2d');
+  if (!context || !canvas.width || !canvas.height) {
+    throw new Error('无法生成 LOGO 图片');
+  }
+
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
+  const renderBox = computeLogoRenderBox({
+    baseWidth: canvas.width,
+    baseHeight: canvas.height,
+    logoWidth: logoImage.naturalWidth || logoImage.width,
+    logoHeight: logoImage.naturalHeight || logoImage.height,
+    areaPercent
+  });
+  const positioned = clampLogoCenterToFrame({
+    centerX: centerXRatio * canvas.width,
+    centerY: centerYRatio * canvas.height,
+    width: renderBox.width,
+    height: renderBox.height,
+    frameWidth: canvas.width,
+    frameHeight: canvas.height
+  });
+  const left = positioned.centerX - renderBox.width / 2;
+  const top = positioned.centerY - renderBox.height / 2;
+  context.drawImage(logoImage, left, top, renderBox.width, renderBox.height);
+
+  const extension = String(baseRef.fileName || '').toLowerCase();
+  const mimeType = extension.endsWith('.jpg') || extension.endsWith('.jpeg')
+    ? 'image/jpeg'
+    : extension.endsWith('.webp')
+      ? 'image/webp'
+      : 'image/png';
+  return canvas.toDataURL(mimeType);
+}
+
+function buildLogoBatchFileNameHint(ref) {
+  return String(ref?.fileName || 'logo-batch')
+    .replace(/\.[^.]+$/g, '')
+    .slice(0, 48);
+}
+
+function buildAppliedLogoBatchPayload(zoneKey, config, nextRefs) {
+  const payload = {
+    logoRef: sanitizeAssetRef(config.logoRef),
+    sourceRefs: zoneKey === 'skuThumbs'
+      ? sanitizeLogoBatchRefs(config.sourceRefs, { allowNullItems: true })
+      : sanitizeLogoBatchRefs(config.sourceRefs),
+    areaPercent: clampLogoBatchAreaPercent(config.areaPercent),
+    centerXRatio: clamp(0, config.centerXRatio, 1),
+    centerYRatio: clamp(0, config.centerYRatio, 1),
+    updatedAt: new Date().toISOString()
+  };
+  config.pendingGeneratedRefs = nextRefs;
+  return payload;
+}
+
+async function handleLogoBatchApply() {
+  const zoneKey = state.ui.logoBatch.zoneKey;
+  const zoneMeta = LOGO_BATCH_ZONE_META[zoneKey];
+  const config = getLogoBatchConfig(zoneKey);
+  if (!zoneMeta || !config.logoRef?.fileUrl) {
+    return;
+  }
+
+  const sourceRefs = getLogoBatchEffectiveSourceRefs(zoneKey);
+  const validSourceRefs = sourceRefs.filter(Boolean);
+  if (!validSourceRefs.length) {
+    window.alert('当前区域没有可处理的图片。');
+    return;
+  }
+
+  state.ui.logoBatch.status = 'loading';
+  state.ui.logoBatch.summary = `正在为 ${validSourceRefs.length} 张图片生成带 LOGO 素材...`;
+  renderLogoBatchModal();
+
+  try {
+    const items = [];
+    for (let index = 0; index < sourceRefs.length; index += 1) {
+      const sourceRef = sourceRefs[index];
+      if (!sourceRef) {
+        continue;
+      }
+      const dataUrl = await composeLogoImageDataUrl(sourceRef, config.logoRef, {
+        areaPercent: config.areaPercent,
+        centerXRatio: config.centerXRatio,
+        centerYRatio: config.centerYRatio
+      });
+      items.push({
+        slotIndex: index,
+        dataUrl,
+        fileNameHint: buildLogoBatchFileNameHint(sourceRef)
+      });
+    }
+
+    const writtenRefs = await state.bridge.asset.writeGeneratedBatch({
+      templateId: state.currentTemplateId,
+      zone: zoneKey,
+      items
+    });
+
+    config.sourceRefs = zoneKey === 'skuThumbs'
+      ? sourceRefs.map((ref) => sanitizeAssetRef(ref))
+      : sourceRefs.filter(Boolean).map((ref) => sanitizeAssetRef(ref));
+    const logoBatchPayload = buildAppliedLogoBatchPayload(zoneKey, config, writtenRefs);
+
+    if (zoneKey === 'mainGallery') {
+      await replaceMainGalleryRefs(writtenRefs, {
+        nextLogoBatch: logoBatchPayload,
+        skipClearLogoBatch: true,
+        preservePreviousRefs: true
+      });
+    } else if (zoneKey === 'skuThumbs') {
+      await replaceSkuThumbRefs(writtenRefs, {
+        nextLogoBatch: logoBatchPayload,
+        skipClearLogoBatch: true,
+        preservePreviousRefs: true
+      });
+    }
+
+    config.pendingGeneratedRefs = null;
+    state.ui.logoBatch.status = 'idle';
+    state.ui.logoBatch.summary = `已为当前${zoneKey === 'mainGallery' ? '轮播图' : 'SKU图'}应用 LOGO，可继续调整或恢复原图。`;
+    await saveCurrentTemplate({ silent: true });
+    renderWorkspaceMeta();
+    renderLogoBatchModal();
+  } catch (error) {
+    state.ui.logoBatch.status = 'idle';
+    state.ui.logoBatch.summary = error instanceof Error ? error.message : '批量加 LOGO 失败，请稍后重试。';
+    renderLogoBatchModal();
+    throw error;
+  }
+}
+
+async function handleLogoBatchRestore() {
+  const zoneKey = state.ui.logoBatch.zoneKey;
+  const config = getLogoBatchConfig(zoneKey);
+  const sourceRefs = Array.isArray(config.sourceRefs) ? config.sourceRefs : [];
+  if (!sourceRefs.some((item) => Boolean(item))) {
+    return;
+  }
+
+  if (zoneKey === 'mainGallery') {
+    await replaceMainGalleryRefs(sourceRefs.filter(Boolean), {
+      clearLogoBatch: true,
+      skipClearLogoBatch: true,
+      preservePreviousRefs: false
+    });
+  } else if (zoneKey === 'skuThumbs') {
+    await replaceSkuThumbRefs(sourceRefs, {
+      clearLogoBatch: true,
+      skipClearLogoBatch: true,
+      preservePreviousRefs: false
+    });
+  }
+
+  await clearLogoBatchState(zoneKey, { preserveCurrentImages: true, reason: '' });
+  state.ui.logoBatch.summary = '已恢复原图，你可以重新上传 LOGO 再次应用。';
+  renderLogoBatchModal();
+}
+
+function renderImagePreviewModal() {
+  if (!dom.imagePreviewModal) {
+    return;
+  }
+
+  const preview = state.ui.imagePreview || {};
+  const ref = preview.ref || null;
+  const isOpen = Boolean(preview.isOpen && ref?.fileUrl);
+  dom.imagePreviewModal.hidden = !isOpen;
+
+  if (!isOpen) {
+    if (dom.imagePreviewImage) {
+      dom.imagePreviewImage.removeAttribute('src');
+      dom.imagePreviewImage.alt = '查看图片';
+    }
+
+    if (dom.imagePreviewMeta) {
+      dom.imagePreviewMeta.textContent = '';
+    }
+    return;
+  }
+
+  const title = preview.label || ref.fileName || '查看图片';
+  dom.imagePreviewTitle.textContent = title;
+  dom.imagePreviewImage.src = ref.fileUrl;
+  dom.imagePreviewImage.alt = title;
+  dom.imagePreviewMeta.textContent = [
+    ref.fileName || title,
+    ref.importedAt ? `导入时间 ${formatDateTime(ref.importedAt)}` : ''
+  ].filter(Boolean).join(' · ');
+}
+
 function renderProductFillState() {
   if (!dom.openProductFillBtn || !dom.productFillModal) {
     return;
@@ -1702,17 +2653,42 @@ async function fillCurrentTemplateFromProductId(productId) {
   renderProductFillState();
 
   const categoryPath = normalizeFilledCategoryPath(detailResult.categoryPath);
-  if (!categoryPath) {
-    return createProductFillFailure('该商品未返回可用的类目信息，无法自动填充。', 'CATEGORY_PATH_MISSING');
+  const pathHints = splitCategoryPath(categoryPath);
+  const categoryIds = detailResult.categoryIds && typeof detailResult.categoryIds === 'object'
+    ? detailResult.categoryIds
+    : null;
+
+  let resolvedSelection = null;
+  if (categoryIds && Object.values(categoryIds).some((value) => String(value || '').trim())) {
+    resolvedSelection = await resolveCategorySelectionFromDetail({
+      shopCode: resolvedShopCode,
+      categoryIds,
+      pathHints
+    });
   }
 
-  const resolvedSelection = await resolveCategorySelectionFromPath({
-    shopCode: resolvedShopCode,
-    pathHints: splitCategoryPath(categoryPath)
-  });
+  if (!resolvedSelection || resolvedSelection.degraded || !resolvedSelection.leafId) {
+    if (categoryPath) {
+      const pathFallback = await resolveCategorySelectionFromPath({
+        shopCode: resolvedShopCode,
+        pathHints
+      });
+      if (pathFallback?.leafId) {
+        resolvedSelection = {
+          ...pathFallback,
+          matchedDepth: 3,
+          degraded: false
+        };
+      }
+    }
+  }
 
   if (!resolvedSelection?.leafId) {
-    return createProductFillFailure(`店铺《${resolvedShopLabel}》下无法解析该商品类目，请确认商品类目是否可发布。`, 'CATEGORY_NOT_RESOLVED');
+    const matched = resolvedSelection?.matchedDepth || 0;
+    const reason = matched > 0
+      ? `已自动定位到 ${matched} 级类目，但更深层级在店铺《${resolvedShopLabel}》下未匹配，请打开类目选择器手动确认。`
+      : `店铺《${resolvedShopLabel}》下无法解析该商品类目，请确认商品类目是否可发布。`;
+    return createProductFillFailure(reason, 'CATEGORY_NOT_RESOLVED');
   }
 
   const attributeResult = await state.bridge.auth.listCategoryAttributes({
@@ -1836,6 +2812,7 @@ async function fillCurrentTemplateFromProductId(productId) {
       formData: formBuildResult.formData
     });
     syncSkuSpecSelectionsToForm(state.skuSpec.selectedSlots);
+    syncSkuSpecValueListsToForm(state.skuSpec.valueLists);
 
     if (stagedMainGalleryRefs.length) {
       await replaceMainGalleryRefs(stagedMainGalleryRefs);
@@ -1905,13 +2882,183 @@ function buildSkuRowsFromProductDetail(detailSkus) {
         groupPrice: sku?.groupPrice,
         singlePrice: sku?.singlePrice,
         stock: sku?.stock,
-        weight: sku?.weight
+        outSkuSn: sku?.outSkuSn || sku?.externalSkuCode
       }),
+      specItems: Array.isArray(sku?.specItems) ? sku.specItems : [],
       skuImageUrl: String(sku?.skuImageUrl || '').trim()
     }))
     .filter((row) => {
       return SKU_FIELD_NAMES.some((fieldName) => String(row[fieldName] || '').trim() !== '');
     });
+}
+
+function isSkuSpecValueColorLike(value) {
+  return extractColorTokens(value).length > 0;
+}
+
+function isSkuSpecValueSizeLike(value) {
+  const text = String(value || '').trim();
+  if (!text) {
+    return false;
+  }
+
+  return /均码|大码|小码|中码|加大码|常规款|高个子|小个子|短版|长版|超长版|加长版|短筒|中筒|长筒|薄款|厚款|春秋款/i.test(text)
+    || /\b(?:XS|S|M|L|XL|XXL|XXXL|XXXXL)\b/i.test(text)
+    || /\d+\s*[-~—至]\s*\d+\s*(?:cm|CM|斤|kg|KG|码|m|M)/.test(text)
+    || /\d+\s*D/i.test(text);
+}
+
+function inferFallbackSkuSpecLabel(values, slotIndex) {
+  const normalizedValues = (Array.isArray(values) ? values : []).map((value) => String(value || '').trim()).filter(Boolean);
+  if (!normalizedValues.length) {
+    return '';
+  }
+
+  const colorCount = normalizedValues.filter((value) => isSkuSpecValueColorLike(value)).length;
+  const sizeCount = normalizedValues.filter((value) => isSkuSpecValueSizeLike(value)).length;
+
+  if (colorCount > 0 && colorCount >= sizeCount) {
+    return '颜色';
+  }
+
+  if (sizeCount > 0) {
+    return '尺码';
+  }
+
+  return slotIndex === 0 ? '规格一' : '规格二';
+}
+
+function buildFallbackSkuSpecConfigFromRows(rows) {
+  const valueBuckets = [new Set(), new Set()];
+
+  (Array.isArray(rows) ? rows : []).forEach((row) => {
+    const parts = splitSkuSpecName(row?.specName);
+    const colorValue = String(parts[0] || '').trim();
+    const sizeValue = String(parts.slice(1).join(' / ') || '').trim();
+    if (colorValue) {
+      valueBuckets[0].add(colorValue);
+    }
+    if (sizeValue) {
+      valueBuckets[1].add(sizeValue);
+    }
+  });
+
+  const valueLists = normalizeSkuSpecValueLists(valueBuckets.map((bucket) => Array.from(bucket)));
+  return {
+    selectedSlots: normalizeSkuSpecSelections(valueLists.map((values, slotIndex) => {
+      if (!values.length) {
+        return createEmptySkuSpecSelection();
+      }
+
+      return {
+        id: '',
+        label: inferFallbackSkuSpecLabel(values, slotIndex)
+      };
+    })),
+    valueLists
+  };
+}
+
+function mergeSkuSpecConfigs(primaryConfig, fallbackConfig) {
+  const primarySelections = normalizeSkuSpecSelections(primaryConfig?.selectedSlots);
+  const fallbackSelections = normalizeSkuSpecSelections(fallbackConfig?.selectedSlots);
+  const primaryValueLists = normalizeSkuSpecValueLists(primaryConfig?.valueLists);
+  const fallbackValueLists = normalizeSkuSpecValueLists(fallbackConfig?.valueLists);
+
+  return {
+    selectedSlots: normalizeSkuSpecSelections([0, 1].map((slotIndex) => {
+      const primarySelection = primarySelections[slotIndex];
+      if (primarySelection?.id || primarySelection?.label) {
+        return primarySelection;
+      }
+      return fallbackSelections[slotIndex];
+    })),
+    valueLists: normalizeSkuSpecValueLists([0, 1].map((slotIndex) => {
+      const mergedValues = [];
+      const seenValues = new Set();
+
+      [...(primaryValueLists[slotIndex] || []), ...(fallbackValueLists[slotIndex] || [])].forEach((value) => {
+        const normalizedValue = String(value || '').trim();
+        if (!normalizedValue || seenValues.has(normalizedValue)) {
+          return;
+        }
+
+        seenValues.add(normalizedValue);
+        mergedValues.push(normalizedValue);
+      });
+
+      return mergedValues;
+    }))
+  };
+}
+
+function rearrangeSkuRowsByCartesianProduct(rows, selections, valueLists) {
+  const slot1 = selections?.[0] || { id: '', label: '' };
+  const slot2 = selections?.[1] || { id: '', label: '' };
+  const values1 = Array.isArray(valueLists?.[0]) ? valueLists[0].filter(Boolean) : [];
+  const values2 = Array.isArray(valueLists?.[1]) ? valueLists[1].filter(Boolean) : [];
+
+  const matchSlotValue = (row, slot, slotIndex) => {
+    const list = Array.isArray(row?.specItems) ? row.specItems : [];
+    const slotId = String(slot?.id || '').trim();
+    const slotLabel = String(slot?.label || '').trim();
+    const hit = list.find((item) => {
+      const parentId = String(item?.parentId || '').trim();
+      const parentName = String(item?.parentName || '').trim();
+      return (slotId && slotId === parentId) || (slotLabel && slotLabel === parentName);
+    });
+    const structuredValue = String(hit?.specName || '').trim();
+    if (structuredValue) {
+      return structuredValue;
+    }
+
+    const parts = splitSkuSpecName(row?.specName);
+    if (slotIndex === 0) {
+      return String(parts[0] || '').trim();
+    }
+    if (slotIndex === 1) {
+      return String(parts.slice(1).join(' / ') || '').trim();
+    }
+    return String(parts[slotIndex] || '').trim();
+  };
+
+  const rowMap = new Map();
+  (Array.isArray(rows) ? rows : []).forEach((row) => {
+    const v1 = matchSlotValue(row, slot1, 0);
+    const v2 = slot2.id || slot2.label ? matchSlotValue(row, slot2, 1) : '';
+    const key = `${v1}${v2}`;
+    if (!rowMap.has(key)) {
+      rowMap.set(key, row);
+    }
+  });
+
+  const outerValues = values1.length ? values1 : [''];
+  const innerValues = (slot2.id || slot2.label) && values2.length ? values2 : [''];
+
+  const ordered = [];
+  outerValues.forEach((v1) => {
+    innerValues.forEach((v2) => {
+      const key = `${v1}${v2}`;
+      const row = rowMap.get(key);
+      const composedSpecName = [v1, v2].filter(Boolean).join(' / ');
+      if (row) {
+        ordered.push({
+          ...row,
+          specName: row.specName || composedSpecName
+        });
+      } else {
+        ordered.push({
+          ...buildBlankSkuRow(),
+          specName: composedSpecName,
+          stock: '0',
+          specItems: [],
+          skuImageUrl: ''
+        });
+      }
+    });
+  });
+
+  return ordered;
 }
 
 function buildSkuSpecSelectionsFromProductDetail(detail) {
@@ -2023,21 +3170,53 @@ function buildProductFillFormData({ currentFormData, detail, selection, schema, 
     detail.twoPiecesDiscount || currentFormData.pddForm_styleCode || currentFormData.styleCode || ''
   );
 
+  assignFormDataValue(nextFormData, 'pddForm_costTemplateId', 'costTemplateId', String(detail.costTemplateId || '').trim());
+  assignFormDataValue(nextFormData, 'pddForm_sendAddress', 'sendAddress', String(detail.sendAddress || '').trim());
+
+  const limitSec = String(detail.shipmentLimitSecond || '').trim();
+  if (limitSec) {
+    if (SHIPMENT_LIMIT_RADIO_VALUES.has(limitSec)) {
+      assignFormDataValue(nextFormData, 'pddForm_shipmentLimitSecond', 'shipmentLimitSecond', limitSec);
+      assignFormDataValue(nextFormData, 'pddForm_shipmentLimitSecondCustom', 'shipmentLimitSecondCustom', '');
+    } else {
+      assignFormDataValue(nextFormData, 'pddForm_shipmentLimitSecond', 'shipmentLimitSecond', 'custom');
+      assignFormDataValue(nextFormData, 'pddForm_shipmentLimitSecondCustom', 'shipmentLimitSecondCustom', limitSec);
+    }
+  }
+
+  if (shouldReplaceAttributes) {
+    state.attribute.meta = {};
+  }
+
   const attributeStats = applyDetailAttributesToFormData({
     formData: nextFormData,
     detailAttributes: detail.attributes,
     schema
   });
 
-  const normalizedSkuRows = shouldReplaceSkuRows ? buildSkuRowsFromProductDetail(detail.skus || skuRows) : getCurrentSkuRows();
+  const detailRowsByInterfaceOrder = buildSkuRowsFromProductDetail(detail.skus || skuRows);
+  const nextSkuSpecConfig = mergeSkuSpecConfigs(
+    {
+      selectedSlots: buildSkuSpecSelectionsFromProductDetail(detail),
+      valueLists: buildSkuSpecValueListsFromProductDetail(detail)
+    },
+    buildFallbackSkuSpecConfigFromRows(detailRowsByInterfaceOrder)
+  );
+  const nextSkuSpecSelections = nextSkuSpecConfig.selectedSlots;
+  const hasSpecDimensions = nextSkuSpecSelections.some((item) => item.id || item.label);
+  const nextSkuSpecValueLists = hasSpecDimensions ? nextSkuSpecConfig.valueLists : [[], []];
+  const normalizedSkuRows = shouldReplaceSkuRows
+    ? (hasSpecDimensions
+      ? rearrangeSkuRowsByCartesianProduct(detailRowsByInterfaceOrder, nextSkuSpecSelections, nextSkuSpecValueLists)
+      : detailRowsByInterfaceOrder)
+    : getCurrentSkuRows();
   if (shouldReplaceSkuRows) {
     assignSkuRowsToFormData(nextFormData, normalizedSkuRows);
   }
 
-  const nextSkuSpecSelections = buildSkuSpecSelectionsFromProductDetail(detail);
-  if (nextSkuSpecSelections.some((item) => item.id || item.label)) {
+  if (hasSpecDimensions) {
     assignSkuSpecSelectionsToFormData(nextFormData, nextSkuSpecSelections);
-    assignSkuSpecValueListsToFormData(nextFormData, buildSkuSpecValueListsFromProductDetail(detail));
+    assignSkuSpecValueListsToFormData(nextFormData, nextSkuSpecValueLists);
   }
 
   return {
@@ -2088,6 +3267,7 @@ function applyDetailAttributesToFormData({ formData, detailAttributes, schema })
   const schemaByRefPid = new Map((Array.isArray(schema) ? schema : []).map((item) => [String(item.refPid || '').trim(), item]));
   let filledCount = 0;
   let skippedCount = 0;
+  const meta = {};
 
   (Array.isArray(detailAttributes) ? detailAttributes : []).forEach((detailAttribute) => {
     const refPid = String(detailAttribute?.refPid || '').trim();
@@ -2097,8 +3277,8 @@ function applyDetailAttributesToFormData({ formData, detailAttributes, schema })
       return;
     }
 
-    const value = resolveProductAttributeFillValue(detailAttribute, schemaAttribute);
-    if (!value) {
+    const resolved = resolveProductAttributeFillValue(detailAttribute, schemaAttribute);
+    if (!resolved.value) {
       skippedCount += 1;
       return;
     }
@@ -2107,29 +3287,70 @@ function applyDetailAttributesToFormData({ formData, detailAttributes, schema })
       formData,
       buildAttributeControlId(refPid),
       buildAttributeControlName(refPid),
-      value
+      resolved.value
     );
     filledCount += 1;
+    if (resolved.vid || resolved.unit) {
+      meta[refPid] = {
+        ...(resolved.vid ? { vid: resolved.vid } : {}),
+        ...(resolved.unit ? { unit: resolved.unit } : {})
+      };
+    }
   });
+
+  state.attribute.meta = {
+    ...(state.attribute.meta || {}),
+    ...meta
+  };
 
   return {
     filledCount,
-    skippedCount
+    skippedCount,
+    meta
   };
 }
 
 function resolveProductAttributeFillValue(detailAttribute, schemaAttribute) {
   const values = Array.isArray(detailAttribute?.values) ? detailAttribute.values : [];
   if (!values.length) {
-    return '';
+    return { value: '', vid: '', unit: '' };
   }
 
   if (schemaAttribute.controlType === 1 && Array.isArray(schemaAttribute.options) && schemaAttribute.options.length) {
-    const allowedLabels = new Set(schemaAttribute.options.map((option) => option.label));
-    const matchedValue = values
-      .map((item) => String(item.rawValue || item.value || '').trim())
-      .find((label) => label && allowedLabels.has(label));
-    return matchedValue || '';
+    const optionsByVid = new Map(
+      schemaAttribute.options
+        .filter((option) => option && (option.id || option.vid))
+        .map((option) => [String(option.id ?? option.vid).trim(), option])
+    );
+    const optionsByLabel = new Map(
+      schemaAttribute.options.map((option) => [String(option.label || '').trim(), option])
+    );
+
+    for (const item of values) {
+      const vid = String(item?.vid || '').trim();
+      if (vid && optionsByVid.has(vid)) {
+        const option = optionsByVid.get(vid);
+        return {
+          value: String(option.label || '').trim(),
+          vid,
+          unit: String(item?.unit || '').trim()
+        };
+      }
+    }
+
+    for (const item of values) {
+      const label = String(item?.rawValue || item?.value || '').trim();
+      if (label && optionsByLabel.has(label)) {
+        const option = optionsByLabel.get(label);
+        return {
+          value: label,
+          vid: String(option.id ?? option.vid ?? '').trim(),
+          unit: String(item?.unit || '').trim()
+        };
+      }
+    }
+
+    return { value: '', vid: '', unit: '' };
   }
 
   const joinedValue = values
@@ -2137,7 +3358,15 @@ function resolveProductAttributeFillValue(detailAttribute, schemaAttribute) {
     .filter(Boolean)
     .join('，');
 
-  return truncateByControlLimit(joinedValue, buildAttributeControlId(schemaAttribute.refPid), schemaAttribute.maxValue);
+  const truncated = truncateByControlLimit(joinedValue, buildAttributeControlId(schemaAttribute.refPid), schemaAttribute.maxValue);
+  const firstWithVid = values.find((item) => String(item?.vid || '').trim());
+  const firstWithUnit = values.find((item) => String(item?.unit || '').trim());
+
+  return {
+    value: truncated,
+    vid: String(firstWithVid?.vid || '').trim(),
+    unit: String(firstWithUnit?.unit || '').trim()
+  };
 }
 
 function applyProductFillFormData({ formData, selection, schema, categoryPath }) {
@@ -2162,22 +3391,73 @@ function applyProductFillFormData({ formData, selection, schema, categoryPath })
 
 async function replaceSkuRowsWithRefs(rows, nextRefs) {
   const previousRefs = getCurrentSkuThumbRefs();
+  await clearLogoBatchForImageChange('skuThumbs', 'SKU 图已被新的商品数据覆盖，请重新应用 LOGO。');
   renderSkuRows(rows, {
     imageRefs: nextRefs
   });
   await cleanupAssetRefs(previousRefs);
 }
 
-async function replaceDetailGalleryRefs(nextRefs) {
+async function replaceSkuThumbRefs(nextRefs, options = {}) {
+  const {
+    nextLogoBatch = null,
+    clearLogoBatch = false,
+    skipClearLogoBatch = false,
+    preservePreviousRefs = false
+  } = options;
+  const previousRefs = Array.isArray(state.slotRegistry.skuThumbs)
+    ? state.slotRegistry.skuThumbs.map((slot) => slot.__assetRef || null)
+    : [];
+  const skuRows = getCurrentSkuRows();
+  renderSkuRows(skuRows, {
+    imageRefs: Array.isArray(nextRefs) ? nextRefs : []
+  });
+  if (nextLogoBatch) {
+    syncUiLogoBatchConfig('skuThumbs', nextLogoBatch);
+    ensureCurrentTemplateLogoBatchStore().skuThumbs = sanitizeLogoBatchConfig(nextLogoBatch, 'skuThumbs');
+  } else if (clearLogoBatch) {
+    syncUiLogoBatchConfig('skuThumbs', null);
+    ensureCurrentTemplateLogoBatchStore().skuThumbs = null;
+  }
+  if (!preservePreviousRefs) {
+    await cleanupAssetRefs(previousRefs);
+  }
+  if (!skipClearLogoBatch) {
+    await clearLogoBatchState('skuThumbs', { preserveCurrentImages: true, reason: '' });
+  }
+}
+
+async function replaceDetailGalleryRefs(nextRefs, options = {}) {
   const previousRefs = getArrayZoneRefs('detailGallery');
   renderDynamicArrayZone('detailGallery', nextRefs);
   await cleanupAssetRefs(previousRefs);
 }
 
-async function replaceMainGalleryRefs(nextRefs) {
+async function replaceMainGalleryRefs(nextRefs, options = {}) {
+  const {
+    nextLogoBatch = null,
+    clearLogoBatch = false,
+    skipClearLogoBatch = false,
+    preservePreviousRefs = false
+  } = options;
   const previousRefs = getArrayZoneRefs('mainGallery');
+  if (!skipClearLogoBatch && !nextLogoBatch) {
+    await clearLogoBatchForImageChange('mainGallery', '轮播图已被新的商品数据覆盖，请重新应用 LOGO。');
+  }
   renderDynamicArrayZone('mainGallery', nextRefs);
-  await cleanupAssetRefs(previousRefs);
+  if (nextLogoBatch) {
+    syncUiLogoBatchConfig('mainGallery', nextLogoBatch);
+    ensureCurrentTemplateLogoBatchStore().mainGallery = sanitizeLogoBatchConfig(nextLogoBatch, 'mainGallery');
+  } else if (clearLogoBatch) {
+    syncUiLogoBatchConfig('mainGallery', null);
+    ensureCurrentTemplateLogoBatchStore().mainGallery = null;
+  }
+  if (!preservePreviousRefs) {
+    await cleanupAssetRefs(previousRefs);
+  }
+  if (!skipClearLogoBatch) {
+    await clearLogoBatchState('mainGallery', { preserveCurrentImages: true, reason: '' });
+  }
 }
 
 async function cleanupAssetRefs(refs) {
@@ -2196,6 +3476,57 @@ async function cleanupAssetRefs(refs) {
       }
     }
   }
+}
+
+async function cleanupSingleAssetRef(ref) {
+  if (!ref) {
+    return;
+  }
+  await cleanupAssetRefs([ref]);
+}
+
+function getLogoBatchAssetRefsToCleanup(zoneKey, config) {
+  const refs = [];
+  if (config?.logoRef) {
+    refs.push(config.logoRef);
+  }
+  if (Array.isArray(config?.pendingGeneratedRefs)) {
+    refs.push(...config.pendingGeneratedRefs.filter(Boolean));
+  }
+  return refs;
+}
+
+async function clearLogoBatchState(zoneKey, { preserveCurrentImages = false, reason = '' } = {}) {
+  if (!LOGO_BATCH_ZONE_META[zoneKey]) {
+    return;
+  }
+  const config = getLogoBatchConfig(zoneKey);
+  const refsToCleanup = getLogoBatchAssetRefsToCleanup(zoneKey, config);
+  syncUiLogoBatchConfig(zoneKey, null);
+  await cleanupAssetRefs(refsToCleanup);
+  if (state.currentTemplate?.imageRefs?.logoBatches) {
+    state.currentTemplate.imageRefs.logoBatches[zoneKey] = null;
+  }
+  if (state.ui.logoBatch.isOpen && state.ui.logoBatch.zoneKey === zoneKey) {
+    state.ui.logoBatch.summary = reason || '图片已变更，请重新应用 LOGO。';
+    renderLogoBatchModal();
+  }
+  if (reason) {
+    showAuthNotice(reason);
+    pushLocalLog('warning', reason);
+  }
+  if (!preserveCurrentImages && state.bridge && state.currentTemplateId) {
+    await saveCurrentTemplate({ silent: true });
+  }
+}
+
+async function clearLogoBatchForImageChange(zoneKey, reason) {
+  const config = getLogoBatchConfig(zoneKey);
+  const hasState = Boolean(config.logoRef) || (Array.isArray(config.sourceRefs) && config.sourceRefs.some((item) => Boolean(item)));
+  if (!hasState) {
+    return;
+  }
+  await clearLogoBatchState(zoneKey, { preserveCurrentImages: true, reason });
 }
 
 function buildProductFillSummary({
@@ -2246,6 +3577,170 @@ function handleSkuTableInput(event) {
   if (!event.target) {
     return;
   }
+
+  scheduleAutoSave();
+  renderWorkspaceMeta();
+}
+
+function handleSkuBulkStockKeyDown(event) {
+  if (event.key !== 'Enter') {
+    return;
+  }
+
+  event.preventDefault();
+  handleApplySkuBulkStock();
+}
+
+function handleSkuBulkPriceInputKeyDown(event) {
+  if (event.key !== 'Enter') {
+    return;
+  }
+
+  event.preventDefault();
+  applySkuBulkPriceAdjust({
+    field: event.target?.id === 'skuBulkSinglePriceInput' ? 'singlePrice' : 'groupPrice',
+    action: 'increase',
+    inputId: event.target?.id
+  });
+}
+
+function handleSkuBulkToolbarClick(event) {
+  const trigger = event.target?.closest?.('[data-sku-bulk-price-action]');
+  if (trigger) {
+    applySkuBulkPriceAdjust({
+      field: trigger.dataset.skuBulkPriceField,
+      action: trigger.dataset.skuBulkPriceAction,
+      inputId: trigger.dataset.skuBulkPriceInput
+    });
+    return;
+  }
+
+  const replaceTrigger = event.target?.closest?.('[data-sku-bulk-code-replace]');
+  if (!replaceTrigger) {
+    return;
+  }
+
+  handleApplySkuBulkCodeReplace();
+}
+
+function normalizePriceToFen(value) {
+  return Math.max(0, Math.round(Number(value) * 100));
+}
+
+function formatFenToPrice(fen) {
+  return (Math.max(0, Number(fen) || 0) / 100).toFixed(2);
+}
+
+function applySkuBulkPriceAdjust({ field, action, inputId }) {
+  const input = inputId ? document.getElementById(inputId) : null;
+  const rawValue = String(input?.value || '').trim();
+  if (!rawValue) {
+    input?.focus();
+    return;
+  }
+
+  const delta = Number(rawValue);
+  if (!Number.isFinite(delta) || delta < 0) {
+    window.alert('请输入大于等于 0 的价格变动值。');
+    input?.focus();
+    return;
+  }
+
+  const normalizedField = field === 'singlePrice' ? 'singlePrice' : 'groupPrice';
+  const normalizedAction = action === 'decrease' ? 'decrease' : 'increase';
+  const deltaFen = normalizePriceToFen(delta);
+  const priceInputs = Array.from(
+    dom.goodsSkuTableBody?.querySelectorAll(`input[name$="[${normalizedField}]"]`) || []
+  );
+  if (!priceInputs.length) {
+    window.alert('当前没有可调整价格的 SKU。');
+    return;
+  }
+
+  priceInputs.forEach((priceInput) => {
+    const currentFen = normalizePriceToFen(priceInput.value);
+    const nextFen = normalizedAction === 'decrease'
+      ? Math.max(0, currentFen - deltaFen)
+      : currentFen + deltaFen;
+    priceInput.value = formatFenToPrice(nextFen);
+  });
+
+  scheduleAutoSave();
+  renderWorkspaceMeta();
+}
+
+function handleApplySkuBulkStock() {
+  const rawValue = String(dom.skuBulkStockInput?.value || '').trim();
+  if (!rawValue) {
+    dom.skuBulkStockInput?.focus();
+    return;
+  }
+
+  const stockValue = Number(rawValue);
+  if (!Number.isFinite(stockValue) || stockValue < 0) {
+    window.alert('请输入大于等于 0 的库存。');
+    dom.skuBulkStockInput?.focus();
+    return;
+  }
+
+  const normalizedStock = String(Math.floor(stockValue));
+  const stockInputs = Array.from(dom.goodsSkuTableBody?.querySelectorAll('input[name$="[stock]"]') || []);
+  if (!stockInputs.length) {
+    window.alert('当前没有可设置库存的 SKU。');
+    return;
+  }
+
+  stockInputs.forEach((input) => {
+    input.value = normalizedStock;
+  });
+
+  scheduleAutoSave();
+  renderWorkspaceMeta();
+}
+
+function handleSkuBulkCodeReplaceKeyDown(event) {
+  if (event.key !== 'Enter') {
+    return;
+  }
+
+  event.preventDefault();
+  handleApplySkuBulkCodeReplace();
+}
+
+function handleApplySkuBulkCodeReplace() {
+  const searchValue = String(dom.skuBulkSkuCodeSearchInput?.value || '');
+  const replaceValue = String(dom.skuBulkSkuCodeReplaceInput?.value || '');
+  if (!searchValue.length) {
+    window.alert('请输入要查找的 SKU 编码字符。');
+    dom.skuBulkSkuCodeSearchInput?.focus();
+    return;
+  }
+
+  const codeInputs = Array.from(dom.goodsSkuTableBody?.querySelectorAll('input[name$="[outSkuSn]"]') || []);
+  if (!codeInputs.length) {
+    window.alert('当前没有可替换 SKU 编码的 SKU。');
+    return;
+  }
+
+  let matched = false;
+  codeInputs.forEach((input) => {
+    const currentValue = String(input.value || '');
+    if (!currentValue.includes(searchValue)) {
+      return;
+    }
+
+    matched = true;
+    input.value = currentValue.split(searchValue).join(replaceValue);
+  });
+
+  if (!matched) {
+    window.alert('当前商品SKU编码中没有匹配的字符。');
+    dom.skuBulkSkuCodeSearchInput?.focus();
+    return;
+  }
+
+  scheduleAutoSave();
+  renderWorkspaceMeta();
 }
 
 function getUsername(user) {
@@ -3666,7 +5161,13 @@ function buildInitialUiState() {
     activeWorkspaceSection: 'overview',
     activeWorkspaceStep: 'overview',
     secondaryDrawerPanel: '',
-    isSalesScopeOpen: false
+    isSalesScopeOpen: false,
+    imagePreview: {
+      isOpen: false,
+      ref: null,
+      label: ''
+    },
+    logoBatch: buildInitialLogoBatchState()
   };
 }
 
@@ -4959,6 +6460,135 @@ async function resolveCategorySelectionFromPath({ shopCode, pathHints }) {
   return resolved;
 }
 
+function pickCategoryNode(options, idHint, nameHint) {
+  const list = Array.isArray(options) ? options : [];
+  const trimmedId = String(idHint || '').trim();
+  const trimmedName = String(nameHint || '').trim();
+
+  if (trimmedId) {
+    const byId = list.find((item) => String(item.id || '').trim() === trimmedId);
+    if (byId) {
+      return byId;
+    }
+  }
+
+  if (trimmedName) {
+    const byName = list.find((item) => String(item.name || '').trim() === trimmedName);
+    if (byName) {
+      return byName;
+    }
+  }
+
+  return null;
+}
+
+async function resolveCategorySelectionFromDetail({ shopCode, categoryIds, pathHints }) {
+  const normalizedShopCode = String(shopCode || '').trim();
+  const normalizedHints = Array.isArray(pathHints) ? pathHints.map((item) => String(item || '').trim()) : [];
+  const ids = categoryIds && typeof categoryIds === 'object' ? categoryIds : {};
+  const idHints = [
+    String(ids.level1Id || '').trim(),
+    String(ids.level2Id || '').trim(),
+    String(ids.level3Id || '').trim(),
+    String(ids.level4Id || '').trim()
+  ];
+
+  if (!normalizedShopCode || !state.bridge?.auth) {
+    return null;
+  }
+
+  if (!idHints.some(Boolean)) {
+    return null;
+  }
+
+  const resolved = {
+    level1Id: '',
+    level2Id: '',
+    level3Id: '',
+    leafId: '',
+    stapleNames: [],
+    matchedDepth: 0,
+    degraded: false
+  };
+
+  const rootResult = await state.bridge.auth.listPublishCategories({
+    shopCode: normalizedShopCode,
+    parentId: '',
+    force: false
+  });
+  if (!rootResult.ok) {
+    return null;
+  }
+
+  const level1 = pickCategoryNode(rootResult.categories || [], idHints[0], normalizedHints[0]);
+  if (!level1) {
+    return { ...resolved, degraded: true };
+  }
+  resolved.level1Id = level1.id;
+  resolved.matchedDepth = 1;
+  resolved.stapleNames = normalizeStringList(level1.stapleNames || []);
+  if (level1.isLeaf) {
+    resolved.leafId = level1.id;
+    return resolved;
+  }
+
+  const secondResult = await state.bridge.auth.listPublishCategories({
+    shopCode: normalizedShopCode,
+    parentId: level1.id,
+    force: false
+  });
+  if (!secondResult.ok) {
+    return { ...resolved, degraded: true };
+  }
+  const level2 = pickCategoryNode(secondResult.categories || [], idHints[1], normalizedHints[1]);
+  if (!level2) {
+    return { ...resolved, degraded: true };
+  }
+  resolved.level2Id = level2.id;
+  resolved.matchedDepth = 2;
+  if (level2.isLeaf) {
+    resolved.leafId = level2.id;
+    return resolved;
+  }
+
+  const thirdResult = await state.bridge.auth.listPublishCategories({
+    shopCode: normalizedShopCode,
+    parentId: level2.id,
+    force: false
+  });
+  if (!thirdResult.ok) {
+    return { ...resolved, degraded: true };
+  }
+  const level3 = pickCategoryNode(thirdResult.categories || [], idHints[2], normalizedHints[2]);
+  if (!level3) {
+    return { ...resolved, degraded: true };
+  }
+  resolved.level3Id = level3.id;
+  resolved.matchedDepth = 3;
+  if (level3.isLeaf || !idHints[3]) {
+    resolved.leafId = level3.id;
+    return resolved;
+  }
+
+  const fourthResult = await state.bridge.auth.listPublishCategories({
+    shopCode: normalizedShopCode,
+    parentId: level3.id,
+    force: false
+  });
+  if (!fourthResult.ok) {
+    resolved.leafId = level3.id;
+    return resolved;
+  }
+  const level4 = pickCategoryNode(fourthResult.categories || [], idHints[3], normalizedHints[3]);
+  if (level4) {
+    resolved.leafId = level4.id;
+    resolved.matchedDepth = 4;
+  } else {
+    resolved.leafId = level3.id;
+  }
+  return resolved;
+}
+
 async function hydrateCategoryPicker({ force = false } = {}) {
   if (!state.bridge?.auth || !state.auth.user || !state.category.shopCode) {
     return;
@@ -5439,6 +7069,79 @@ function normalizeSkuSpecSelections(selections) {
   return nextSelections;
 }
 
+function scoreSkuSpecOptionMatch(option, selection, slotIndex) {
+  const optionLabel = String(option?.label || '').trim();
+  const selectionLabel = String(selection?.label || '').trim();
+  if (!optionLabel) {
+    return Number.NEGATIVE_INFINITY;
+  }
+
+  if (selectionLabel && optionLabel === selectionLabel) {
+    return 1000;
+  }
+
+  let score = 0;
+
+  if (selectionLabel && (optionLabel.includes(selectionLabel) || selectionLabel.includes(optionLabel))) {
+    score += 200;
+  }
+
+  const positiveKeywords = slotIndex === 0
+    ? ['颜色', '花色', '色号', '色']
+    : ['尺码', '尺寸', '身高', '长度', '裤长', '袜长', '规格'];
+  const negativeKeywords = slotIndex === 0
+    ? ['尺码', '尺寸', '身高', '长度', '裤长', '袜长']
+    : ['颜色', '花色', '色号'];
+
+  positiveKeywords.forEach((keyword, index) => {
+    if (optionLabel.includes(keyword)) {
+      score += 50 - index;
+    }
+  });
+
+  negativeKeywords.forEach((keyword) => {
+    if (optionLabel.includes(keyword)) {
+      score -= 60;
+    }
+  });
+
+  return score;
+}
+
+function resolveSkuSpecSelectionOption(options, selection, slotIndex, usedOptionIds = new Set()) {
+  const normalizedOptions = Array.isArray(options) ? options : [];
+  const selectionId = String(selection?.id || '').trim();
+  const selectionLabel = String(selection?.label || '').trim();
+
+  if (selectionId) {
+    const optionById = normalizedOptions.find((option) => option.id === selectionId && !usedOptionIds.has(option.id));
+    if (optionById) {
+      return optionById;
+    }
+  }
+
+  if (selectionLabel) {
+    const optionByLabel = normalizedOptions.find((option) => option.label === selectionLabel && !usedOptionIds.has(option.id));
+    if (optionByLabel) {
+      return optionByLabel;
+    }
+  }
+
+  return normalizedOptions
+    .filter((option) => option.id && !usedOptionIds.has(option.id))
+    .map((option) => ({
+      option,
+      score: scoreSkuSpecOptionMatch(option, selection, slotIndex)
+    }))
+    .filter((item) => item.score > 0)
+    .sort((left, right) => {
+      if (right.score !== left.score) {
+        return right.score - left.score;
+      }
+      return left.option.label.localeCompare(right.option.label, 'zh-CN');
+    })[0]?.option || null;
+}
+
 function syncSkuSpecSelectionsToForm(selections) {
   const normalizedSelections = normalizeSkuSpecSelections(selections);
   setFormControlValue(SKU_SPEC_FIELD_IDS.slot1Id, normalizedSelections[0]?.id || '');
@@ -5458,18 +7161,19 @@ function assignSkuSpecSelectionsToFormData(formData, selections) {
 function normalizeSelectedSkuSpecSlotsAgainstOptions(selections, options) {
   const normalizedSelections = normalizeSkuSpecSelections(selections);
   const normalizedOptions = Array.isArray(options) ? options : [];
-  const resolvedSelections = normalizedSelections.map((selection) => {
+  const usedOptionIds = new Set();
+  const resolvedSelections = normalizedSelections.map((selection, slotIndex) => {
     if (!selection.id && !selection.label) {
       return createEmptySkuSpecSelection();
     }
 
-    const matchedOption = normalizedOptions.find((option) => {
-      return option.id === selection.id || option.label === selection.label;
-    });
+    const matchedOption = resolveSkuSpecSelectionOption(normalizedOptions, selection, slotIndex, usedOptionIds);
 
     if (!matchedOption) {
       return createEmptySkuSpecSelection();
     }
+
+    usedOptionIds.add(matchedOption.id);
 
     return {
       id: matchedOption.id,
@@ -5524,35 +7228,33 @@ function isDynamicAttributeKey(key) {
   return normalizedKey.startsWith('pddForm_goodsAttribute_') || normalizedKey.startsWith('goodsAttribute[');
 }
 
+const SKU_FORM_KEY_PATTERN = new RegExp(`^goodsSkuDetail\\[(\\d+)\\]\\[(${SKU_FIELD_NAMES.join('|')})\\]$`);
+
 function isSkuFormKey(key) {
-  return /^goodsSkuDetail\[\d+\]\[(specName|groupPrice|singlePrice|stock|weight)\]$/.test(String(key || '').trim());
+  return SKU_FORM_KEY_PATTERN.test(String(key || '').trim());
 }
 
 function buildBlankSkuRow() {
-  return {
-    specName: '',
-    groupPrice: '',
-    singlePrice: '',
-    stock: '',
-    weight: ''
-  };
+  const row = {};
+  SKU_FIELD_NAMES.forEach((field) => {
+    row[field] = '';
+  });
+  return row;
 }
 
 function normalizeSkuRow(row = {}) {
-  return {
-    specName: String(row.specName || '').trim(),
-    groupPrice: String(row.groupPrice || '').trim(),
-    singlePrice: String(row.singlePrice || '').trim(),
-    stock: String(row.stock || '').trim(),
-    weight: String(row.weight || '').trim()
-  };
+  const normalized = {};
+  SKU_FIELD_NAMES.forEach((field) => {
+    normalized[field] = String(row?.[field] || '').trim();
+  });
+  return normalized;
 }
 
 function extractSkuRowsFromFormData(formData, { fallbackRows = [] } = {}) {
   const groupedRows = new Map();
 
   Object.entries(formData || {}).forEach(([key, value]) => {
-    const match = String(key || '').trim().match(/^goodsSkuDetail\[(\d+)\]\[(specName|groupPrice|singlePrice|stock|weight)\]$/);
+    const match = String(key || '').trim().match(SKU_FORM_KEY_PATTERN);
     if (!match) {
       return;
     }
@@ -5582,7 +7284,7 @@ function extractSkuRowsFromFormData(formData, { fallbackRows = [] } = {}) {
 
 function splitSkuSpecName(value) {
   return String(value || '')
-    .split('/')
+    .split(' / ')
     .map((item) => item.trim())
     .filter(Boolean);
 }
@@ -5696,6 +7398,7 @@ async function rebuildSkuRowsFromSpecConfig({ existingRows = null, existingRefs 
     existingRefs: sourceRefs
   });
 
+  await clearLogoBatchForImageChange('skuThumbs', 'SKU 规格已重建，请重新应用 LOGO。');
   renderSkuRows(generated.rows, {
     imageRefs: generated.refs
   });
@@ -5769,10 +7472,40 @@ function buildSkuSpecValueEditorMarkup(valueLists, slotIndex) {
   ].join('');
 }
 
+function getSkuSpecAiRenameDimensions(selectedSlots = state.skuSpec.selectedSlots, valueLists = state.skuSpec.valueLists) {
+  const normalizedSelections = normalizeSkuSpecSelections(selectedSlots);
+  const normalizedValueLists = normalizeSkuSpecValueLists(valueLists).map((values) => {
+    return values.map((item) => String(item || '').trim()).filter(Boolean);
+  });
+
+  return normalizedSelections
+    .map((selection, slotIndex) => ({
+      slot: slotIndex,
+      label: String(selection?.label || SKU_DIMENSION_LABELS[slotIndex] || `规格${slotIndex + 1}`).trim(),
+      values: normalizedValueLists[slotIndex] || []
+    }))
+    .filter((item) => normalizedSelections[item.slot]?.id && item.values.length);
+}
+
+function buildSkuSpecAiRenameFeedbackMarkup() {
+  const error = String(state.skuSpec.aiRenameError || '').trim();
+  const message = String(state.skuSpec.aiRenameMessage || '').trim();
+  if (!error && !message) {
+    return '';
+  }
+
+  const className = error
+    ? 'sku-spec-ai-feedback sku-spec-ai-feedback--error'
+    : 'sku-spec-ai-feedback';
+  return `<div class="${className}">${escapeHtml(error || message)}</div>`;
+}
+
 function buildSkuSpecBoardMarkup(options, selectedSlots, valueLists) {
   const normalizedSelections = normalizeSkuSpecSelections(selectedSlots);
   const normalizedValueLists = normalizeSkuSpecValueLists(valueLists, { keepEmpty: true });
   const selectedCount = normalizedSelections.filter((item) => item.id).length;
+  const canAiRename = getSkuSpecAiRenameDimensions(normalizedSelections, normalizedValueLists).length > 0;
+  const isAiRenaming = state.skuSpec.aiRenameStatus === 'loading';
   const groupsMarkup = [0, 1].map((slotIndex) => {
     const currentSelection = normalizedSelections[slotIndex];
     const selectionId = currentSelection?.id || '';
@@ -5793,7 +7526,11 @@ function buildSkuSpecBoardMarkup(options, selectedSlots, valueLists) {
   }).join('');
 
   return [
+    '<div class="sku-spec-board__topline">',
     `<div class="sku-spec-board__meta">最多添加 2 个商品规格类型，当前已选 ${selectedCount}/2 个，规格类型会自动去重。</div>`,
+    `<button type="button" class="ghost-button ghost-button--sm sku-spec-ai-button" data-sku-spec-ai-rename${canAiRename && !isAiRenaming ? '' : ' disabled'}>${isAiRenaming ? 'AI改写中...' : 'AI改规格名'}</button>`,
+    '</div>',
+    buildSkuSpecAiRenameFeedbackMarkup(),
     groupsMarkup,
     buildSkuWarningMarkup()
   ].join('');
@@ -5903,6 +7640,15 @@ function areSkuSpecValueListsEqual(left, right, options = {}) {
   });
 }
 
+function areSkuSpecSelectionsEqual(left, right) {
+  const normalizedLeft = normalizeSkuSpecSelections(left);
+  const normalizedRight = normalizeSkuSpecSelections(right);
+  return [0, 1].every((slotIndex) => {
+    return normalizedLeft[slotIndex]?.id === normalizedRight[slotIndex]?.id
+      && normalizedLeft[slotIndex]?.label === normalizedRight[slotIndex]?.label;
+  });
+}
+
 function commitSkuSpecBoardInputValue({
   slotIndex,
   valueIndex,
@@ -5974,6 +7720,14 @@ function handleSkuSpecBoardCompositionEnd(event) {
 }
 
 function handleSkuSpecBoardClick(event) {
+  const aiRenameTrigger = event.target.closest('[data-sku-spec-ai-rename]');
+  if (aiRenameTrigger && dom.goodsSkuBoard?.contains(aiRenameTrigger)) {
+    handleSkuSpecAiRename().catch((error) => {
+      console.error(error);
+    });
+    return;
+  }
+
   const clearTrigger = event.target.closest('[data-sku-spec-clear-slot]');
   if (clearTrigger && dom.goodsSkuBoard?.contains(clearTrigger)) {
     const slotIndex = Number(clearTrigger.dataset.skuSpecClearSlot);
@@ -6092,17 +7846,458 @@ function handleSkuSpecBoardInput(event) {
   });
 }
 
-function buildSkuRowMarkup(row, index) {
-  return [
-    '<tr>',
-    `<td class="sku-table__cell sku-table__cell--image"><div id="pddForm_goodsSkuDetail_${index}_pic" class="image-slot image-slot--sku" data-image-zone="sku-thumb" data-asset-zone="skuThumbs" data-slot-index="${index}" data-frame-label="SKU图${index + 1}"><input type="file" accept="image/*"></div></td>`,
-    `<td class="sku-table__cell sku-table__cell--name"><input class="sku-table__input sku-table__input--name" name="goodsSkuDetail[${index}][specName]" type="text" value="${escapeHtml(row.specName)}" placeholder="请输入规格名" readonly></td>`,
+async function handleSkuSpecAiRename() {
+  if (state.skuSpec.aiRenameStatus === 'loading') {
+    return;
+  }
+
+  const dimensions = getSkuSpecAiRenameDimensions();
+  if (!dimensions.length) {
+    setSkuSpecAiRenameFeedback({
+      status: 'error',
+      error: '请先选择规格类型并录入规格值。'
+    });
+    return;
+  }
+
+  const duplicateDimension = dimensions.find((dimension) => new Set(dimension.values).size !== dimension.values.length);
+  if (duplicateDimension) {
+    setSkuSpecAiRenameFeedback({
+      status: 'error',
+      error: `${duplicateDimension.label} 存在重复规格值，请先处理后再使用 AI 改写。`
+    });
+    return;
+  }
+
+  if (!state.bridge?.auth?.rewriteSkuSpecNames || !state.auth.user) {
+    setSkuSpecAiRenameFeedback({
+      status: 'error',
+      error: '当前环境无法调用 AI 改写能力，请确认已登录桌面端。'
+    });
+    return;
+  }
+
+  setSkuSpecAiRenameFeedback({
+    status: 'loading',
+    message: 'AI 正在改写规格名...'
+  });
+
+  const previousRows = getCurrentSkuRows();
+  const previousRefs = getCurrentSkuThumbRefs();
+  const previousValueLists = normalizeSkuSpecValueLists(state.skuSpec.valueLists);
+  const previousSelections = normalizeSkuSpecSelections(state.skuSpec.selectedSlots);
+
+  let result = null;
+  try {
+    result = await state.bridge.auth.rewriteSkuSpecNames({
+      dimensions,
+      context: buildSkuSpecAiRenameContext()
+    });
+  } catch (error) {
+    setSkuSpecAiRenameFeedback({
+      status: 'error',
+      error: error instanceof Error ? error.message : 'AI 改写规格名失败，请稍后重试。'
+    });
+    return;
+  }
+
+  if (!result?.ok) {
+    setSkuSpecAiRenameFeedback({
+      status: 'error',
+      error: result?.error?.message || 'AI 改写规格名失败，请稍后重试。'
+    });
+    return;
+  }
+
+  if (!areSkuSpecValueListsEqual(previousValueLists, state.skuSpec.valueLists)
+    || !areSkuSpecSelectionsEqual(previousSelections, state.skuSpec.selectedSlots)) {
+    setSkuSpecAiRenameFeedback({
+      status: 'error',
+      error: 'AI 改写期间规格值已变化，本次结果未应用。'
+    });
+    return;
+  }
+
+  const validation = validateAiSkuSpecRenameResult(dimensions, result.dimensions);
+  if (!validation.ok) {
+    setSkuSpecAiRenameFeedback({
+      status: 'error',
+      error: validation.message
+    });
+    return;
+  }
+
+  const nextValueLists = previousValueLists.map((values) => [...values]);
+  validation.dimensions.forEach((dimension) => {
+    nextValueLists[dimension.slot] = dimension.values;
+  });
+
+  state.skuSpec.valueLists = normalizeSkuSpecValueLists(nextValueLists);
+  syncSkuSpecValueListsToForm(state.skuSpec.valueLists);
+  renderSkuSpecState();
+
+  const renamedRows = buildRenamedSkuRowsFromValueLists({
+    rows: previousRows,
+    sourceValueLists: previousValueLists,
+    targetValueLists: state.skuSpec.valueLists
+  });
+  await rebuildSkuRowsFromSpecConfig({
+    existingRows: renamedRows,
+    existingRefs: previousRefs
+  });
+
+  setSkuSpecAiRenameFeedback({
+    status: 'success',
+    message: `AI 已改写 ${validation.changedCount} 个规格名，并保留原价格、库存、SKU编码和图片。`
+  });
+  scheduleAutoSave();
+}
+
+function setSkuSpecAiRenameFeedback({ status = 'idle', error = '', message = '' } = {}) {
+  state.skuSpec.aiRenameStatus = status;
+  state.skuSpec.aiRenameError = String(error || '').trim();
+  state.skuSpec.aiRenameMessage = String(message || '').trim();
+  renderSkuSpecState();
+}
+
+function validateAiSkuSpecRenameResult(requestDimensions, responseDimensions) {
+  const requestBySlot = new Map((Array.isArray(requestDimensions) ? requestDimensions : []).map((dimension) => {
+    return [dimension.slot, dimension];
+  }));
+  const responseBySlot = new Map();
+
+  (Array.isArray(responseDimensions) ? responseDimensions : []).forEach((dimension) => {
+    if (Number.isInteger(dimension?.slot)) {
+      responseBySlot.set(dimension.slot, dimension);
+    }
+  });
+
+  const normalizedDimensions = [];
+  let changedCount = 0;
+  for (const requestDimension of requestBySlot.values()) {
+    const responseDimension = responseBySlot.get(requestDimension.slot);
+    const responseValues = Array.isArray(responseDimension?.values)
+      ? responseDimension.values.map((value) => String(value || '').trim())
+      : [];
+
+    const resolvedValues = [];
+    for (let index = 0; index < requestDimension.values.length; index += 1) {
+      const originalValue = requestDimension.values[index];
+      let nextValue = normalizeSkuSpecRenameText(responseValues[index]);
+      if (!nextValue || nextValue === originalValue || isWeakAppendedSkuSpecRename(originalValue, nextValue)) {
+        nextValue = buildSkuSpecFallbackRenameValue({
+          originalValue,
+          index,
+          usedValues: resolvedValues,
+          dimensionLabel: requestDimension.label
+        });
+      }
+
+      changedCount += 1;
+
+      resolvedValues.push(nextValue);
+    }
+
+    if (new Set(resolvedValues).size !== resolvedValues.length) {
+      return {
+        ok: false,
+        message: `${requestDimension.label} 返回了重复规格名，未改动规格名。`
+      };
+    }
+
+    normalizedDimensions.push({
+      slot: requestDimension.slot,
+      values: resolvedValues
+    });
+  }
+
+  return {
+    ok: true,
+    dimensions: normalizedDimensions,
+    changedCount
+  };
+}
+
+function buildSkuSpecAiRenameContext() {
+  const formData = serializeForm();
+  return {
+    productName: String(
+      formData.pddForm_goodsName
+      ?? formData.goodsName
+      ?? dom.goodsNameInput?.value
+      ?? ''
+    ).trim(),
+    categoryPath: String(
+      formData[CATEGORY_FIELD_IDS.display]
+      ?? formData.categoryData
+      ?? dom.categoryDataInput?.value
+      ?? ''
+    ).trim()
+  };
+}
+
+function isWeakAppendedSkuSpecRename(originalValue, nextValue) {
+  const originalText = String(originalValue || '').trim();
+  const nextText = String(nextValue || '').trim();
+  if (!originalText || !nextText.startsWith(originalText)) {
+    return false;
+  }
+
+  const suffix = nextText.slice(originalText.length).replace(/^[\s·\-—_]+/g, '').trim();
+  if (!suffix) {
+    return false;
+  }
+
+  return /^(经典款|柔感款|日常款|舒适款|优选款|百搭款|轻柔款|基础款|精选款|通勤款|透气款|细腻款|简约款|软弹款|顺滑款|焕新版|亲肤款|常规款)$/.test(suffix);
+}
+
+function normalizeSkuSpecRenameText(value) {
+  return String(value || '')
+    .replace(/[·•・]/g, '-')
+    .replace(/[|｜]/g, '/')
+    .replace(/\s*-\s*/g, '-')
+    .replace(/\s*\/\s*/g, '/')
+    .replace(/^-+|-+$/g, '')
+    .trim();
+}
+
+function buildSkuSpecFallbackRenameValue({ originalValue, index, usedValues = [], dimensionLabel = '' } = {}) {
+  const baseValue = String(originalValue || '').trim();
+  const candidates = [
+    ...buildSkuSpecStructuredFallbackCandidates(baseValue, index, dimensionLabel),
+    ...buildSkuSpecGenericFallbackCandidates(baseValue, index)
+  ];
+  const usedSet = new Set((Array.isArray(usedValues) ? usedValues : []).map((value) => String(value || '').trim()));
+
+  for (const candidate of candidates) {
+    const normalizedCandidate = normalizeSkuSpecRenameText(candidate);
+    if (normalizedCandidate !== baseValue
+      && !usedSet.has(normalizedCandidate)
+      && !isWeakAppendedSkuSpecRename(baseValue, normalizedCandidate)) {
+      return normalizedCandidate;
+    }
+  }
+
+  return normalizeSkuSpecRenameText(`${baseValue}规格组`);
+}
+
+function buildSkuSpecStructuredFallbackCandidates(baseValue, index, dimensionLabel) {
+  const label = String(dimensionLabel || '');
+  const colors = extractColorTokens(baseValue);
+  const isColorLike = label.includes('颜色') || colors.length > 0;
+  const hasMixedColors = /[+＋]/.test(baseValue) || colors.length > 1;
+  const totalCount = extractSkuSpecTotalCount(baseValue);
+  const candidates = [];
+
+  if (isColorLike) {
+    const colorRatio = buildSkuSpecColorRatioText(baseValue);
+    const primaryColorAlias = colors[0] ? getSkuSpecColorAlias(colors[0], { descriptive: true }) : '';
+    const singleDescriptors = ['通勤基础组', '日常换洗组', '柔暖常备组', '简净实穿组', '百搭囤货组', '保暖基础组'];
+    const mixedDescriptors = ['三色配比装', '多色轮换组', '混色换洗装', '配色常备组', '组合囤货装', '日常搭配组'];
+    const descriptors = hasMixedColors ? mixedDescriptors : singleDescriptors;
+    descriptors.forEach((descriptor, descriptorIndex) => {
+      const resolvedDescriptor = descriptors[(index + descriptorIndex) % descriptors.length];
+      if (hasMixedColors && colorRatio) {
+        candidates.push(`${colorRatio}-${totalCount ? `${totalCount}条` : ''}${resolvedDescriptor}`);
+        candidates.push(`${colorRatio}/${totalCount ? `${totalCount}条` : ''}${resolvedDescriptor}`);
+      } else if (primaryColorAlias) {
+        candidates.push(`${primaryColorAlias}${totalCount ? `/${totalCount}条装` : ''}-${resolvedDescriptor}`);
+        candidates.push(`${primaryColorAlias}${totalCount ? `${totalCount}条装` : ''}/${resolvedDescriptor}`);
+      }
+    });
+    return candidates;
+  }
+
+  if (label.includes('尺码') || /\d+\s*[-~—至]\s*\d+\s*(?:斤|kg|KG)/.test(baseValue) || /均码|大码|小码|中码/.test(baseValue)) {
+    const denier = baseValue.match(/\d+\s*D/i)?.[0]?.replace(/\s+/g, '') || '';
+    const fitRange = baseValue.match(/\d+\s*[-~—至]\s*\d+\s*(?:斤|kg|KG)/)?.[0]?.replace(/\s+/g, '') || '';
+    const sizeToken = baseValue.match(/均码|大码|小码|中码|加大码/)?.[0] || '';
+    const featurePhrases = [
+      '裸感无痕',
+      '柔暖贴合',
+      '毛圈保暖',
+      '弹力包裹',
+      '加绒亲肤',
+      '轻压不勒',
+      '冬季暖护',
+      '舒弹适穿'
+    ];
+    featurePhrases.forEach((feature, featureIndex) => {
+      const resolvedFeature = featurePhrases[(index + featureIndex) % featurePhrases.length];
+      const left = [denier, resolvedFeature].filter(Boolean).join('');
+      const right = [sizeToken ? `${sizeToken}贴合` : '', fitRange].filter(Boolean).join('/');
+      if (left || right) {
+        candidates.push(`${left || resolvedFeature}-${right || baseValue}`);
+      }
+      candidates.push(`${baseValue.replace(/雅鹿款|品牌款|同款|原款|常规款/g, '').trim()}-${resolvedFeature}`);
+    });
+    return candidates;
+  }
+
+  return candidates;
+}
+
+function buildSkuSpecGenericFallbackCandidates(baseValue, index) {
+  const suffixes = [
+    '换洗备选组',
+    '实穿组合款',
+    '日用常备款',
+    '舒弹适穿组',
+    '保暖通勤款',
+    '柔暖基础组'
+  ];
+  return suffixes.map((suffix, suffixIndex) => {
+    const resolvedSuffix = suffixes[(index + suffixIndex) % suffixes.length];
+    return `${baseValue}${resolvedSuffix}`;
+  });
+}
+
+function extractColorTokens(value) {
+  const text = String(value || '');
+  const tokens = [];
+  const colorPattern = /(?:经典黑|自然肤|裸感肤|裸肤|浅肤|深肤|高级灰|烟灰|浅灰|深灰|奶白|藏青|酒红|玫红|卡其|藕粉|姜黄|墨绿|燕麦|香槟|荧光|黑色?|白色?|红色?|粉色?|蓝色?|绿色?|黄色?|紫色?|灰色?|棕色?|咖色?|橙色?|驼色?|金色?|银色?|肤色?|裸色|米色?|杏色?|黑|白|红|粉|蓝|绿|黄|紫|灰|棕|咖|橙|驼|金|银|肤(?!感)|米|杏)/g;
+  let match = colorPattern.exec(text);
+  while (match) {
+    tokens.push(match[0]);
+    match = colorPattern.exec(text);
+  }
+  return tokens;
+}
+
+function normalizeSkuSpecColorToken(value) {
+  const token = String(value || '').replace(/色$/g, '').trim();
+  if (!token) {
+    return '';
+  }
+
+  if (token.includes('黑')) return '黑';
+  if (token.includes('肤') || token.includes('裸')) return '肤';
+  if (token.includes('灰')) return '灰';
+  if (token.includes('白')) return '白';
+  if (token.includes('红')) return '红';
+  if (token.includes('粉')) return '粉';
+  if (token.includes('蓝') || token.includes('藏青')) return '蓝';
+  if (token.includes('绿')) return '绿';
+  if (token.includes('黄')) return '黄';
+  if (token.includes('紫')) return '紫';
+  if (token.includes('棕') || token.includes('咖')) return '棕';
+  if (token.includes('橙')) return '橙';
+  if (token.includes('驼') || token.includes('卡其')) return '驼';
+  if (token.includes('金') || token.includes('香槟')) return '金';
+  if (token.includes('银')) return '银';
+  if (token.includes('米') || token.includes('杏') || token.includes('燕麦')) return '米';
+  return token;
+}
+
+function getSkuSpecColorAlias(color, { descriptive = false } = {}) {
+  const normalizedColor = normalizeSkuSpecColorToken(color);
+  const descriptiveMap = {
+    黑: '经典黑',
+    肤: '裸感肤',
+    灰: '高级灰',
+    白: '柔雾白',
+    红: '显白红',
+    粉: '柔粉',
+    蓝: '清爽蓝',
+    绿: '森系绿',
+    黄: '暖姜黄',
+    紫: '温柔紫',
+    棕: '咖棕',
+    橙: '暖橙',
+    驼: '卡其驼',
+    金: '香槟金',
+    银: '浅银',
+    米: '燕麦米'
+  };
+  return descriptive ? descriptiveMap[normalizedColor] || `${normalizedColor}系` : normalizedColor;
+}
+
+function buildSkuSpecColorRatioText(value) {
+  const text = String(value || '');
+  const parts = text
+    .split(/[+＋]/)
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .map((part) => {
+      const color = extractColorTokens(part)[0] || '';
+      const number = part.match(/\d+(?!.*】)/)?.[0] || '';
+      const alias = getSkuSpecColorAlias(color);
+      return alias && number ? `${alias}${number}` : '';
+    })
+    .filter(Boolean);
+  return parts.join('+');
+}
+
+function extractSkuSpecTotalCount(value) {
+  const text = String(value || '');
+  const bracketCount = text.match(/【\s*(\d+)\s*条\s*】/);
+  if (bracketCount?.[1]) {
+    return bracketCount[1];
+  }
+
+  const count = text.match(/(\d+)\s*条/);
+  return count?.[1] || '';
+}
+
+function buildRenamedSkuRowsFromValueLists({ rows, sourceValueLists, targetValueLists }) {
+  const normalizedRows = (Array.isArray(rows) ? rows : []).map((row) => normalizeSkuRow(row));
+  const sourceLists = getFilledSkuSpecValueLists(sourceValueLists);
+  const targetLists = getFilledSkuSpecValueLists(targetValueLists);
+  const valueMaps = [0, 1].map((slotIndex) => {
+    const map = new Map();
+    (sourceLists[slotIndex] || []).forEach((value, valueIndex) => {
+      const nextValue = targetLists[slotIndex]?.[valueIndex];
+      if (value && nextValue) {
+        map.set(value, nextValue);
+      }
+    });
+    return map;
+  });
+
+  return normalizedRows.map((row) => {
+    const parts = splitSkuSpecName(row.specName);
+    const renamedParts = parts.map((part, index) => valueMaps[index]?.get(part) || part);
+    return {
+      ...row,
+      specName: renamedParts.filter(Boolean).join(' / ')
+    };
+  });
+}
+
+function splitSkuSpecParts(specName) {
+  const parts = String(specName || '')
+    .split(' / ')
+    .map((item) => item.trim())
+    .filter(Boolean);
+  const color = parts[0] || '';
+  const size = parts.slice(1).join(' / ');
+  return { color, size };
+}
+
+function buildSkuRowMarkup(row, index, options = {}) {
+  const { color, size } = splitSkuSpecParts(row.specName);
+  const { isGroupHead = true, groupSize = 1 } = options;
+  const cells = [];
+
+  cells.push(
+    `<td class="sku-table__cell sku-table__cell--image"><div id="pddForm_goodsSkuDetail_${index}_pic" class="image-slot image-slot--sku" data-image-zone="sku-thumb" data-asset-zone="skuThumbs" data-slot-index="${index}" data-frame-label="SKU图${index + 1}"><input type="file" accept="image/*"></div></td>`
+  );
+
+  if (isGroupHead) {
+    cells.push(
+      `<td class="sku-table__cell sku-table__cell--color" rowspan="${groupSize}">${escapeHtml(color)}</td>`
+    );
+  }
+
+  cells.push(
+    `<td class="sku-table__cell sku-table__cell--size">${escapeHtml(size)}<input type="hidden" name="goodsSkuDetail[${index}][specName]" value="${escapeHtml(row.specName)}"></td>`,
     `<td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[${index}][groupPrice]" type="number" step="0.01" value="${escapeHtml(row.groupPrice)}"></td>`,
     `<td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[${index}][singlePrice]" type="number" step="0.01" value="${escapeHtml(row.singlePrice)}"></td>`,
-    `<td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[${index}][stock]" type="number" value="${escapeHtml(row.stock)}"></td>`,
-    `<td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[${index}][weight]" type="number" step="0.01" value="${escapeHtml(row.weight)}"></td>`,
-    '</tr>'
-  ].join('');
+    `<td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[${index}][outSkuSn]" type="text" value="${escapeHtml(row.outSkuSn)}"></td>`,
+    `<td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[${index}][stock]" type="number" value="${escapeHtml(row.stock)}"></td>`
+  );
+
+  return `<tr>${cells.join('')}</tr>`;
 }
 
 function renderSkuRows(rows, { imageRefs = null } = {}) {
@@ -6112,9 +8307,29 @@ function renderSkuRows(rows, { imageRefs = null } = {}) {
 
   const normalizedRows = (Array.isArray(rows) ? rows : []).map((row) => normalizeSkuRow(row));
   const resolvedRefs = Array.isArray(imageRefs) ? imageRefs : getCurrentSkuThumbRefs();
-  dom.goodsSkuTableBody.innerHTML = normalizedRows.length
-    ? normalizedRows.map((row, index) => buildSkuRowMarkup(row, index)).join('')
-    : '<tr class="sku-table__empty-row"><td class="sku-table__empty" colspan="6"><div class="empty-state">暂无SKU，请先配置规格类型和规格值。</div></td></tr>';
+
+  if (!normalizedRows.length) {
+    dom.goodsSkuTableBody.innerHTML = '<tr class="sku-table__empty-row"><td class="sku-table__empty" colspan="7"><div class="empty-state">暂无SKU，请先配置规格类型和规格值。</div></td></tr>';
+  } else {
+    const groupSizes = new Map();
+    normalizedRows.forEach((row) => {
+      const { color } = splitSkuSpecParts(row.specName);
+      groupSizes.set(color, (groupSizes.get(color) || 0) + 1);
+    });
+
+    const seenGroups = new Set();
+    dom.goodsSkuTableBody.innerHTML = normalizedRows.map((row, index) => {
+      const { color } = splitSkuSpecParts(row.specName);
+      const isGroupHead = !seenGroups.has(color);
+      if (isGroupHead) {
+        seenGroups.add(color);
+      }
+      return buildSkuRowMarkup(row, index, {
+        isGroupHead,
+        groupSize: groupSizes.get(color) || 1
+      });
+    }).join('');
+  }
 
   state.slotRegistry.skuThumbs = [];
   Array.from(dom.goodsSkuTableBody.querySelectorAll('[data-asset-zone="skuThumbs"]')).forEach((slot) => {
@@ -6162,6 +8377,25 @@ function buildCurrentAttributeLabelMap() {
     }
   });
 
+  return result;
+}
+
+function buildCurrentAttributeMetaMap() {
+  const meta = state.attribute.meta && typeof state.attribute.meta === 'object' ? state.attribute.meta : {};
+  const result = {};
+  Object.entries(meta).forEach(([refPid, entry]) => {
+    if (!refPid || !entry) {
+      return;
+    }
+    const vid = String(entry.vid || '').trim();
+    const unit = String(entry.unit || '').trim();
+    if (vid || unit) {
+      result[refPid] = {
+        ...(vid ? { vid } : {}),
+        ...(unit ? { unit } : {})
+      };
+    }
+  });
   return result;
 }
 
@@ -6516,6 +8750,10 @@ async function applyTemplate(template) {
     ...normalizedFormData
   });
 
+  state.attribute.meta = template.attributeMeta && typeof template.attributeMeta === 'object'
+    ? { ...template.attributeMeta }
+    : {};
+
   dom.templateNameInput.value = template.meta.name || '';
   renderSkuRows(skuRows, {
     imageRefs: Array.isArray(template.imageRefs?.skuThumbs) ? template.imageRefs.skuThumbs : []
@@ -6583,6 +8821,33 @@ function fillForm(formData) {
       control.value = value;
     }
   });
+
+  syncShipmentLimitCustomShell();
+  syncCostTemplateIdHint();
+}
+
+function syncShipmentLimitCustomShell() {
+  const shell = document.getElementById('shipmentLimitSecondCustomShell');
+  if (!shell) {
+    return;
+  }
+  const checkedRadio = document.querySelector('input[name="shipmentLimitSecond"]:checked');
+  const isCustom = checkedRadio?.value === 'custom';
+  shell.hidden = !isCustom;
+}
+
+function syncCostTemplateIdHint() {
+  const hint = document.getElementById('costTemplateIdHint');
+  const hidden = document.getElementById('pddForm_costTemplateId');
+  if (!hint || !hidden) {
+    return;
+  }
+  const value = String(hidden.value || '').trim();
+  hint.hidden = !value;
+  const code = hint.querySelector('[data-cost-template-id]');
+  if (code) {
+    code.textContent = value;
+  }
 }
 
 function serializeForm() {
@@ -6693,6 +8958,15 @@ function registerImageSlot(slot) {
       return;
     }
 
+    const previewArea = event.target.closest('.image-frame__canvas');
+    if (slot.__assetRef?.fileUrl && previewArea) {
+      openImagePreviewModal(slot);
+      if (zoneKey === 'detailGallery') {
+        activateFrame(slot.__frame);
+      }
+      return;
+    }
+
     if (zoneKey === 'detailGallery' && slot.__assetRef) {
       activateFrame(slot.__frame);
       return;
@@ -6708,6 +8982,14 @@ function registerImageSlot(slot) {
   frame.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
+      if (slot.__assetRef?.fileUrl) {
+        openImagePreviewModal(slot);
+        if (zoneKey === 'detailGallery') {
+          activateFrame(slot.__frame);
+        }
+        return;
+      }
+
       openSlotPicker(slot, {
         allowMultiple: isDynamicArrayZone(zoneKey) && !slot.__assetRef
       }).catch((error) => {
@@ -6924,6 +9206,9 @@ async function reorderDynamicArrayZone(zoneKey, fromIndex, targetIndex) {
   const insertIndex = Math.min(boundedTargetIndex, refs.length);
   refs.splice(insertIndex, 0, movedRef);
   renderDynamicArrayZone(zoneKey, refs);
+  if (zoneKey === 'mainGallery') {
+    await clearLogoBatchForImageChange('mainGallery', '轮播图顺序已变更，请重新应用 LOGO。');
+  }
   await saveCurrentTemplate({ silent: true });
 }
 
@@ -6965,11 +9250,26 @@ function renderDetailGalleryPreview(refs) {
     '<div class="detail-preview-stream">',
     refs.map((ref, index) => {
       return [
-        `<img class="detail-preview-stream__image" src="${escapeHtml(ref.fileUrl)}" alt="详情图 ${index + 1}">`
+        `<img class="detail-preview-stream__image" src="${escapeHtml(ref.fileUrl)}" alt="详情图 ${index + 1}" title="点击查看大图" data-detail-preview-index="${index}">`
       ].join('');
     }).join(''),
     '</div>'
   ].join('');
+}
+
+function handleDetailPreviewCanvasClick(event) {
+  const image = event.target?.closest?.('[data-detail-preview-index]');
+  if (!image) {
+    return;
+  }
+
+  const index = normalizeSlotIndex(image.dataset.detailPreviewIndex);
+  const ref = getArrayZoneRefs('detailGallery')[index];
+  if (!ref?.fileUrl) {
+    return;
+  }
+
+  openImagePreviewRef(ref, `详情图${index + 1}`);
 }
 
 async function triggerZoneUpload(zoneKey) {
@@ -7007,6 +9307,9 @@ async function openSlotPicker(slot, options = {}) {
     if (allowMultiple) {
       const importedRefs = Array.isArray(imported) ? imported : imported ? [imported] : [];
       if (importedRefs.length > 0) {
+        if (zoneKey === 'mainGallery') {
+          await clearLogoBatchForImageChange('mainGallery', '轮播图已更换，请重新应用 LOGO。');
+        }
         applyRefsToDynamicArrayZone(zoneKey, slotIndex, importedRefs);
         await saveCurrentTemplate({ silent: true });
       }
@@ -7019,8 +9322,14 @@ async function openSlotPicker(slot, options = {}) {
       }
 
       if (isDynamicArrayZone(zoneKey)) {
+        if (zoneKey === 'mainGallery') {
+          await clearLogoBatchForImageChange('mainGallery', '轮播图已更换，请重新应用 LOGO。');
+        }
         applyRefsToDynamicArrayZone(zoneKey, slotIndex, [imported]);
       } else {
+        if (zoneKey === 'skuThumbs') {
+          await clearLogoBatchForImageChange('skuThumbs', 'SKU图已更换，请重新应用 LOGO。');
+        }
         setSlotAsset(slot, imported);
       }
 
@@ -7071,6 +9380,11 @@ function handleLocalFilePreview(slot) {
     }));
 
     applyRefsToDynamicArrayZone(zoneKey, slotIndex, temporaryRefs);
+    if (zoneKey === 'mainGallery') {
+      clearLogoBatchForImageChange('mainGallery', '轮播图已更换，请重新应用 LOGO。').catch((error) => {
+        console.error(error);
+      });
+    }
     return;
   }
 
@@ -7085,6 +9399,11 @@ function handleLocalFilePreview(slot) {
   };
 
   setSlotAsset(slot, temporaryRef);
+  if (zoneKey === 'skuThumbs') {
+    clearLogoBatchForImageChange('skuThumbs', 'SKU图已更换，请重新应用 LOGO。').catch((error) => {
+      console.error(error);
+    });
+  }
 }
 
 async function handleSlotAction(slot, action) {
@@ -7115,6 +9434,9 @@ async function clearSlotAsset(slot) {
     const nextRefs = getArrayZoneRefs(zoneKey);
     nextRefs.splice(slotIndex, 1);
     renderDynamicArrayZone(zoneKey, nextRefs);
+    if (zoneKey === 'mainGallery') {
+      await clearLogoBatchForImageChange('mainGallery', '轮播图已变更，请重新应用 LOGO。');
+    }
 
     if (state.bridge && state.currentTemplateId) {
       await saveCurrentTemplate({ silent: true });
@@ -7136,6 +9458,9 @@ async function clearSlotAsset(slot) {
 
   slot.__assetRef = null;
   renderSlot(slot, null);
+  if (zoneKey === 'skuThumbs') {
+    await clearLogoBatchForImageChange('skuThumbs', 'SKU图已变更，请重新应用 LOGO。');
+  }
 
   if (state.bridge && state.currentTemplateId) {
     await saveCurrentTemplate({ silent: true });
@@ -7185,7 +9510,7 @@ function renderSlot(slot, ref) {
 
   if (ref?.fileUrl) {
     canvas.innerHTML = [
-      `<img class="image-frame__preview" src="${escapeHtml(ref.fileUrl)}" alt="${escapeHtml(label)}">`,
+      `<img class="image-frame__preview" src="${escapeHtml(ref.fileUrl)}" alt="${escapeHtml(label)}" title="点击查看大图" draggable="false">`,
       '<div class="image-frame__overlay">',
       '<button type="button" class="image-frame__mini-btn" data-slot-action="replace">替换</button>',
       '<button type="button" class="image-frame__mini-btn" data-slot-action="clear">清空</button>',
@@ -7211,25 +9536,30 @@ function renderSlot(slot, ref) {
 }
 
 function applyImageRefs(imageRefs) {
+  const normalizedImageRefs = imageRefs || buildEmptyImageRefs();
   Object.entries(ASSET_LAYOUT).forEach(([zoneKey, config]) => {
     if (config.type === 'dynamic-array') {
-      renderDynamicArrayZone(zoneKey, imageRefs?.[zoneKey] || []);
+      renderDynamicArrayZone(zoneKey, normalizedImageRefs?.[zoneKey] || []);
       return;
     }
 
     const slots = Array.from(state.slotRegistry[zoneKey] || document.querySelectorAll(config.selector));
 
     if (config.type === 'array') {
-      const refs = Array.isArray(imageRefs?.[zoneKey]) ? imageRefs[zoneKey] : [];
+      const refs = Array.isArray(normalizedImageRefs?.[zoneKey]) ? normalizedImageRefs[zoneKey] : [];
       slots.forEach((slot, index) => {
         setSlotAsset(slot, refs[index] || null);
       });
       return;
     }
 
-    const ref = imageRefs?.[zoneKey] || null;
+    const ref = normalizedImageRefs?.[zoneKey] || null;
     slots.forEach((slot) => setSlotAsset(slot, ref));
   });
+
+  const normalizedLogoBatches = normalizeLogoBatches(normalizedImageRefs.logoBatches || createEmptyLogoBatchStore());
+  syncUiLogoBatchConfig('mainGallery', normalizedLogoBatches.mainGallery);
+  syncUiLogoBatchConfig('skuThumbs', normalizedLogoBatches.skuThumbs);
 }
 
 function collectImageRefs() {
@@ -7249,6 +9579,11 @@ function collectImageRefs() {
 
     imageRefs[zoneKey] = sanitizeAssetRef(slots[0]?.__assetRef || null);
   });
+
+  imageRefs.logoBatches = {
+    mainGallery: sanitizeLogoBatchConfig(state.currentTemplate?.imageRefs?.logoBatches?.mainGallery, 'mainGallery'),
+    skuThumbs: sanitizeLogoBatchConfig(state.currentTemplate?.imageRefs?.logoBatches?.skuThumbs, 'skuThumbs')
+  };
 
   return imageRefs;
 }
@@ -7284,7 +9619,8 @@ function buildEmptyImageRefs() {
     detailGallery: [],
     whiteImage: null,
     longImage: null,
-    skuThumbs: []
+    skuThumbs: [],
+    logoBatches: createEmptyLogoBatchStore()
   };
 }
 
@@ -7474,6 +9810,7 @@ async function saveCurrentTemplate({ silent }) {
       formData: serializeForm(),
       imageRefs: collectImageRefs(),
       attributeLabels: buildCurrentAttributeLabelMap(),
+      attributeMeta: buildCurrentAttributeMetaMap(),
       categoryMeta: buildCurrentCategoryExportMeta()
     };
     updateTemplateLabels();
@@ -7487,6 +9824,7 @@ async function saveCurrentTemplate({ silent }) {
     formData: serializeForm(),
     imageRefs: collectImageRefs(),
     attributeLabels: buildCurrentAttributeLabelMap(),
+    attributeMeta: buildCurrentAttributeMetaMap(),
     categoryMeta: buildCurrentCategoryExportMeta(),
     meta: {
       lastRunResult: state.currentTemplate.meta.lastRunResult || null

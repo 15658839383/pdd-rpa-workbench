@@ -178,9 +178,8 @@ function buildGoodsPropertyHeaders({ antiContent, cookie1, goodsId }) {
 
 function normalizeGoodsDetail(result, options = {}) {
   const normalizedResult = result && typeof result === "object" ? result : {};
-  const cats = Array.isArray(normalizedResult.cats)
-    ? normalizedResult.cats.map((item) => String(item || "").trim()).filter(Boolean)
-    : [];
+  const cats = collectCategoryPathSegments(normalizedResult.cats);
+  const categoryIds = extractCategoryIds(normalizedResult);
   const normalizedSkus = normalizeSkuList(normalizedResult.skus);
   const normalizedAttributes = mergeGoodsPropertyAttributes(
     options.attributes,
@@ -190,36 +189,98 @@ function normalizeGoodsDetail(result, options = {}) {
   return {
     productId: String(normalizedResult.goods_id ?? "").trim(),
     categoryId: String(normalizedResult.cat_id ?? normalizedResult.cat_id_3 ?? "").trim(),
+    categoryIds,
     categoryPath: cats.join(" > "),
     productName: String(normalizedResult.goods_name ?? "").trim(),
-    detailText: String(normalizedResult.goods_desc ?? "").trim(),
     marketPrice: normalizePriceFen(normalizedResult.market_price ?? normalizedResult.marketPrice),
     twoPiecesDiscount: normalizeNumberValue(
       normalizedResult.two_pieces_discount ?? normalizedResult.twoPiecesDiscount
     ),
-    carouselImages: normalizeGalleryUrls(normalizedResult.carousel_gallery, [
-      normalizedResult.hd_thumb_url,
-      normalizedResult.thumb_url
-    ]),
-    detailImages: normalizeGalleryUrls(normalizedResult.detail_gallery),
+    costTemplateId: String(normalizedResult.cost_template_id ?? "").trim(),
+    shipmentLimitSecond: normalizeNumberValue(normalizedResult.shipment_limit_second),
+    sendAddress: String(normalizedResult.send_address ?? "").trim(),
+    carouselImages: normalizeGalleryUrls(normalizedResult.carousel_gallery, {
+      typeFilter: 1,
+      fallback: [normalizedResult.hd_thumb_url, normalizedResult.thumb_url]
+    }),
+    detailImages: normalizeGalleryUrls(normalizedResult.detail_gallery, {
+      typeFilter: 2
+    }),
     attributes: normalizedAttributes,
     skus: normalizedSkus,
     specDimensions: normalizeSpecDimensions(normalizedSkus)
   };
 }
 
-function normalizeGalleryUrls(source, fallbackUrls = []) {
-  const urls = (Array.isArray(source) ? source : [])
-    .map((item) => String(item?.url ?? item ?? "").trim())
-    .filter(Boolean);
-
-  if (urls.length) {
-    return urls;
+function collectCategoryPathSegments(source) {
+  const segments = [];
+  if (!Array.isArray(source)) {
+    return segments;
   }
 
-  return (Array.isArray(fallbackUrls) ? fallbackUrls : [])
-    .map((item) => String(item || "").trim())
-    .filter(Boolean);
+  for (const item of source) {
+    if (item === null || item === undefined) {
+      break;
+    }
+    const trimmed = String(item).trim();
+    if (!trimmed) {
+      break;
+    }
+    segments.push(trimmed);
+  }
+
+  return segments;
+}
+
+function extractCategoryIds(result) {
+  const pickId = (value) => {
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric) || numeric <= 0) {
+      return "";
+    }
+    return String(numeric);
+  };
+
+  return {
+    level1Id: pickId(result?.cat_id_1),
+    level2Id: pickId(result?.cat_id_2),
+    level3Id: pickId(result?.cat_id_3),
+    level4Id: pickId(result?.cat_id_4)
+  };
+}
+
+function normalizeGalleryUrls(source, options = {}) {
+  const { typeFilter = null, fallback = [] } = options;
+  const seen = new Set();
+  const result = [];
+
+  const pushUnique = (rawUrl) => {
+    const url = String(rawUrl ?? "").trim();
+    if (!url || seen.has(url)) {
+      return;
+    }
+    seen.add(url);
+    result.push(url);
+  };
+
+  (Array.isArray(source) ? source : []).forEach((item) => {
+    if (item === null || item === undefined) {
+      return;
+    }
+    if (typeFilter !== null && typeof item === "object") {
+      const itemType = Number(item?.type);
+      if (Number.isFinite(itemType) && itemType !== typeFilter) {
+        return;
+      }
+    }
+    pushUnique(typeof item === "object" ? item?.url : item);
+  });
+
+  if (result.length === 0) {
+    (Array.isArray(fallback) ? fallback : []).forEach(pushUnique);
+  }
+
+  return result;
 }
 
 function normalizeGoodsPropertyList(source) {
@@ -300,6 +361,7 @@ function mergeGoodsPropertyAttributes(primary, fallback) {
 function normalizeSkuList(source) {
   return (Array.isArray(source) ? source : [])
     .map((item) => {
+      const outSkuSn = String(item?.out_sku_sn ?? item?.external_sku_code ?? "").trim();
       return {
         skuId: String(item?.sku_id ?? item?.skuId ?? "").trim(),
         specName: normalizeSkuSpecName(item?.spec),
@@ -307,23 +369,28 @@ function normalizeSkuList(source) {
         groupPrice: normalizePriceFen(item?.multi_price ?? item?.multiPrice),
         singlePrice: normalizePriceFen(item?.price),
         stock: normalizeNumberValue(item?.quantity),
-        weight: normalizeWeightValue(item?.weight),
-        externalSkuCode: String(item?.out_sku_sn ?? item?.external_sku_code ?? "").trim(),
+        outSkuSn,
+        externalSkuCode: outSkuSn,
         skuImageUrl: String(item?.thumb_url ?? item?.sku_image_url ?? "").trim()
       };
     })
     .filter((item) => item.specName || item.skuId);
 }
 
+function normalizeSkuSpecSourceOrder(specList) {
+  // 详情接口已经按商家侧展示顺序返回规格项，继续按 parent_id 排序会把颜色/尺码顺序打乱。
+  return Array.isArray(specList) ? specList.slice() : [];
+}
+
 function normalizeSkuSpecName(specList) {
-  return (Array.isArray(specList) ? specList : [])
+  return normalizeSkuSpecSourceOrder(specList)
     .map((item) => String(item?.spec_name ?? item?.specName ?? "").trim())
     .filter(Boolean)
     .join(" / ");
 }
 
 function normalizeSkuSpecItems(specList) {
-  return (Array.isArray(specList) ? specList : [])
+  return normalizeSkuSpecSourceOrder(specList)
     .map((item) => {
       return {
         parentId: String(item?.parent_id ?? item?.parentId ?? "").trim(),
@@ -376,19 +443,6 @@ function normalizeNumberValue(value) {
   }
 
   return String(value).trim();
-}
-
-function normalizeWeightValue(value) {
-  if (value === undefined || value === null || value === "") {
-    return "";
-  }
-
-  const normalizedNumber = Number(value);
-  if (!Number.isFinite(normalizedNumber)) {
-    return String(value).trim();
-  }
-
-  return normalizedNumber === 0 ? "" : String(normalizedNumber);
 }
 
 async function requestJson(url, options = {}) {
@@ -445,6 +499,8 @@ function extractMessage(payload) {
   return [
     payload.errorMsg,
     payload.error_msg,
+    payload.result_msg,
+    payload.resultMsg,
     payload.message,
     payload.msg,
     payload.error

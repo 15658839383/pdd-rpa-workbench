@@ -28,14 +28,18 @@ function createAssetService(workspace) {
 
   async function copyAssetFile(sourcePath, payload, offset = 0) {
     const extension = path.extname(sourcePath);
-    const assetFolder = path.join(workspace.assets, payload.templateId, payload.zone);
     const resolvedSlotIndex = payload.slotIndex === null || payload.slotIndex === undefined
       ? null
       : payload.slotIndex + offset;
-    const slotLabel = resolvedSlotIndex === null ? "single" : `slot-${resolvedSlotIndex}`;
-    const targetPath = path.join(assetFolder, `${slotLabel}-${Date.now()}-${offset}${extension}`);
+    const targetPath = buildAssetTargetPath({
+      templateId: payload.templateId,
+      zone: payload.zone,
+      slotIndex: resolvedSlotIndex,
+      extension,
+      offset
+    });
 
-    await ensureDirectory(assetFolder);
+    await ensureDirectory(path.dirname(targetPath));
     await fs.copyFile(sourcePath, targetPath);
 
     return makeAssetRef(targetPath, {
@@ -76,6 +80,26 @@ function createAssetService(workspace) {
     }
   }
 
+  function buildAssetTargetPath({
+    templateId,
+    zone,
+    slotIndex = null,
+    extension = ".png",
+    offset = 0,
+    fileNameHint = ""
+  }) {
+    const assetFolder = path.join(workspace.assets, templateId, zone);
+    const slotLabel = slotIndex === null || slotIndex === undefined ? "single" : `slot-${slotIndex}`;
+    const normalizedHint = String(fileNameHint || "")
+      .trim()
+      .replace(/[<>:"/\\|?*\x00-\x1F]/g, "-")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
+    const suffix = normalizedHint ? `-${normalizedHint}` : "";
+    return path.join(assetFolder, `${slotLabel}-${Date.now()}-${offset}${suffix}${extension}`);
+  }
+
   async function downloadRemoteAsset(url, payload, offset = 0) {
     const controller = new AbortController();
     const timeoutHandle = setTimeout(() => controller.abort(), 15000);
@@ -94,15 +118,19 @@ function createAssetService(workspace) {
         throw new Error(`下载失败，状态码 ${response.status}`);
       }
 
-      const assetFolder = path.join(workspace.assets, payload.templateId, payload.zone);
       const resolvedSlotIndex = payload.slotIndex === null || payload.slotIndex === undefined
         ? null
         : payload.slotIndex + offset;
-      const slotLabel = resolvedSlotIndex === null ? "single" : `slot-${resolvedSlotIndex}`;
       const extension = resolveRemoteExtension(url, response.headers.get("content-type"));
-      const targetPath = path.join(assetFolder, `${slotLabel}-${Date.now()}-${offset}${extension}`);
+      const targetPath = buildAssetTargetPath({
+        templateId: payload.templateId,
+        zone: payload.zone,
+        slotIndex: resolvedSlotIndex,
+        extension,
+        offset
+      });
 
-      await ensureDirectory(assetFolder);
+      await ensureDirectory(path.dirname(targetPath));
       const arrayBuffer = await response.arrayBuffer();
       await fs.writeFile(targetPath, Buffer.from(arrayBuffer));
 
@@ -180,6 +208,65 @@ function createAssetService(workspace) {
     return { removed: true };
   }
 
+  function resolveDataUrlExtension(dataUrl) {
+    const prefix = String(dataUrl || "").slice(0, 64).toLowerCase();
+    if (prefix.includes("image/jpeg")) {
+      return ".jpg";
+    }
+    if (prefix.includes("image/webp")) {
+      return ".webp";
+    }
+    return ".png";
+  }
+
+  function decodeDataUrlToBuffer(dataUrl) {
+    const match = String(dataUrl || "").match(/^data:([^;,]+)?(?:;charset=[^;,]+)?;base64,(.+)$/i);
+    if (!match?.[2]) {
+      throw new Error("生成图片数据无效");
+    }
+    return Buffer.from(match[2], "base64");
+  }
+
+  async function writeGeneratedBatch(payload = {}) {
+    const templateId = String(payload.templateId || "").trim();
+    const zone = String(payload.zone || "").trim();
+    const items = Array.isArray(payload.items) ? payload.items : [];
+
+    if (!templateId || !zone || !items.length) {
+      return [];
+    }
+
+    const writtenRefs = [];
+    try {
+      for (let index = 0; index < items.length; index += 1) {
+        const item = items[index] || {};
+        const slotIndex = Number.isFinite(Number(item.slotIndex)) ? Number(item.slotIndex) : null;
+        const dataUrl = String(item.dataUrl || "").trim();
+        if (!dataUrl) {
+          throw new Error("生成图片数据为空");
+        }
+        const extension = resolveDataUrlExtension(dataUrl);
+        const targetPath = buildAssetTargetPath({
+          templateId,
+          zone,
+          slotIndex,
+          extension,
+          offset: index,
+          fileNameHint: item.fileNameHint || ""
+        });
+        await ensureDirectory(path.dirname(targetPath));
+        await fs.writeFile(targetPath, decodeDataUrlToBuffer(dataUrl));
+        writtenRefs.push(makeAssetRef(targetPath, { zone, slotIndex }));
+      }
+      return writtenRefs;
+    } catch (error) {
+      await Promise.all(
+        writtenRefs.map((ref) => fs.rm(ref.absolutePath, { force: true }).catch(() => undefined))
+      );
+      throw error;
+    }
+  }
+
   async function cloneRef(ref, targetTemplateId) {
     if (!ref) {
       return null;
@@ -242,6 +329,7 @@ function createAssetService(workspace) {
   return {
     importAsset,
     importRemoteAsset,
+    writeGeneratedBatch,
     removeAsset,
     cloneImageRefs,
     removeTemplateAssets,

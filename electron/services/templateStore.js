@@ -9,7 +9,11 @@ function buildEmptyImageRefs() {
     detailGallery: [],
     whiteImage: null,
     longImage: null,
-    skuThumbs: []
+    skuThumbs: [],
+    logoBatches: {
+      mainGallery: null,
+      skuThumbs: null
+    }
   };
 }
 
@@ -35,7 +39,28 @@ const EXPORT_FORM_DATA_KEY_LABELS = new Map([
   ["pddForm_categoryId3", "三级类目ID"],
   ["categoryId3", "三级类目ID"],
   ["pddForm_leafCategoryId", "末级类目ID"],
-  ["leafCategoryId", "末级类目ID"]
+  ["leafCategoryId", "末级类目ID"],
+  ["pddForm_costTemplateId", "运费模板ID"],
+  ["costTemplateId", "运费模板ID"],
+  ["pddForm_shipmentLimitSecond", "发货时限秒"],
+  ["shipmentLimitSecond", "发货时限秒"],
+  ["pddForm_shipmentLimitSecondCustom", "发货时限秒(自定义)"],
+  ["shipmentLimitSecondCustom", "发货时限秒(自定义)"],
+  ["pddForm_sendAddress", "发货地"],
+  ["sendAddress", "发货地"],
+  ["pddForm_marketPrice", "商品市场价"],
+  ["marketPrice", "商品市场价"],
+  ["pddForm_styleCode", "满2件折扣"],
+  ["styleCode", "满2件折扣"]
+]);
+
+const OMITTED_EXPORT_FORM_DATA_KEYS = new Set([
+  "pddForm_shortDesc",
+  "shortDesc",
+  "pddForm_shareDesc",
+  "shareDesc",
+  "pddForm_outGoodsSn",
+  "outGoodsSn"
 ]);
 
 function isBlankExportValue(value) {
@@ -49,8 +74,11 @@ function splitCategoryPath(value) {
     .filter(Boolean);
 }
 
+const EXPORT_SKU_FIELD_NAMES = ["specName", "groupPrice", "singlePrice", "stock", "outSkuSn"];
+const SKU_DETAIL_KEY_REGEX = new RegExp(`^goodsSkuDetail\\[(\\d+)\\]\\[(${EXPORT_SKU_FIELD_NAMES.join("|")})\\]$`);
+
 function isSkuDetailFormKey(key) {
-  return /^goodsSkuDetail\[\d+\]\[(specName|groupPrice|singlePrice|stock|weight)\]$/.test(String(key || "").trim());
+  return SKU_DETAIL_KEY_REGEX.test(String(key || "").trim());
 }
 
 function extractAttributeRefPidFromKey(key) {
@@ -64,32 +92,28 @@ function isAttributeFormKey(key) {
 }
 
 function buildBlankExportSkuRow() {
-  return {
-    specName: "",
-    groupPrice: "",
-    singlePrice: "",
-    stock: "",
-    weight: "",
-    skuThumbAbsolutePath: ""
-  };
+  const row = {};
+  EXPORT_SKU_FIELD_NAMES.forEach((field) => {
+    row[field] = "";
+  });
+  row.skuThumbAbsolutePath = "";
+  return row;
 }
 
 function normalizeExportSkuRow(row = {}, skuThumbRef = null) {
-  return {
-    specName: String(row.specName || "").trim(),
-    groupPrice: String(row.groupPrice || "").trim(),
-    singlePrice: String(row.singlePrice || "").trim(),
-    stock: String(row.stock || "").trim(),
-    weight: String(row.weight || "").trim(),
-    skuThumbAbsolutePath: String(skuThumbRef?.absolutePath || "").trim()
-  };
+  const normalized = {};
+  EXPORT_SKU_FIELD_NAMES.forEach((field) => {
+    normalized[field] = String(row?.[field] || "").trim();
+  });
+  normalized.skuThumbAbsolutePath = String(skuThumbRef?.absolutePath || "").trim();
+  return normalized;
 }
 
 function extractExportSkuList(formData, skuThumbRefs = []) {
   const groupedRows = new Map();
 
   Object.entries(formData || {}).forEach(([key, value]) => {
-    const match = String(key || "").trim().match(/^goodsSkuDetail\[(\d+)\]\[(specName|groupPrice|singlePrice|stock|weight)\]$/);
+    const match = String(key || "").trim().match(SKU_DETAIL_KEY_REGEX);
     if (!match) {
       return;
     }
@@ -109,7 +133,7 @@ function extractExportSkuList(formData, skuThumbRefs = []) {
     .filter((row) => Object.values(row).some((value) => value !== ""));
 }
 
-function extractExportAttributeList(formData, attributeLabels = {}) {
+function extractExportAttributeList(formData, attributeLabels = {}, attributeMeta = {}) {
   const groupedAttributes = new Map();
 
   Object.entries(formData || {}).forEach(([key, value]) => {
@@ -134,13 +158,27 @@ function extractExportAttributeList(formData, attributeLabels = {}) {
     }
   });
 
-  return Array.from(groupedAttributes.values()).filter((item) => !isBlankExportValue(item.value));
+  return Array.from(groupedAttributes.values())
+    .filter((item) => !isBlankExportValue(item.value))
+    .map((item) => {
+      const meta = attributeMeta?.[item.refPid] || {};
+      const enriched = { ...item };
+      const vid = String(meta.vid || "").trim();
+      const unit = String(meta.unit || "").trim();
+      if (vid) {
+        enriched.vid = vid;
+      }
+      if (unit) {
+        enriched.unit = unit;
+      }
+      return enriched;
+    });
 }
 
-function localizeExportFormData(formData, attributeLabels = {}, imageRefs = {}, categoryMeta = {}) {
+function localizeExportFormData(formData, attributeLabels = {}, imageRefs = {}, categoryMeta = {}, attributeMeta = {}) {
   const source = formData && typeof formData === "object" ? formData : {};
   const skuList = extractExportSkuList(source, Array.isArray(imageRefs?.skuThumbs) ? imageRefs.skuThumbs : []);
-  const attributeList = extractExportAttributeList(source, attributeLabels);
+  const attributeList = extractExportAttributeList(source, attributeLabels, attributeMeta);
   const stapleNames = (Array.isArray(categoryMeta?.stapleNames) ? categoryMeta.stapleNames : [])
     .map((item) => String(item || "").trim())
     .filter(Boolean);
@@ -150,6 +188,10 @@ function localizeExportFormData(formData, attributeLabels = {}, imageRefs = {}, 
     : "";
 
   const result = Object.entries(source).reduce((result, [key, value]) => {
+    if (OMITTED_EXPORT_FORM_DATA_KEYS.has(key)) {
+      return result;
+    }
+
     if (isSkuDetailFormKey(key)) {
       return result;
     }
@@ -264,6 +306,7 @@ function createTemplateStore(workspace) {
       formData: payload.formData || {},
       imageRefs: payload.imageRefs || buildEmptyImageRefs(),
       attributeLabels: payload.attributeLabels || {},
+      attributeMeta: payload.attributeMeta || {},
       categoryMeta: payload.categoryMeta || {}
     };
 
@@ -292,6 +335,7 @@ function createTemplateStore(workspace) {
       formData: payload.formData || current.formData,
       imageRefs: payload.imageRefs || current.imageRefs,
       attributeLabels: payload.attributeLabels ?? current.attributeLabels ?? {},
+      attributeMeta: payload.attributeMeta ?? current.attributeMeta ?? {},
       categoryMeta: payload.categoryMeta ?? current.categoryMeta ?? {}
     };
 
@@ -427,7 +471,13 @@ function createTemplateStore(workspace) {
     const rawFormData = template.formData || {};
     const exportedTemplate = {
       ...template,
-      formData: localizeExportFormData(rawFormData, template.attributeLabels || {}, imageRefs, template.categoryMeta || {}),
+      formData: localizeExportFormData(
+        rawFormData,
+        template.attributeLabels || {},
+        imageRefs,
+        template.categoryMeta || {},
+        template.attributeMeta || {}
+      ),
       imageRefs
     };
 

@@ -64,8 +64,6 @@
         </div>
         <div class="app-header__actions">
           <button type="button" class="ghost-button" id="openQuickLoginBtn">登录专用</button>
-          <button type="button" class="ghost-button" id="openShopPickerBtn">切换店铺</button>
-          <button type="button" class="ghost-button" id="openSecondaryDrawerBtn">更多工具</button>
           <button type="button" class="ghost-button" id="logoutBtn">退出登录</button>
         </div>
       </div>
@@ -435,7 +433,10 @@
                     <strong class="image-zone-note__title">轮播图上传</strong>
                     <span class="image-zone-count" data-zone-count="mainGallery">已上传 0/10 张</span>
                   </div>
-                  <button type="button" class="secondary-button secondary-button--sm" data-zone-upload="mainGallery">本地上传</button>
+                  <div class="image-zone-note__actions">
+                    <button type="button" class="ghost-button ghost-button--sm" id="openMainGalleryLogoBatchBtn">批量加LOGO</button>
+                    <button type="button" class="secondary-button secondary-button--sm" data-zone-upload="mainGallery">本地上传</button>
+                  </div>
                 </div>
                 <div id="pddForm_mainSpareImage" class="image-zone image-zone--gallery" data-required-zone="true"></div>
               </div>
@@ -506,8 +507,6 @@
               <p id="workspaceSkuSummary" class="section-card__summary">等待配置</p>
             </div>
             <div class="section-card__actions">
-              <button type="button" class="text-button">规格值排序</button>
-              <button type="button" class="text-button">规格映射小工具</button>
               <button type="button" class="ghost-button ghost-button--sm" data-workspace-step-toggle data-section="sku">展开</button>
             </div>
           </div>
@@ -525,50 +524,124 @@
             <div class="form-row form-row--top">
               <label class="form-row__label" for="pddForm_goodsSkuDetail">价格与库存</label>
               <div class="form-row__control">
+                <div class="sku-bulk-toolbar" id="skuBulkToolbar">
+                  <div class="sku-bulk-adjust">
+                    <label class="sku-bulk-stock__field" for="skuBulkGroupPriceInput">
+                      <span>拼单价</span>
+                      <input id="skuBulkGroupPriceInput" type="number" min="0" step="0.01" inputmode="decimal" placeholder="输入变动值">
+                    </label>
+                    <div class="sku-bulk-adjust__actions">
+                      <button
+                        type="button"
+                        class="ghost-button ghost-button--sm"
+                        data-sku-bulk-price-action="decrease"
+                        data-sku-bulk-price-field="groupPrice"
+                        data-sku-bulk-price-input="skuBulkGroupPriceInput"
+                      >减少</button>
+                      <button
+                        type="button"
+                        class="ghost-button ghost-button--sm"
+                        data-sku-bulk-price-action="increase"
+                        data-sku-bulk-price-field="groupPrice"
+                        data-sku-bulk-price-input="skuBulkGroupPriceInput"
+                      >增加</button>
+                    </div>
+                  </div>
+                  <div class="sku-bulk-adjust">
+                    <label class="sku-bulk-stock__field" for="skuBulkSinglePriceInput">
+                      <span>单买价</span>
+                      <input id="skuBulkSinglePriceInput" type="number" min="0" step="0.01" inputmode="decimal" placeholder="输入变动值">
+                    </label>
+                    <div class="sku-bulk-adjust__actions">
+                      <button
+                        type="button"
+                        class="ghost-button ghost-button--sm"
+                        data-sku-bulk-price-action="decrease"
+                        data-sku-bulk-price-field="singlePrice"
+                        data-sku-bulk-price-input="skuBulkSinglePriceInput"
+                      >减少</button>
+                      <button
+                        type="button"
+                        class="ghost-button ghost-button--sm"
+                        data-sku-bulk-price-action="increase"
+                        data-sku-bulk-price-field="singlePrice"
+                        data-sku-bulk-price-input="skuBulkSinglePriceInput"
+                      >增加</button>
+                    </div>
+                  </div>
+                  <div class="sku-bulk-stock">
+                    <label class="sku-bulk-stock__field" for="skuBulkStockInput">
+                      <span>批量库存</span>
+                      <input id="skuBulkStockInput" type="number" min="0" step="1" inputmode="numeric" placeholder="输入库存">
+                    </label>
+                    <button type="button" class="ghost-button ghost-button--sm" id="applySkuBulkStockBtn">批量设置</button>
+                  </div>
+                  <div class="sku-bulk-replace">
+                    <label class="sku-bulk-stock__field sku-bulk-stock__field--compact" for="skuBulkSkuCodeSearchInput">
+                      <span>查找</span>
+                      <input id="skuBulkSkuCodeSearchInput" type="text" placeholder="SKU编码字符">
+                    </label>
+                    <label class="sku-bulk-stock__field sku-bulk-stock__field--compact" for="skuBulkSkuCodeReplaceInput">
+                      <span>替换为</span>
+                      <input id="skuBulkSkuCodeReplaceInput" type="text" placeholder="可留空">
+                    </label>
+                    <button
+                      type="button"
+                      class="ghost-button ghost-button--sm"
+                      id="applySkuBulkCodeReplaceBtn"
+                      data-sku-bulk-code-replace="true"
+                    >替换SKU编码</button>
+                  </div>
+                  <button type="button" class="ghost-button ghost-button--sm" id="openSkuLogoBatchBtn">SKU图批量加LOGO</button>
+                </div>
                 <div class="sku-table-wrap">
                   <table id="pddForm_goodsSkuDetail" class="sku-table">
                     <colgroup>
                       <col class="sku-table__col sku-table__col--image">
-                      <col class="sku-table__col sku-table__col--name">
+                      <col class="sku-table__col sku-table__col--color">
+                      <col class="sku-table__col sku-table__col--size">
                       <col class="sku-table__col sku-table__col--number">
                       <col class="sku-table__col sku-table__col--number">
-                      <col class="sku-table__col sku-table__col--number">
+                      <col class="sku-table__col sku-table__col--code">
                       <col class="sku-table__col sku-table__col--number">
                     </colgroup>
                     <thead>
                       <tr>
                         <th>规格图</th>
-                        <th>规格名</th>
+                        <th>颜色</th>
+                        <th>尺码</th>
                         <th>拼单价</th>
                         <th>单买价</th>
+                        <th>商品SKU编码</th>
                         <th>库存</th>
-                        <th>重量</th>
                       </tr>
                     </thead>
                     <tbody id="skuTableBody">
                       <tr>
                         <td class="sku-table__cell sku-table__cell--image"><div id="pddForm_goodsSkuDetail_0_pic" class="image-slot image-slot--sku" data-image-zone="sku-thumb" data-asset-zone="skuThumbs" data-slot-index="0" data-frame-label="SKU图1"><input type="file" accept="image/*"></div></td>
-                        <td class="sku-table__cell sku-table__cell--name"><input class="sku-table__input sku-table__input--name" name="goodsSkuDetail[0][specName]" type="text" value="黑色1+1黑色--过膝款 / （均码）毛圈加厚"></td>
+                        <td class="sku-table__cell sku-table__cell--color" rowspan="2">黑色</td>
+                        <td class="sku-table__cell sku-table__cell--size">均码<input type="hidden" name="goodsSkuDetail[0][specName]" value="黑色 / 均码"></td>
                         <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[0][groupPrice]" type="number" step="0.01" value="15.90"></td>
                         <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[0][singlePrice]" type="number" step="0.01" value="19.90"></td>
+                        <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[0][outSkuSn]" type="text" value=""></td>
                         <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[0][stock]" type="number" value="500"></td>
-                        <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[0][weight]" type="number" step="0.01" value="0.18"></td>
                       </tr>
                       <tr>
                         <td class="sku-table__cell sku-table__cell--image"><div id="pddForm_goodsSkuDetail_1_pic" class="image-slot image-slot--sku" data-image-zone="sku-thumb" data-asset-zone="skuThumbs" data-slot-index="1" data-frame-label="SKU图2"><input type="file" accept="image/*"></div></td>
-                        <td class="sku-table__cell sku-table__cell--name"><input class="sku-table__input sku-table__input--name" name="goodsSkuDetail[1][specName]" type="text" value="奶白色--中筒款 / （均码）毛圈加厚"></td>
+                        <td class="sku-table__cell sku-table__cell--size">加大码<input type="hidden" name="goodsSkuDetail[1][specName]" value="黑色 / 加大码"></td>
                         <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[1][groupPrice]" type="number" step="0.01" value="15.90"></td>
                         <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[1][singlePrice]" type="number" step="0.01" value="19.90"></td>
+                        <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[1][outSkuSn]" type="text" value=""></td>
                         <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[1][stock]" type="number" value="420"></td>
-                        <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[1][weight]" type="number" step="0.01" value="0.18"></td>
                       </tr>
                       <tr>
                         <td class="sku-table__cell sku-table__cell--image"><div id="pddForm_goodsSkuDetail_2_pic" class="image-slot image-slot--sku" data-image-zone="sku-thumb" data-asset-zone="skuThumbs" data-slot-index="2" data-frame-label="SKU图3"><input type="file" accept="image/*"></div></td>
-                        <td class="sku-table__cell sku-table__cell--name"><input class="sku-table__input sku-table__input--name" name="goodsSkuDetail[2][specName]" type="text" value="麻灰色--高筒款 / （均码）毛圈加厚"></td>
+                        <td class="sku-table__cell sku-table__cell--color">奶白色</td>
+                        <td class="sku-table__cell sku-table__cell--size">均码<input type="hidden" name="goodsSkuDetail[2][specName]" value="奶白色 / 均码"></td>
                         <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[2][groupPrice]" type="number" step="0.01" value="16.50"></td>
                         <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[2][singlePrice]" type="number" step="0.01" value="20.50"></td>
+                        <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[2][outSkuSn]" type="text" value=""></td>
                         <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[2][stock]" type="number" value="360"></td>
-                        <td class="sku-table__cell"><input class="sku-table__input" name="goodsSkuDetail[2][weight]" type="number" step="0.01" value="0.19"></td>
                       </tr>
                     </tbody>
                   </table>
@@ -618,7 +691,19 @@
 
             <div class="form-row">
               <label class="form-row__label" for="pddForm_shipmentLimitSecond">承诺发货时间</label>
-              <div class="form-row__control"><div id="pddForm_shipmentLimitSecond" class="choice-group"><label class="choice-pill"><input name="shipmentLimitSecond" type="radio" value="0"><span>当日发货</span></label><label class="choice-pill"><input name="shipmentLimitSecond" type="radio" value="86400"><span>24小时</span></label><label class="choice-pill"><input name="shipmentLimitSecond" type="radio" value="172800" checked><span>48小时</span></label></div></div>
+              <div class="form-row__control">
+                <div id="pddForm_shipmentLimitSecond" class="choice-group"><label class="choice-pill"><input name="shipmentLimitSecond" type="radio" value="0"><span>当日发货</span></label><label class="choice-pill"><input name="shipmentLimitSecond" type="radio" value="86400"><span>24小时</span></label><label class="choice-pill"><input name="shipmentLimitSecond" type="radio" value="172800" checked><span>48小时</span></label><label class="choice-pill"><input name="shipmentLimitSecond" type="radio" value="custom"><span>自定义</span></label></div>
+                <div class="input-shell input-shell--short" id="shipmentLimitSecondCustomShell" hidden style="margin-top:8px;"><input id="pddForm_shipmentLimitSecondCustom" name="shipmentLimitSecondCustom" type="number" min="0" placeholder="自定义秒数"></div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <label class="form-row__label" for="pddForm_sendAddress">发货地</label>
+              <div class="form-row__control">
+                <div class="input-shell input-shell--medium">
+                  <input id="pddForm_sendAddress" name="sendAddress" type="text" placeholder="例：浙江省/金华市">
+                </div>
+              </div>
             </div>
 
             <div class="form-row">
@@ -631,6 +716,8 @@
                     <button type="button" class="text-button">刷新模板</button>
                   </div>
                 </div>
+                <input id="pddForm_costTemplateId" name="costTemplateId" type="hidden" value="">
+                <p class="helper-text" id="costTemplateIdHint" hidden>已记录源店铺运费模板 ID：<code data-cost-template-id></code>，请在下拉中手动选择目标店铺对应的运费模板。</p>
                 <div id="freightNotice" class="info-stack" hidden><p>当前不是推荐运费模板，请再次确认。</p></div>
               </div>
             </div>
@@ -853,6 +940,83 @@
         <div class="modal-form__actions category-picker__actions">
           <button type="button" class="ghost-button" id="categoryPickerRefreshBtn">刷新类目</button>
           <button type="button" class="primary-button" id="categoryPickerConfirmBtn">确认使用该类目</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="imagePreviewModal" class="modal-shell image-preview-modal" hidden>
+    <div class="modal-shell__backdrop image-preview-modal__backdrop" id="imagePreviewBackdrop"></div>
+    <div class="image-preview-modal__card" role="dialog" aria-modal="true" aria-labelledby="imagePreviewTitle">
+      <div class="image-preview-modal__head">
+        <div>
+          <p class="modal-card__eyebrow">Image Preview</p>
+          <h2 id="imagePreviewTitle" class="modal-card__title">查看图片</h2>
+        </div>
+        <button type="button" class="ghost-button ghost-button--sm" id="closeImagePreviewBtn">关闭</button>
+      </div>
+      <div class="image-preview-modal__stage">
+        <img id="imagePreviewImage" class="image-preview-modal__image" src="" alt="查看图片">
+      </div>
+      <p id="imagePreviewMeta" class="image-preview-modal__meta"></p>
+    </div>
+  </div>
+
+  <div id="logoBatchModal" class="modal-shell image-preview-modal logo-batch-modal" hidden>
+    <div class="modal-shell__backdrop image-preview-modal__backdrop" id="logoBatchBackdrop"></div>
+    <div class="image-preview-modal__card logo-batch-modal__card" role="dialog" aria-modal="true" aria-labelledby="logoBatchTitle">
+      <div class="image-preview-modal__head logo-batch-modal__head">
+        <div>
+          <p class="modal-card__eyebrow">Logo Batch</p>
+          <h2 id="logoBatchTitle" class="modal-card__title">批量加 LOGO</h2>
+          <p id="logoBatchDesc" class="modal-card__desc">上传一张 LOGO，调整面积占比与位置后，一键应用到当前区域全部图片。</p>
+        </div>
+        <button type="button" class="ghost-button ghost-button--sm" id="closeLogoBatchBtn">关闭</button>
+      </div>
+      <div class="logo-batch-modal__body">
+        <div class="logo-batch-modal__stage-wrap">
+          <div class="logo-batch-modal__stage-meta">
+            <strong id="logoBatchPreviewLabel">预览图</strong>
+            <span id="logoBatchPreviewMeta">当前区域暂无图片。</span>
+          </div>
+          <div id="logoBatchStage" class="image-preview-modal__stage logo-batch-modal__stage">
+            <div class="detail-preview-empty">
+              <span class="detail-preview-empty__graphic" aria-hidden="true"></span>
+              <strong>暂无可预览图片</strong>
+              <span>请先上传轮播图或 SKU 图。</span>
+            </div>
+          </div>
+          <div class="logo-batch-modal__stage-actions">
+            <button type="button" class="ghost-button ghost-button--sm" id="logoBatchPrevBtn">上一张</button>
+            <button type="button" class="ghost-button ghost-button--sm" id="logoBatchNextBtn">下一张</button>
+          </div>
+        </div>
+        <div class="logo-batch-modal__panel">
+          <div class="product-fill__summary" id="logoBatchSummary">仅桌面版支持批量加 LOGO。</div>
+          <div class="logo-batch-modal__toolbar">
+            <button type="button" class="secondary-button" id="logoBatchUploadBtn">上传/替换LOGO</button>
+            <button type="button" class="ghost-button" id="logoBatchResetPositionBtn">重置位置</button>
+          </div>
+          <div class="logo-batch-modal__fields">
+            <label class="field-block">
+              <span class="field-block__label">LOGO 素材</span>
+              <div id="logoBatchLogoStatus" class="product-fill__summary logo-batch-modal__info">尚未上传 LOGO。</div>
+            </label>
+            <label class="field-block">
+              <span class="field-block__label">面积占比</span>
+              <div class="logo-batch-modal__percent">
+                <input id="logoBatchAreaRange" type="range" min="5" max="200" step="0.5" value="5">
+                <div class="input-shell input-shell--short">
+                  <input id="logoBatchAreaInput" type="number" min="5" max="200" step="0.5" inputmode="decimal" value="5">
+                  <span class="input-meta">%</span>
+                </div>
+              </div>
+            </label>
+          </div>
+          <div class="modal-form__actions logo-batch-modal__actions">
+            <button type="button" class="ghost-button" id="logoBatchRestoreBtn">恢复原图</button>
+            <button type="button" class="primary-button" id="logoBatchApplyBtn">应用到全部图片</button>
+          </div>
         </div>
       </div>
     </div>

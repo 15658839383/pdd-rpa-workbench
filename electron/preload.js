@@ -14,6 +14,7 @@ contextBridge.exposeInMainWorld("desktopBridge", {
   asset: {
     import: (payload) => ipcRenderer.invoke("asset:import", payload),
     importRemote: (payload) => ipcRenderer.invoke("asset:importRemote", payload),
+    writeGeneratedBatch: (payload) => ipcRenderer.invoke("asset:writeGeneratedBatch", payload),
     remove: (payload) => ipcRenderer.invoke("asset:remove", payload),
     list: (payload) => ipcRenderer.invoke("asset:list", payload)
   },
@@ -27,6 +28,7 @@ contextBridge.exposeInMainWorld("desktopBridge", {
     listPublishCategories: (payload) => ipcRenderer.invoke("auth:listPublishCategories", payload),
     listCategoryAttributes: (payload) => ipcRenderer.invoke("auth:listCategoryAttributes", payload),
     listCategorySkuSpecs: (payload) => ipcRenderer.invoke("auth:listCategorySkuSpecs", payload),
+    rewriteSkuSpecNames: (payload) => ipcRenderer.invoke("auth:rewriteSkuSpecNames", payload),
     getProductFullDetail: (payload) => ipcRenderer.invoke("auth:getProductFullDetail", payload),
     getShopOverview: (payload) => ipcRenderer.invoke("auth:getShopOverview", payload),
     testProductsData: (payload) => ipcRenderer.invoke("auth:testProductsData", payload),
