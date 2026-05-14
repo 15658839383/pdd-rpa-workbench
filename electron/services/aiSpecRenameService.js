@@ -1,9 +1,9 @@
-const DEFAULT_TIMEOUT_MS = 30000;
+const DEFAULT_TIMEOUT_MS = 60000;
 const DEFAULT_API_URL = process.env.PDD_AI_SPEC_RENAME_URL || "https://value.apiqik.online/v1/chat/completions";
-const DEFAULT_MODEL = process.env.PDD_AI_SPEC_RENAME_MODEL || "gpt-5.4";
+const DEFAULT_MODEL = process.env.PDD_AI_SPEC_RENAME_MODEL || "gemini-3.1-flash-lite-preview";
 const DEFAULT_AUTHORIZATION = process.env.PDD_AI_SPEC_RENAME_AUTHORIZATION
   || process.env.PDD_AI_API_KEY
-  || "";
+  || "Bearer sk-f9DDXFBukvjdl970LScHVgVtFwIq0Ib4YVgZBRqTBo7O1Lag";
 
 async function renameSkuSpecsWithAi(payload = {}) {
   const dimensions = normalizeRequestDimensions(payload.dimensions);
@@ -28,11 +28,11 @@ async function renameSkuSpecsWithAi(payload = {}) {
     method: "POST",
     timeoutMs: DEFAULT_TIMEOUT_MS,
     headers: {
-      Authorization: DEFAULT_AUTHORIZATION,
+      Authorization: normalizeAuthorization(DEFAULT_AUTHORIZATION),
       "Content-Type": "application/json"
     },
     json: {
-      temperature: 0.7,
+      temperature: resolveModelTemperature(DEFAULT_MODEL),
       model: DEFAULT_MODEL,
       stream: false,
       messages: buildMessages(dimensions, context)
@@ -114,49 +114,49 @@ function normalizeRenameContext(source) {
 function buildMessages(dimensions, context = {}) {
   return [
     {
-    "role": "system",
-    "content": [
-      "你是资深电商 SKU 规格命名师，擅长把原始规格改成更自然的售卖规格别名，用于降低同款比价识别。",
-      "任务：根据商品标题、类目和规格类型重写商品规格值，输出统一风格的规格别名。",
-      "硬性规则：",
-      "1. 按输入 values 的顺序逐项改写，一一对应输出；不得新增或删减规格项。",
-      "2. 同一组 values 内的所有规格必须保持完全一致的命名风格和结构，不允许第一个用“经典黑”第二个用“黑色”这种风格混杂。",
-      "3. 颜色语义必须保留，但必须重组改写，禁止直接复用原词。可简称化（黑色→黑、白色→白）、可加限定修饰（黑色→经典黑、白色→暖白）、可调序组合。整组颜色必须统一改写手法。",
-      "4. 数字、数量、配比、D数、尺码语义必须保留，但必须换表达形式。阿拉伯数字↔中文数字互转均可（6条→六条装，三条→3条装），D数可调位置或换符号（500D→D500/500旦），尺码可换写法（XL→加大码）。关键是换形式，不限定转换方向。",
-      "5. 每一项都必须发生实质性文本变化，修改幅度须达到70%以上。不允许任何一项与原始值完全相同，不允许仅加前后缀敷衍了事。",
-      "6. 括号非必须：可加可去可替换为 /、- 等普通符号，但整组规格须统一括号策略。",
-      "7. 优先使用中文、数字、普通括号、/、-、+；严禁使用 ·、•、・、™、® 等装饰符号。",
-      "8. 严禁机械追加“经典款、舒适款、优选款、日常款、基础款”等空泛修饰词；若要加修饰，必须与颜色/数量/材质融合成自然词组。",
-      "9. 输出内容须短，适合直接作为商品规格值展示，控制在2-8个字之间。",
-      "10. 只输出一个 JSON 对象，格式为 {\"dimensions\":[{\"slot\":0,\"values\":[\"...\"]}]}，不输出任何解释、Markdown 或代码块。",
-      "风格一致性示例：",
-      "输入：[\"黑色\",\"白色\",\"灰色\"] → 输出：[\"经典黑\",\"雅致白\",\"雾灰\"]",
-      "输入：[\"6条\",\"12条\",\"24条\"] → 输出：[\"六条装\",\"十二条装\",\"二十四条装\"]",
-      "输入：[\"六条装\",\"十二条装\",\"二十四条装\"] → 输出：[\"6条/包\",\"12条/包\",\"24条/包\"]",
-      "输入：[\"黑色 6条\",\"白色 12条\",\"灰色 24条\"] → 输出：[\"黑/六条装\",\"白/十二条装\",\"灰/二十四条装\"]",
-      "输入：[\"XL\",\"XXL\",\"XXXL\"] → 输出：[\"加大\",\"双加大\",\"三加大\"]",
-      "输入：[\"加大\",\"双加大\",\"三加大\"] → 输出：[\"XL码\",\"XXL码\",\"XXXL码\"]"
-    ].join("\n")
-  },
+      role: "system",
+      content: [
+        "你是资深电商 SKU 规格命名师，擅长将原始规格值改写为更自然、更统一、更适合商品展示的规格别名。",
+        "任务：根据商品标题、类目、规格类型和上下文，重写商品规格值，在不改变原始规格含义的前提下，输出统一风格、便于消费者理解的规格名称。",
+        "必须严格遵守以下规则：",
+        "1. 严格按输入 values 的顺序逐项改写，一一对应输出，不得新增、合并、拆分或删减规格项。",
+        "2. 同一组 values 内的所有规格必须保持完全一致的命名风格、句式结构和表达粒度，不得出现风格混杂。",
+        "3. 每一项都必须发生明显改写，不允许与原始值完全相同，也不允许只做机械性的前后缀增删、同义词硬替换或单字微调。",
+        "4. 改写后必须保留原始规格的真实语义，不得虚构或篡改颜色、尺寸、容量、数量、材质、型号、适用对象、功能等关键信息。",
+        "5. 如果原始规格较短，可在不改变含义的前提下适度丰富；如果原始规格较长，可在保留关键信息的前提下适度压缩。",
+        "6. 同组规格之间必须有清晰区分，避免改写后出现含义重叠、难以分辨或近似重复。",
+        "7. 优先使用自然、口语化、商品化的表达，避免生硬、模板化、堆砌式命名。",
+        "8. 严禁使用未允许的特殊符号；仅可使用：【】、（）、()、/、\\、+、-、*、%、#。",
+        "9. 输出前自行检查：数量一致、顺序一致、风格一致、含义未变、每项均已改写。",
+        "10. 只输出一个 JSON 对象，格式为 {\"dimensions\":[{\"slot\":0,\"values\":[\"...\"]}]}，不得输出任何解释、Markdown、代码块或多余文本。"
+      ].join("\n")
+    },
     {
       role: "user",
       content: JSON.stringify({
         context,
-        dimensions,
-        rules: [
-          "保持 slot 不变",
-          "尽量保持每个 values 数组长度不变；确实无法处理时也不要编造无关规格",
-          "保持每个 values 的顺序不变",
-          "保留颜色、数量、配比、D数、尺码和适穿范围的语义；数量可以用中文数字或阿拉伯数字表达，如 6条/六条装 都可以，不能用单只",
-          "允许改括号和普通符号；没有括号可以加，有括号可以去或替换；允许把颜色改成简称，允许调整顺序",
-          "禁止使用特殊点号或装饰符号，例如 ·、•、・；优先使用 /、-、+、普通括号",
-          "每一项都必须发生文本变化，不能返回和原始值完全相同的内容",
-          "当原始值几乎只有颜色或数量时，按示例风格重构成规格别名，不要简单加形容词",
-          "输出内容要短，适合作为商品规格值直接展示"
-        ]
+        dimensions
       }, null, 2)
     }
   ];
+}
+
+function normalizeAuthorization(value) {
+  const normalizedValue = String(value || "").trim();
+  if (!normalizedValue) {
+    return "";
+  }
+
+  return /^Bearer\s+/i.test(normalizedValue) ? normalizedValue : `Bearer ${normalizedValue}`;
+}
+
+function resolveModelTemperature(model) {
+  const normalizedModel = String(model || "").trim().toLowerCase();
+  if (normalizedModel.startsWith("moonshot-v1")) {
+    return 0.3;
+  }
+
+  return 1;
 }
 
 async function requestJson(url, options = {}) {

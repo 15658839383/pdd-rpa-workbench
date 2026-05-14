@@ -1,6 +1,6 @@
 {
   "name": "pdd-goods-desktop",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "private": true,
   "description": "拼多多商家属性填写 Electron 安装版工具",
   "main": "electron/main.js",

@@ -1,2 +1,5 @@
 # Legacy dependency for automation/automation_bridge.py reference only.
 DrissionPage==4.1.1.2
+
+# Required by 新店1.py / pdd-auto-fill helper.
+playwright==1.59.1

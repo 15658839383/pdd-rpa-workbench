@@ -14,6 +14,7 @@ const { createCredentialStore } = require("./services/credentialStore");
 const { createShopCatalogStore } = require("./services/shopCatalogStore");
 const { createBackendClient, DEFAULT_BASE_URL } = require("./services/backendClient");
 const { createSalesOverviewExportService } = require("./services/salesOverviewExportService");
+const { createAutomationService } = require("./services/automationService");
 
 let mainWindow;
 let services;
@@ -38,6 +39,12 @@ async function bootstrap() {
     onSessionInvalidated: publishAuthEvent,
     workspace
   });
+  const automationService = createAutomationService({
+    workspace,
+    templateStore,
+    backendClient,
+    onEvent: publishAutomationEvent
+  });
 
   services = {
     workspace,
@@ -47,7 +54,8 @@ async function bootstrap() {
     credentialStore,
     shopCatalogStore,
     salesOverviewExportService,
-    backendClient
+    backendClient,
+    automationService
   };
 
   registerIpcHandlers();
@@ -169,8 +177,6 @@ async function createMainWindow() {
   mainWindow = new BrowserWindow({
     width: 1680,
     height: 1040,
-    minWidth: 1220,
-    minHeight: 860,
     show: false,
     autoHideMenuBar: true,
     backgroundColor: "#fffefb",
@@ -207,6 +213,17 @@ function publishAuthEvent(event) {
   }
 
   mainWindow.webContents.send("auth:event", {
+    timestamp: new Date().toISOString(),
+    ...event
+  });
+}
+
+function publishAutomationEvent(event) {
+  if (!mainWindow || mainWindow.isDestroyed()) {
+    return;
+  }
+
+  mainWindow.webContents.send("automation:event", {
     timestamp: new Date().toISOString(),
     ...event
   });
@@ -406,6 +423,14 @@ function registerIpcHandlers() {
     ipcMain.handle(channel, handler);
   });
 
+  ipcMain.handle("automation:startAutoFill", async (_event, payload) => {
+    return services.automationService.startAutoFill(payload);
+  });
+
+  ipcMain.handle("automation:getState", async () => {
+    return services.automationService.getState();
+  });
+
   ipcMain.handle("auth:clearSession", async (_event, payload) => {
     return services.backendClient.clearSession({
       preserveBaseUrl: payload?.preserveBaseUrl !== false,
@@ -424,11 +449,11 @@ function registerIpcHandlers() {
     if (mainWindowWasMaximized) {
       mainWindow.unmaximize();
     }
-    mainWindow.setMinimumSize(420, 600);
+    mainWindow.setMinimumSize(0, 0);
     mainWindow.setSize(420, 640);
     mainWindow.center();
-    mainWindow.setMaximizable(false);
-    mainWindow.setResizable(false);
+    mainWindow.setMaximizable(true);
+    mainWindow.setResizable(true);
     await mainWindow.loadFile(path.join(__dirname, "..", "一键登录.html"));
   });
 
@@ -444,7 +469,7 @@ function registerIpcHandlers() {
     } else {
       mainWindow.setSize(1680, 1040);
     }
-    mainWindow.setMinimumSize(1220, 860);
+    mainWindow.setMinimumSize(0, 0);
     if (mainWindowWasMaximized && mainWindowWasMaximizable) {
       mainWindow.maximize();
     } else {

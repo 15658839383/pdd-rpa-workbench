@@ -67,6 +67,17 @@ function buildInitialProductFillState() {
   };
 }
 
+function buildInitialAutoFillState() {
+  return {
+    status: 'idle',
+    error: '',
+    summary: '自动填充会使用当前店铺和当前模板。',
+    runId: '',
+    shopCode: '',
+    shopName: ''
+  };
+}
+
 function buildInitialLogoBatchConfig() {
   return {
     logoRef: null,
@@ -196,6 +207,7 @@ const state = {
   isWorkbenchReady: false,
   isWorkbenchHydrating: false,
   unsubscribeAuth: null,
+  unsubscribeAutomation: null,
   slotRegistry: {},
   dragContext: null,
   authNoticeTimer: null,
@@ -217,6 +229,7 @@ const state = {
   attribute: buildInitialAttributeState(),
   skuSpec: buildInitialSkuSpecState(),
   productFill: buildInitialProductFillState(),
+  autoFill: buildInitialAutoFillState(),
   templateExport: buildInitialTemplateExportState(),
   ui: buildInitialUiState()
 };
@@ -534,10 +547,15 @@ async function initializeApp() {
   renderShopPicker();
   renderSalesOverviewPage();
   renderProductFillState();
+  renderAutoFillState();
   renderTemplateExport();
 
   if (state.bridge?.auth?.onEvent) {
     state.unsubscribeAuth = state.bridge.auth.onEvent(handleAuthEvent);
+  }
+
+  if (state.bridge?.automation?.onEvent) {
+    state.unsubscribeAutomation = state.bridge.automation.onEvent(handleAutomationEvent);
   }
 
   await bootstrapAuth();
@@ -556,8 +574,8 @@ function cacheDom() {
   dom.shopSelectionBackBtn = document.getElementById('shopSelectionBackBtn');
   dom.shopSelectionAccountName = document.getElementById('shopSelectionAccountName');
   dom.shopSelectionAccountRole = document.getElementById('shopSelectionAccountRole');
-  dom.shopSelectionAccountUsername = document.getElementById('shopSelectionAccountUsername');
   dom.shopSelectionCurrentShop = document.getElementById('shopSelectionCurrentShop');
+  dom.shopSelectionDraftState = document.getElementById('shopSelectionDraftState');
   dom.openSalesOverviewBtn = document.getElementById('openSalesOverviewBtn');
   dom.salesOverviewPage = document.getElementById('salesOverviewPage');
   dom.salesOverviewBackBtn = document.getElementById('salesOverviewBackBtn');
@@ -610,13 +628,16 @@ function cacheDom() {
   dom.shopAccessScope = document.getElementById('shopAccessScope');
   dom.shopCountBadge = document.getElementById('shopCountBadge');
   dom.shopSearchInput = document.getElementById('shopSearchInput');
+  dom.shopSearchHint = document.getElementById('shopSearchHint');
   dom.shopSelectionError = document.getElementById('shopSelectionError');
   dom.shopSelectionList = document.getElementById('shopSelectionList');
   dom.shopSelectionConfirmBtn = document.getElementById('shopSelectionConfirmBtn');
+  dom.shopSelectionActionSummary = document.getElementById('shopSelectionActionSummary');
   dom.shopSelectionRefreshBtn = document.getElementById('shopSelectionRefreshBtn');
   dom.shopPickerLogoutBtn = document.getElementById('shopPickerLogoutBtn');
   dom.openCategoryPickerBtn = document.getElementById('openCategoryPickerBtn');
   dom.openProductFillBtn = document.getElementById('openProductFillBtn');
+  dom.startAutoFillBtn = document.getElementById('startAutoFillBtn');
   dom.categoryDataInput = document.getElementById(CATEGORY_FIELD_IDS.display);
   dom.categoryPickerModal = document.getElementById('categoryPickerModal');
   dom.categoryPickerBackdrop = document.getElementById('categoryPickerBackdrop');
@@ -769,6 +790,7 @@ function bindUiEvents() {
   dom.salesOverviewTableBody?.addEventListener('change', handleSalesOverviewTableSelectionChange);
   dom.salesOverviewTableBody?.addEventListener('click', handleSalesOverviewTableClick);
   dom.openProductFillBtn?.addEventListener('click', openProductFillModal);
+  dom.startAutoFillBtn?.addEventListener('click', handleStartAutoFill);
   document.addEventListener('change', (event) => {
     const target = event.target;
     if (target && target.name === 'shipmentLimitSecond') {
@@ -1134,6 +1156,56 @@ function handleAuthEvent(event) {
   }
 }
 
+function handleAutomationEvent(event) {
+  if (!event || typeof event !== 'object') {
+    return;
+  }
+
+  const message = String(event.message || '').trim();
+  if (event.type === 'started') {
+    state.autoFill = {
+      status: 'running',
+      error: '',
+      summary: message || '自动填充已启动...',
+      runId: String(event.runId || ''),
+      shopCode: String(event.shopCode || state.shop.selected?.shopCode || ''),
+      shopName: String(event.shopName || state.shop.selected?.shopName || '')
+    };
+    pushLocalLog('info', message || '自动填充已启动');
+    renderAutoFillState();
+    return;
+  }
+
+  if (event.type === 'progress') {
+    state.autoFill.summary = message || state.autoFill.summary;
+    state.autoFill.status = state.autoFill.status === 'idle' ? 'running' : state.autoFill.status;
+    if (message) {
+      pushLocalLog('info', message);
+    }
+    renderAutoFillState();
+    return;
+  }
+
+  if (event.type === 'completed') {
+    state.autoFill.status = 'success';
+    state.autoFill.error = '';
+    state.autoFill.summary = message || '自动填充已完成，请人工检查后发布';
+    pushLocalLog('info', state.autoFill.summary);
+    showAuthNotice(state.autoFill.summary);
+    renderAutoFillState();
+    return;
+  }
+
+  if (event.type === 'failed') {
+    state.autoFill.status = 'error';
+    state.autoFill.error = event.error?.message || message || '自动填充失败，请稍后重试。';
+    state.autoFill.summary = state.autoFill.error;
+    pushLocalLog('error', `自动填充失败：${state.autoFill.error}`);
+    showAuthNotice(state.autoFill.error);
+    renderAutoFillState();
+  }
+}
+
 function handleSessionExpired(message) {
   stopSalesOverviewFetch({ preserveStatus: false });
   state.auth.lastUsername = getUsername(state.auth.user) || state.auth.lastUsername;
@@ -1147,6 +1219,7 @@ function handleSessionExpired(message) {
   resetAttributeState();
   resetSkuSpecState();
   resetProductFillState();
+  resetAutoFillState();
   dom.loginPasswordInput.value = '';
   resetShopState();
   resetSalesOverviewState();
@@ -1469,6 +1542,7 @@ function renderAuthState() {
   renderSalesOverviewPage();
   renderChangePasswordState();
   renderProductFillState();
+  renderAutoFillState();
   renderTemplateExport();
 }
 
@@ -1489,12 +1563,12 @@ function renderAccountPanel() {
     dom.shopSelectionAccountRole.textContent = user ? (user.role_name || user.roleName || user.role || '-') : '-';
   }
 
-  if (dom.shopSelectionAccountUsername) {
-    dom.shopSelectionAccountUsername.textContent = user ? getUsername(user) : '-';
+  if (dom.shopSelectionCurrentShop) {
+    dom.shopSelectionCurrentShop.textContent = getCurrentShopLabel({ emptyLabel: user ? '尚未确认' : '-' });
   }
 
-  if (dom.shopSelectionCurrentShop) {
-    dom.shopSelectionCurrentShop.textContent = `当前店铺：${getCurrentShopLabel({ emptyLabel: user ? '尚未确认' : '-' })}`;
+  if (dom.shopSelectionDraftState) {
+    dom.shopSelectionDraftState.textContent = getShopDraftStatusText();
   }
 
   if (dom.appHeaderAccountName) {
@@ -1614,6 +1688,7 @@ async function handleLogout() {
   resetAttributeState();
   resetSkuSpecState();
   resetProductFillState();
+  resetAutoFillState();
   resetShopState();
   resetSalesOverviewState();
   resetTemplateExportState();
@@ -1660,6 +1735,21 @@ function renderChangePasswordState() {
 
 function canUseProductFill() {
   return Boolean(state.bridge?.auth && state.auth.user && state.currentTemplateId);
+}
+
+function canUseAutoFill(user = state.auth.user) {
+  const role = String(user?.role || '').trim().toLowerCase();
+  const roleName = String(user?.role_name || user?.roleName || '').trim();
+  return role === 'admin' || role === '运营管理' || roleName === '运营管理' || roleName.includes('管理员');
+}
+
+function getAutoFillDeniedMessage() {
+  return '仅管理员和运营管理可启动自动填充';
+}
+
+function resetAutoFillState() {
+  state.autoFill = buildInitialAutoFillState();
+  renderAutoFillState();
 }
 
 function resetProductFillState() {
@@ -2510,6 +2600,34 @@ function renderProductFillState() {
   }
 }
 
+function renderAutoFillState() {
+  if (!dom.startAutoFillBtn) {
+    return;
+  }
+
+  const isRunning = state.autoFill.status === 'running';
+  const hasBridge = Boolean(state.bridge?.automation?.startAutoFill);
+  const hasTemplate = Boolean(state.currentTemplateId);
+  const hasShop = Boolean(state.shop.selected?.shopCode);
+  const hasPermission = canUseAutoFill(state.auth.user);
+  const disabled = isRunning || !hasBridge || !hasTemplate || !hasShop || !hasPermission;
+
+  dom.startAutoFillBtn.disabled = disabled;
+  dom.startAutoFillBtn.textContent = isRunning ? '自动填充中...' : '启动自动填充';
+
+  if (!hasPermission && state.auth.user) {
+    dom.startAutoFillBtn.title = getAutoFillDeniedMessage();
+  } else if (!hasShop) {
+    dom.startAutoFillBtn.title = '请先选择当前店铺';
+  } else if (!hasTemplate) {
+    dom.startAutoFillBtn.title = '请先选择模板';
+  } else if (!hasBridge) {
+    dom.startAutoFillBtn.title = '当前环境不支持自动填充';
+  } else {
+    dom.startAutoFillBtn.title = state.autoFill.summary || '启动自动填充';
+  }
+}
+
 function handleProductFillIdInput() {
   state.productFill.productId = String(dom.productFillIdInput?.value || '').trim();
   if (!state.productFill.error) {
@@ -2613,6 +2731,83 @@ async function handleProductFillSubmit(event) {
 
   pushLocalLog('info', result.logMessage || result.summary);
   resetProductFillState();
+}
+
+async function handleStartAutoFill() {
+  if (state.autoFill.status === 'running') {
+    return;
+  }
+
+  if (!state.bridge?.automation?.startAutoFill) {
+    const message = '当前环境不支持自动填充，请使用桌面端最新版本。';
+    showAuthNotice(message);
+    pushLocalLog('warning', message);
+    return;
+  }
+
+  if (!canUseAutoFill(state.auth.user)) {
+    const message = getAutoFillDeniedMessage();
+    showAuthNotice(message);
+    pushLocalLog('warning', message);
+    return;
+  }
+
+  if (!state.currentTemplateId) {
+    const message = '请先选择模板，再启动自动填充。';
+    showAuthNotice(message);
+    pushLocalLog('warning', message);
+    return;
+  }
+
+  const selectedShop = state.shop.selected;
+  if (!selectedShop?.shopCode) {
+    const message = '请先选择当前店铺，再启动自动填充。';
+    showAuthNotice(message);
+    pushLocalLog('warning', message);
+    return;
+  }
+
+  state.autoFill.status = 'running';
+  state.autoFill.error = '';
+  state.autoFill.summary = `正在保存模板并准备店铺《${selectedShop.shopName || selectedShop.shopCode}》自动填充...`;
+  state.autoFill.shopCode = selectedShop.shopCode;
+  state.autoFill.shopName = selectedShop.shopName || selectedShop.shopCode;
+  renderAutoFillState();
+  pushLocalLog('info', state.autoFill.summary);
+
+  try {
+    const saved = await saveCurrentTemplate({ silent: true });
+    const templateId = saved?.id || state.currentTemplateId;
+    const result = await state.bridge.automation.startAutoFill({
+      templateId,
+      shopCode: selectedShop.shopCode
+    });
+
+    if (!result?.ok) {
+      const message = result?.error?.message || '自动填充启动失败，请稍后重试。';
+      state.autoFill.status = 'error';
+      state.autoFill.error = message;
+      state.autoFill.summary = message;
+      renderAutoFillState();
+      showAuthNotice(message);
+      pushLocalLog('error', `自动填充启动失败：${message}`);
+      return;
+    }
+
+    state.autoFill.status = 'success';
+    state.autoFill.error = '';
+    state.autoFill.summary = result.message || '自动填充已完成，请人工检查后发布。';
+    state.autoFill.runId = result.runId || state.autoFill.runId;
+    renderAutoFillState();
+  } catch (error) {
+    const message = error instanceof Error ? error.message : '自动填充启动失败，请稍后重试。';
+    state.autoFill.status = 'error';
+    state.autoFill.error = message;
+    state.autoFill.summary = message;
+    renderAutoFillState();
+    showAuthNotice(message);
+    pushLocalLog('error', `自动填充启动失败：${message}`);
+  }
 }
 
 async function fillCurrentTemplateFromProductId(productId) {
@@ -3772,7 +3967,11 @@ function renderSelectedShop() {
   }
 
   if (dom.shopSelectionCurrentShop) {
-    dom.shopSelectionCurrentShop.textContent = `当前店铺：${getCurrentShopLabel({ emptyLabel: state.auth.user ? '尚未确认' : '-' })}`;
+    dom.shopSelectionCurrentShop.textContent = getCurrentShopLabel({ emptyLabel: state.auth.user ? '尚未确认' : '-' });
+  }
+
+  if (dom.shopSelectionDraftState) {
+    dom.shopSelectionDraftState.textContent = getShopDraftStatusText();
   }
 
   if (dom.appHeaderCurrentShop) {
@@ -4014,6 +4213,7 @@ function resetShopState() {
   renderShopPicker();
   renderSalesOverviewPage();
   renderProductFillState();
+  renderAutoFillState();
   renderSkuSpecState();
 }
 
@@ -4092,8 +4292,10 @@ async function applySelectedShopByCode(shopCode, options = {}) {
     state.shop.isRequired = false;
   }
 
+  // 必须在 reset 之前抓 snapshot：resetAttributeState/resetSkuSpecState 会清空对应 DOM，之后再 serializeForm 就拿不到已填值。
+  const preservedFormSnapshot = isChanged ? serializeForm() : null;
+
   if (isChanged) {
-    resetCategoryState();
     resetAttributeState();
     resetSkuSpecState();
     if (!preserveProductFillState) {
@@ -4103,6 +4305,7 @@ async function applySelectedShopByCode(shopCode, options = {}) {
 
   syncSelectedShopIntoForm();
   renderSelectedShop();
+  renderAutoFillState();
   renderShopPicker();
 
   if (focusOverview) {
@@ -4111,7 +4314,8 @@ async function applySelectedShopByCode(shopCode, options = {}) {
 
   if (hydrateAttributes) {
     await hydrateAttributesFromCurrentForm({
-      force: isChanged
+      force: isChanged,
+      formData: preservedFormSnapshot
     });
   }
 
@@ -4243,6 +4447,7 @@ async function hydrateShopCatalog({ force = false } = {}) {
   seedShopDraftSelection();
   syncSalesOverviewSelectionWithAvailableShops();
   renderSelectedShop();
+  renderAutoFillState();
   renderShopPicker();
   renderSalesOverviewPage();
 }
@@ -4499,8 +4704,6 @@ async function handleShopSearchKeyDown(event) {
   }
 
   event.preventDefault();
-  state.shop.draftCode = targetShopCode;
-  renderShopPicker();
   await handleQuickLoginShop(targetShopCode);
 }
 
@@ -4601,6 +4804,14 @@ async function handleConfirmShopSelection() {
     return;
   }
 
+  const currentShopCode = String(state.shop.selected?.shopCode || '').trim();
+  const draftShopCode = String(state.shop.draftCode || '').trim();
+  if (currentShopCode && draftShopCode === currentShopCode) {
+    closeShopPicker();
+    setActiveWorkspaceStep('overview', { scroll: false });
+    return;
+  }
+
   const result = await applySelectedShopByCode(state.shop.draftCode, {
     reason: 'manual',
     autoSave: true,
@@ -4654,13 +4865,22 @@ function renderShopPicker() {
   dom.shopSelectionRefreshBtn.disabled = state.shop.status === 'loading';
   dom.shopPickerLogoutBtn.disabled = state.shop.status === 'loading';
   dom.shopSelectionConfirmBtn.disabled = state.shop.status !== 'ready' || !state.shop.draftCode;
-  dom.shopSelectionConfirmBtn.textContent = state.shop.selected ? '确认切换店铺' : '确认进入工作台';
+  dom.shopSelectionConfirmBtn.textContent = getShopSelectionConfirmText();
   dom.shopSelectionBackBtn.hidden = state.shop.isRequired || !state.shop.selected;
   dom.shopSelectionBackBtn.disabled = state.shop.status === 'loading';
   dom.shopAccessScope.textContent = getShopAccessScopeLabel();
   dom.shopPickerDesc.textContent = getShopPickerDescription();
 
   const visibleShops = getVisibleShopList();
+  if (dom.shopSearchHint) {
+    dom.shopSearchHint.textContent = getShopSearchHintText(visibleShops);
+  }
+  if (dom.shopSelectionDraftState) {
+    dom.shopSelectionDraftState.textContent = getShopDraftStatusText();
+  }
+  if (dom.shopSelectionActionSummary) {
+    dom.shopSelectionActionSummary.textContent = getShopActionSummaryText();
+  }
   dom.shopCountBadge.textContent = state.shop.status === 'ready'
     ? `${visibleShops.length}/${state.shop.available.length}`
     : '...';
@@ -4689,7 +4909,11 @@ function renderShopPicker() {
   }
 
   dom.shopSelectionList.innerHTML = visibleShops.map((shop) => {
-    const selectedClass = shop.shopCode === state.shop.draftCode ? 'is-selected' : '';
+    const isSelected = shop.shopCode === state.shop.draftCode;
+    const isCurrent = shop.shopCode === String(state.shop.selected?.shopCode || '').trim();
+    const selectedClass = isSelected ? 'is-selected' : '';
+    const currentClass = isCurrent ? 'is-current' : '';
+    const pendingClass = isSelected && !isCurrent ? 'is-pending' : '';
     const quickLoginPending = isShopQuickLoginPending(shop.shopCode);
     const quickLoginAllowed = canUseShopQuickLogin(state.auth.user);
     const quickLoginDisabled = state.shop.status !== 'ready'
@@ -4702,15 +4926,22 @@ function renderShopPicker() {
     const remarkTag = shop.remark
       ? `<span class="shop-selection-item__tag shop-selection-item__tag--remark">${escapeHtml(shop.remark)}</span>`
       : '';
+    const statusTags = [
+      isCurrent && isSelected ? '<span class="shop-selection-item__tag shop-selection-item__tag--current">当前且已选中</span>' : '',
+      isCurrent && !isSelected ? '<span class="shop-selection-item__tag shop-selection-item__tag--current">当前生效</span>' : '',
+      isSelected && !isCurrent ? '<span class="shop-selection-item__tag shop-selection-item__tag--pending">待切换</span>' : '',
+      quickLoginPending ? '<span class="shop-selection-item__tag shop-selection-item__tag--pending-login">一键登录处理中</span>' : ''
+    ].filter(Boolean).join('');
 
     return [
-      `<article class="shop-selection-item ${selectedClass}">`,
+      `<article class="shop-selection-item ${selectedClass} ${currentClass} ${pendingClass}">`,
       `<button type="button" class="shop-selection-item__main" data-shop-select-code="${escapeHtml(shop.shopCode)}">`,
       '<span class="shop-selection-item__top">',
       `<strong class="shop-selection-item__title">${escapeHtml(shop.shopName || shop.shopCode)}</strong>`,
       `<span class="shop-selection-item__code">店铺ID ${escapeHtml(shop.shopCode)}</span>`,
       '</span>',
       '<span class="shop-selection-item__badges">',
+      statusTags,
       shop.platform ? `<span class="shop-selection-item__tag">${escapeHtml(shop.platform)}</span>` : '',
       remarkTag,
       '</span>',
@@ -6201,35 +6432,83 @@ function getShopAccessScopeLabel() {
 
 function getShopPickerDescription() {
   if (!state.auth.user) {
-    return '请先登录。';
+    return '';
   }
 
   if (state.shop.status === 'loading') {
-    return '正在加载店铺列表。';
+    return '';
   }
 
-  const mode = String(state.shop.scope?.mode || '').trim();
-  if (mode === 'all') {
-    return '请选择本次要操作的店铺。';
+  return '';
+}
+
+function getShopDraftStatusText() {
+  if (!state.auth.user) {
+    return '';
   }
 
-  if (mode === 'self_and_managed') {
-    return '当前显示你与被管理运营名下店铺。';
+  const currentShopCode = String(state.shop.selected?.shopCode || '').trim();
+  const draftShopCode = String(state.shop.draftCode || '').trim();
+  const draftShop = state.shop.available.find((shop) => shop.shopCode === draftShopCode) || null;
+
+  if (!currentShopCode && draftShop) {
+    return `待进入：${formatShopLabel(draftShop)}`;
   }
 
-  if (mode === 'self_only') {
-    return `当前仅显示 ${getDisplayName(state.auth.user)} 名下店铺。`;
+  if (!currentShopCode) {
+    return '';
   }
 
-  if (canViewAllShops(state.auth.user)) {
-    return '请选择本次要操作的店铺。';
+  if (draftShop && draftShopCode !== currentShopCode) {
+    return `待切换：${formatShopLabel(draftShop)}`;
   }
 
-  if (buildShopAccessContext(state.auth.user).includesManagedOperators) {
-    return '当前显示你与被管理运营名下店铺。';
+  return '';
+}
+
+function getShopSearchHintText(visibleShops) {
+  return '';
+}
+
+function getShopActionSummaryText() {
+  if (!state.auth.user) {
+    return '';
   }
 
-  return `当前仅显示 ${getDisplayName(state.auth.user)} 名下店铺。`;
+  const currentShopCode = String(state.shop.selected?.shopCode || '').trim();
+  const draftShopCode = String(state.shop.draftCode || '').trim();
+  const draftShop = state.shop.available.find((shop) => shop.shopCode === draftShopCode) || null;
+
+  if (!draftShopCode || !draftShop) {
+    return currentShopCode
+      ? formatShopLabel(state.shop.selected)
+      : '';
+  }
+
+  if (!currentShopCode) {
+    return formatShopLabel(draftShop);
+  }
+
+  if (draftShopCode === currentShopCode) {
+    return formatShopLabel(state.shop.selected);
+  }
+
+  return `${formatShopLabel(state.shop.selected)} -> ${formatShopLabel(draftShop)}`;
+}
+
+function getShopSelectionConfirmText() {
+  const currentShopCode = String(state.shop.selected?.shopCode || '').trim();
+  const draftShopCode = String(state.shop.draftCode || '').trim();
+
+  if (!currentShopCode) {
+    return '确认进入工作台';
+  }
+
+  if (!draftShopCode || draftShopCode === currentShopCode) {
+    return '继续使用当前店铺';
+  }
+
+  return '确认切换到该店铺';
 }
 
 function handleOpenCategoryPicker() {
@@ -9712,6 +9991,7 @@ function updateTemplateLabels() {
     dom.workspaceOverviewTemplateMeta.textContent = metaText;
   }
   renderProductFillState();
+  renderAutoFillState();
   renderTemplateExport();
   renderWorkspaceMeta();
 }

@@ -113,7 +113,9 @@ function buildWorkspacePaths(root) {
   const assets = path.join(normalizedRoot, "assets");
   const browserProfile = path.join(normalizedRoot, "browser-profile-playwright");
   const browserProfileCookieLogin = path.join(normalizedRoot, "browser-profile-cookie-login");
+  const browserProfileAutoFill = path.join(normalizedRoot, "browser-profile-auto-fill");
   const logs = path.join(normalizedRoot, "logs");
+  const automationRuns = path.join(normalizedRoot, "automation-runs");
   const configPath = path.join(normalizedRoot, "config.json");
   const credentialsPath = path.join(normalizedRoot, "login-credentials.json");
   const migrationStatePath = path.join(normalizedRoot, MIGRATION_STATE_FILE);
@@ -124,7 +126,9 @@ function buildWorkspacePaths(root) {
     assets,
     browserProfile,
     browserProfileCookieLogin,
+    browserProfileAutoFill,
     logs,
+    automationRuns,
     configPath,
     credentialsPath,
     migrationStatePath,
@@ -134,7 +138,9 @@ function buildWorkspacePaths(root) {
       assets,
       browserProfile,
       browserProfileCookieLogin,
+      browserProfileAutoFill,
       logs,
+      automationRuns,
       credentialsPath
     }
   };
@@ -150,6 +156,8 @@ async function ensureWorkspace(app, options = {}) {
     ensureDirectory(workspacePaths.assets),
     ensureDirectory(workspacePaths.browserProfile),
     ensureDirectory(workspacePaths.browserProfileCookieLogin),
+    ensureDirectory(workspacePaths.browserProfileAutoFill),
+    ensureDirectory(workspacePaths.automationRuns),
     ensureDirectory(workspacePaths.logs)
   ]);
 

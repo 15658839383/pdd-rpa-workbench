@@ -47,6 +47,15 @@ contextBridge.exposeInMainWorld("desktopBridge", {
     openPath: (targetPath) => ipcRenderer.invoke("workspace:openPath", targetPath),
     exportSalesOverview: (payload) => ipcRenderer.invoke("workspace:exportSalesOverview", payload)
   },
+  automation: {
+    startAutoFill: (payload) => ipcRenderer.invoke("automation:startAutoFill", payload),
+    getState: () => ipcRenderer.invoke("automation:getState"),
+    onEvent: (callback) => {
+      const handler = (_event, payload) => callback(payload);
+      ipcRenderer.on("automation:event", handler);
+      return () => ipcRenderer.removeListener("automation:event", handler);
+    }
+  },
   window: {
     enterQuickLogin: () => ipcRenderer.invoke("window:enterQuickLogin"),
     exitQuickLogin: () => ipcRenderer.invoke("window:exitQuickLogin")

@@ -9,6 +9,7 @@ const { renameSkuSpecsWithAi } = require("./aiSpecRenameService");
 const DEFAULT_BASE_URL = "http://106.75.215.11:8080";
 const DEFAULT_TIMEOUT_MS = 10000;
 const QUICK_LOGIN_ROLE_DENIED_MESSAGE = "仅 admin、运营管理和财务角色可使用一键登录";
+const AUTO_FILL_ROLE_DENIED_MESSAGE = "仅管理员和运营管理可启动自动填充";
 
 function isFinanceUser(user) {
   const role = String(user?.role || "").trim().toLowerCase();
@@ -34,6 +35,12 @@ function canUseShopQuickLogin(user) {
   const role = String(user?.role || "").trim().toLowerCase();
   const roleName = String(user?.role_name || user?.roleName || "").trim();
   return role === "admin" || role === "运营管理" || roleName === "运营管理" || isFinanceUser(user);
+}
+
+function canUseAutoFill(user) {
+  const role = String(user?.role || "").trim().toLowerCase();
+  const roleName = String(user?.role_name || user?.roleName || "").trim();
+  return role === "admin" || role === "运营管理" || roleName === "运营管理" || roleName.includes("管理员");
 }
 
 function createBackendClient({
@@ -586,6 +593,77 @@ function createBackendClient({
       return failure({
         code: error?.code || "QUICK_LOGIN_FAILED",
         message: error?.message || "一键登录失败，请稍后重试"
+      });
+    }
+  }
+
+  async function resolveAutoFillShop(payload = {}) {
+    if (!currentUser) {
+      return failure({
+        code: "AUTH_EXPIRED",
+        message: "登录已失效，请重新登录"
+      });
+    }
+
+    if (!canUseAutoFill(currentUser)) {
+      return failure({
+        code: "AUTO_FILL_FORBIDDEN",
+        message: AUTO_FILL_ROLE_DENIED_MESSAGE
+      });
+    }
+
+    const shopCode = String(payload.shopCode || "").trim();
+    if (!shopCode) {
+      return failure({
+        code: "SHOP_CODE_REQUIRED",
+        message: "请先选择店铺，再启动自动填充"
+      });
+    }
+
+    try {
+      let refreshError = null;
+      const refreshResult = await refreshShopCatalogInBackground();
+      if (!refreshResult.ok) {
+        refreshError = refreshResult.error || null;
+      }
+
+      const targetShopResult = await resolveShopByCodeFromSnapshot(shopCode, {
+        cacheNotReadyCode: "SHOP_COOKIE_CACHE_NOT_READY",
+        cacheNotReadyMessage: "店铺 cookies1 主动刷新后仍未准备就绪，请稍后重试",
+        notFoundCode: "SHOP_NOT_FOUND",
+        notFoundMessage: "主动刷新后仍未在当前账号的店铺 cookies1 缓存中找到该店铺"
+      });
+      if (!targetShopResult.ok) {
+        if (refreshError && !hasShopCatalogSnapshot()) {
+          return failure(refreshError);
+        }
+        return failure(targetShopResult.error);
+      }
+
+      const targetShop = targetShopResult.shop;
+      if (!targetShop.cookie1) {
+        return failure({
+          code: "COOKIE_MISSING",
+          message: "该店铺缺少 cookie1，无法启动自动填充"
+        });
+      }
+
+      return {
+        ok: true,
+        shop: {
+          shopCode: targetShop.shopCode,
+          shopName: targetShop.shopName || targetShop.shopCode,
+          currentOperator: targetShop.currentOperator || "",
+          platform: targetShop.platform || "",
+          remark: targetShop.remark || "",
+          cookie1: targetShop.cookie1
+        },
+        user: currentUser
+      };
+    } catch (error) {
+      return failure({
+        code: error?.code || "AUTO_FILL_SHOP_RESOLVE_FAILED",
+        message: error?.message || "自动填充启动前解析店铺失败"
       });
     }
   }
@@ -1317,6 +1395,7 @@ function createBackendClient({
     logout,
     me,
     quickLoginShop,
+    resolveAutoFillShop,
     rewriteSkuSpecNames,
     restoreSession,
     testProductsData

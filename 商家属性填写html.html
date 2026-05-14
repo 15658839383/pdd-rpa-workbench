@@ -87,7 +87,7 @@
             <div>
               <p class="shop-selection-shell__eyebrow">Shop Selector</p>
               <h2 class="shop-selection-shell__title">选择本次操作店铺</h2>
-              <p id="shopPickerDesc" class="shop-selection-shell__desc">可随时查看或切换当前操作店铺。</p>
+              <p id="shopPickerDesc" class="shop-selection-shell__desc"></p>
             </div>
             <div class="shop-selection-shell__actions">
               <button type="button" class="ghost-button" id="openSalesOverviewBtn" hidden>经营总览</button>
@@ -95,26 +95,27 @@
             </div>
           </div>
 
-          <div class="shop-selection-account__grid shop-selection-account__grid--compact">
-            <article class="shop-selection-account__item">
-              <span class="shop-selection-account__label">账号</span>
-              <strong id="shopSelectionAccountName" class="shop-selection-account__value">未登录</strong>
-            </article>
-            <article class="shop-selection-account__item">
-              <span class="shop-selection-account__label">角色</span>
-              <strong id="shopSelectionAccountRole" class="shop-selection-account__value">-</strong>
-            </article>
-            <article class="shop-selection-account__item">
-              <span class="shop-selection-account__label">用户名</span>
-              <strong id="shopSelectionAccountUsername" class="shop-selection-account__value">-</strong>
-            </article>
-            <article class="shop-selection-account__item">
-              <span class="shop-selection-account__label">可见范围</span>
-              <strong id="shopAccessScope" class="shop-selection-account__value">未加载</strong>
-            </article>
+          <div class="shop-selection-account">
+            <div class="shop-selection-account__grid shop-selection-account__grid--compact">
+              <article class="shop-selection-account__item">
+                <span class="shop-selection-account__label">账号</span>
+                <strong id="shopSelectionAccountName" class="shop-selection-account__value">未登录</strong>
+              </article>
+              <article class="shop-selection-account__item">
+                <span class="shop-selection-account__label">角色</span>
+                <strong id="shopSelectionAccountRole" class="shop-selection-account__value">-</strong>
+              </article>
+              <article class="shop-selection-account__item">
+                <span class="shop-selection-account__label">可见范围</span>
+                <strong id="shopAccessScope" class="shop-selection-account__value">未加载</strong>
+              </article>
+              <article class="shop-selection-account__item">
+                <span class="shop-selection-account__label">当前生效店铺</span>
+                <strong id="shopSelectionCurrentShop" class="shop-selection-account__value">尚未确认</strong>
+              </article>
+            </div>
+            <p id="shopSelectionDraftState" class="shop-selection-account__current"></p>
           </div>
-
-          <p id="shopSelectionCurrentShop" class="shop-selection-account__current">当前店铺：尚未确认</p>
 
           <div class="shop-picker">
             <div class="shop-picker__toolbar">
@@ -129,14 +130,21 @@
 
             <div id="shopSelectionError" class="auth-error" hidden></div>
 
-            <div id="shopSelectionList" class="shop-selection-list">
-              <div class="empty-state">正在准备店铺列表...</div>
+            <div class="shop-picker__list-shell">
+              <div id="shopSelectionList" class="shop-selection-list">
+                <div class="empty-state">正在准备店铺列表...</div>
+              </div>
             </div>
 
-            <div class="shop-picker__actions">
-              <button type="button" class="ghost-button" id="shopPickerLogoutBtn">退出登录</button>
-              <button type="button" class="ghost-button" id="shopSelectionRefreshBtn">刷新店铺</button>
-              <button type="button" class="primary-button" id="shopSelectionConfirmBtn">确认进入工作台</button>
+            <div class="shop-picker__actions" data-shop-action-bar>
+              <div class="shop-picker__action-summary">
+                <strong id="shopSelectionActionSummary" class="shop-picker__action-value"></strong>
+              </div>
+              <div class="shop-picker__action-buttons">
+                <button type="button" class="ghost-button" id="shopPickerLogoutBtn">退出登录</button>
+                <button type="button" class="ghost-button" id="shopSelectionRefreshBtn">刷新店铺</button>
+                <button type="button" class="primary-button" id="shopSelectionConfirmBtn">确认进入工作台</button>
+              </div>
             </div>
           </div>
         </section>
@@ -302,6 +310,7 @@
           </div>
           <div class="workspace-overview__actions">
             <button type="button" class="secondary-button" id="openProductFillBtn">按商品ID填充</button>
+            <button type="button" class="secondary-button" id="startAutoFillBtn">启动自动填充</button>
             <button type="button" class="ghost-button" id="workspaceSaveTemplateBtn">保存当前模板</button>
             <button type="button" class="ghost-button" id="workspaceOpenWorkspaceBtn">打开工作区</button>
             <button type="button" class="ghost-button" data-open-secondary-panel="templates">更多工具</button>

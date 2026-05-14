@@ -13,6 +13,11 @@ const HELPERS = [
     name: "shop-online-check",
     scriptPath: path.join(ROOT_DIR, "tools", "检查是否登录状态是否正常", "检查cookies状态.py"),
     extraArgs: []
+  },
+  {
+    name: "pdd-auto-fill",
+    scriptPath: path.join(ROOT_DIR, "新店1.py"),
+    extraArgs: []
   }
 ];
 
@@ -58,8 +63,60 @@ function ensureCommand(command, args, label) {
   }
 }
 
+function runCommand(command, args, options = {}) {
+  const result = spawnSync(command, args, {
+    cwd: ROOT_DIR,
+    stdio: "pipe",
+    windowsHide: true,
+    encoding: "utf-8",
+    ...options
+  });
+
+  if (result.error || result.status !== 0) {
+    const stderr = String(result.stderr || "").trim();
+    const stdout = String(result.stdout || "").trim();
+    const details = stderr || stdout || result.error?.message || "unknown error";
+    throw new Error(`Command failed: ${command} ${args.join(" ")}\n${details}`);
+  }
+
+  return result;
+}
+
 function cleanDirectory(targetPath) {
   fs.rmSync(targetPath, { recursive: true, force: true });
+}
+
+function resolvePythonPackagePath(packageName) {
+  const pythonScript = [
+    "import importlib.util",
+    "import pathlib",
+    `spec = importlib.util.find_spec(${JSON.stringify(packageName)})`,
+    "if spec is None or not spec.origin:",
+    "    raise SystemExit(1)",
+    "print(pathlib.Path(spec.origin).resolve().parent)"
+  ].join("\n");
+
+  const result = runCommand("python", ["-c", pythonScript]);
+  const resolvedPath = String(result.stdout || "").trim();
+  if (!resolvedPath || !fs.existsSync(resolvedPath)) {
+    throw new Error(`Unable to resolve package path for ${packageName}`);
+  }
+  return resolvedPath;
+}
+
+function getHelperExtraDataArgs() {
+  const playwrightPath = resolvePythonPackagePath("playwright");
+  const playwrightDriverPath = path.join(playwrightPath, "driver");
+  if (!fs.existsSync(playwrightDriverPath)) {
+    throw new Error(`Playwright driver directory not found: ${playwrightDriverPath}`);
+  }
+
+  return [
+    "--collect-data",
+    "playwright",
+    "--add-data",
+    `${playwrightDriverPath};playwright\\driver`
+  ];
 }
 
 function buildHelper(helper) {
@@ -81,6 +138,7 @@ function buildHelper(helper) {
     path.join(WORK_ROOT, helper.name),
     "--specpath",
     SPEC_ROOT,
+    ...getHelperExtraDataArgs(),
     ...helper.extraArgs,
     helper.scriptPath
   ];
@@ -104,5 +162,21 @@ function buildHelper(helper) {
 
   if (!fs.existsSync(outputExePath)) {
     throw new Error(`Expected helper executable was not created: ${outputExePath}`);
+  }
+
+  verifyHelperBundle(outputDir);
+}
+
+function verifyHelperBundle(outputDir) {
+  const requiredFiles = [
+    path.join(outputDir, "_internal", "playwright", "driver", "node.exe"),
+    path.join(outputDir, "_internal", "playwright", "driver", "package", "cli.js")
+  ];
+
+  const missingFiles = requiredFiles.filter((filePath) => !fs.existsSync(filePath));
+  if (missingFiles.length > 0) {
+    throw new Error(
+      `Playwright runtime files are missing from helper bundle:\n${missingFiles.join("\n")}`
+    );
   }
 }
